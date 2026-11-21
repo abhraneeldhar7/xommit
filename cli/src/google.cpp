@@ -53,7 +53,7 @@ std::string response_text(const Json& root) {
 std::vector<ModelSpec> GoogleProvider::list_models(const std::string& api_key) {
     HttpResponse response = http_request(
         "GET",
-        "https://generativelanguage.googleapis.com/v1beta/models",
+        "https://generativelanguage.googleapis.com/v1beta/models?pageSize=1000",
         {"x-goog-api-key: " + api_key, "Accept: application/json"},
         "");
     if (response.status != 200) {

@@ -168,6 +168,8 @@ std::string format_model(const ModelSpec& model) {
     return label;
 }
 
+// 401, 403, and 429 are final. 5xx and network failures are retried once by the
+// caller. Other 4xx responses are reported as they are.
 std::string http_error_message(int status, const std::string& body) {
     std::string detail = error_detail(body);
     if (status == 401) {

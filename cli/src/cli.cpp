@@ -44,11 +44,12 @@ std::vector<std::string> to_args(int argc, wchar_t** argv) {
     return result;
 }
 
-std::string request_completion(Provider& provider, const Config& config, const std::string& user) {
+template <typename Function>
+auto with_retry(const std::string& label, Function function) -> decltype(function()) {
     for (int attempt = 0; attempt < 2; attempt++) {
         try {
-            Spinner spinner("asking " + config.model.id);
-            return provider.complete(config.api_key, config.model, system_prompt(), user);
+            Spinner spinner(label);
+            return function();
         } catch (const ProviderError& error) {
             if (attempt == 0 && error.retryable()) {
                 continue;
@@ -93,7 +94,9 @@ int run_commit(const std::string& hint) {
     std::string user = build_user_prompt(hint, context);
 
     std::unique_ptr<Provider> provider = make_provider(config.provider);
-    std::string response = request_completion(*provider, config, user);
+    std::string response = with_retry("asking " + config.model.id, [&]() {
+        return provider->complete(config.api_key, config.model, system_prompt(), user);
+    });
 
     std::vector<std::string> options = parse_commit_options(response);
     if (options.empty()) {
@@ -136,11 +139,9 @@ int run_connect() {
     }
 
     std::unique_ptr<Provider> provider = make_provider(provider_id);
-    std::vector<ModelSpec> models;
-    {
-        Spinner spinner("fetching models");
-        models = provider->list_models(api_key);
-    }
+    std::vector<ModelSpec> models = with_retry("fetching models", [&]() {
+        return provider->list_models(api_key);
+    });
 
     std::vector<std::string> labels_models;
     labels_models.reserve(models.size());
