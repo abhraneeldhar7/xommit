@@ -172,6 +172,8 @@ int select_interactive(const std::vector<std::string>& options, const std::strin
         if (key == 8 || key == 127) {
             if (!filter.empty()) {
                 filter.pop_back();
+                selected = 0;
+                offset = 0;
                 rebuild();
                 draw();
             }
@@ -179,6 +181,8 @@ int select_interactive(const std::vector<std::string>& options, const std::strin
         }
         if (key >= 32 && key < 127) {
             filter += static_cast<char>(key);
+            selected = 0;
+            offset = 0;
             rebuild();
             draw();
         }
