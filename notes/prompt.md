@@ -15,7 +15,7 @@ Rules:
 - type is one of: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert
 - scope is optional and only when the diff makes it obvious
 - subject is lowercase, imperative, and has no trailing period
-- keep each subject at or under 72 characters
+- keep each option at or under 72 characters
 - describe the actual change in the diff, not the user's wording
 - if the user hint and the diff disagree, trust the diff
 - no body, no quotes, no markdown, no explanations

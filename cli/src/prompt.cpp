@@ -21,7 +21,7 @@ const char* SYSTEM_PROMPT =
     "- type is one of: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert\n"
     "- scope is optional and only when the diff makes it obvious\n"
     "- subject is lowercase, imperative, and has no trailing period\n"
-    "- keep each subject at or under 72 characters\n"
+    "- keep each option at or under 72 characters\n"
     "- describe the actual change in the diff, not the user's wording\n"
     "- if the user hint and the diff disagree, trust the diff\n"
     "- no body, no quotes, no markdown, no explanations\n"
@@ -83,6 +83,10 @@ std::string sanitize_message(const std::string& value) {
         if (cut == std::string::npos || cut < 20) {
             cut = 72;
         }
+        while (cut < result.size() &&
+               (static_cast<unsigned char>(result[cut]) & 0xC0) == 0x80) {
+            cut--;
+        }
         result = trim(result.substr(0, cut));
     }
     return result;
@@ -122,7 +126,8 @@ std::vector<std::string> parse_commit_options(const std::string& response) {
             if (line.empty()) {
                 continue;
             }
-            if (starts_with(line, "```") || starts_with(line, "{")) {
+            if (starts_with(line, "```") || starts_with(line, "{") || starts_with(line, "[") ||
+                starts_with(line, "\"")) {
                 continue;
             }
             if (line[0] == '-' || line[0] == '*' || line[0] == '+') {
