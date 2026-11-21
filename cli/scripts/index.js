@@ -47,11 +47,15 @@ function download(url, target, redirects = 0) {
           return;
         }
         const file = fs.createWriteStream(target);
+        response.on("error", reject);
         response.pipe(file);
         file.on("finish", () => file.close(resolve));
         file.on("error", reject);
       },
     );
+    request.setTimeout(120000, () => {
+      request.destroy(new Error("download timed out"));
+    });
     request.on("error", reject);
   });
 }
