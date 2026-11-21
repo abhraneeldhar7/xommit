@@ -3,6 +3,7 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 $repo = "abhraneeldhar7/xommit"
 $headers = @{ "User-Agent" = "xommit-installer" }
 
