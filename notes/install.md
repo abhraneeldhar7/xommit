@@ -31,7 +31,7 @@ What npm does:
    ```
 
 3. It creates launchers in the global prefix, next to `node_modules`. On Windows you get `xommit.cmd` for cmd and PowerShell, `xommit.ps1` for PowerShell, and a plain `xommit` shim for Git Bash. Each one runs `node "...\scripts\index.js"`.
-4. The global prefix is already on `PATH` if `npm bin -g` resolves. If `xommit` is not found after install, add `%APPDATA%\npm` to `PATH` and open a new terminal.
+4. The global prefix is `npm prefix -g`, usually `%APPDATA%\npm`. npm puts that folder on `PATH` during install. If `xommit` is not found, add the folder to `PATH` and open a new terminal.
 
 What the shim does on every run:
 
@@ -54,7 +54,7 @@ Because the shim spawns the exe as a child process, pressing keys works normally
 ## PowerShell
 
 ```powershell
-irm https://raw.githubusercontent.com/abhraneeldhar7/xommit/main/cli/scripts/install.ps1 | iex
+irm https://raw.githubusercontent.com/abhraneeldhar7/xommit/master/cli/scripts/install.ps1 | iex
 ```
 
 Or with a pinned version:
@@ -76,7 +76,7 @@ Open a new terminal after the script finishes so the new `PATH` is picked up.
 ## Git Bash
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/abhraneeldhar7/xommit/main/cli/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/abhraneeldhar7/xommit/master/cli/scripts/install.sh | bash
 ```
 
 The script does the same steps as the PowerShell route, using `curl`. It converts `LOCALAPPDATA` with `cygpath` when available, appends an `export PATH` line to `~/.bashrc`, and prints the installed path.
