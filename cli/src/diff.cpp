@@ -76,11 +76,22 @@ std::vector<DiffFile> parse_diff(const std::string& raw) {
             index++;
         }
 
-        std::string plus_path = header_path(lines[start], true);
-        std::string minus_path = header_path(lines[start], false);
         bool binary = false;
         for (size_t i = start; i < index; i++) {
+            if (starts_with(lines[i], "Binary files ") || starts_with(lines[i], "GIT binary patch")) {
+                binary = true;
+            }
+        }
+
+        std::string plus_path = header_path(lines[start], true);
+        std::string minus_path = header_path(lines[start], false);
+        size_t body_start = start + 1;
+        for (size_t i = start + 1; i < index; i++) {
             const std::string& line = lines[i];
+            if (starts_with(line, "@@")) {
+                body_start = i;
+                break;
+            }
             if (starts_with(line, "+++ b/")) {
                 plus_path = line.substr(6);
             } else if (starts_with(line, "--- a/")) {
@@ -89,9 +100,6 @@ std::vector<DiffFile> parse_diff(const std::string& raw) {
                 plus_path = line.substr(10);
             } else if (starts_with(line, "rename from ")) {
                 minus_path = line.substr(12);
-            }
-            if (starts_with(line, "Binary files ") || starts_with(line, "GIT binary patch")) {
-                binary = true;
             }
         }
 
@@ -109,8 +117,11 @@ std::vector<DiffFile> parse_diff(const std::string& raw) {
         if (binary) {
             file.body = "(binary file)\n";
         } else {
-            for (size_t i = start + 1; i < index; i++) {
-                if (is_header_line(lines[i])) {
+            for (size_t i = body_start; i < index; i++) {
+                if (lines[i].empty()) {
+                    continue;
+                }
+                if (body_start == start + 1 && is_header_line(lines[i])) {
                     continue;
                 }
                 file.body += lines[i];
