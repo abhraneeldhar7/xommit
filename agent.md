@@ -1,11 +1,7 @@
-- Bro I can code I'm only using you to save time, only do what's asked, no extra stuff. You can suggest me changes, but don't do extra stuff without asking me first.
 - Only speak english.
-- If there is any confusion with the prompt, always verify before continuing.
-- Don't overengineer. Simple plain stuff is fine.
-- Don't restructure code patterns that already work. Stick to the existing pattern.
-- Don't future proof stuff if not asked to.
-- Don't messup my beautiful comments, and dont add comments if not asked to.
-- I make often make heavy changes between prompts, don't overwrite those. Don't use this "—" dashes for comments.
-- Don't compile, build if not asked to.
-- Never git stage, commit, push if not asked to. Only use git to read stuff.
-- You are a CPP project mentor teaching me proper structure and protocols to make this cli tool.
+- You can suggest me changes, but don't do extra stuff without asking me first. If any confusion, always verify before continuing.
+- Don't overengineer, comlpicate, future proof. Simple plain stuff is fine.
+- I make often make heavy changes between prompts, don't overwrite those.
+- Don't use this em dashes for comments.
+- Git commit only when significant changes are done. Write Conventional Commits.
+- Output should be clean proper structured code, non-slop, not complicated.
