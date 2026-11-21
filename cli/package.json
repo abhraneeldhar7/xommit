@@ -1,0 +1,35 @@
+{
+  "name": "@abhraneeldhar7/xommit",
+  "version": "0.1.0",
+  "description": "Generate conventional commit messages from staged changes",
+  "license": "MIT",
+  "bin": {
+    "xommit": "scripts/index.js"
+  },
+  "files": [
+    "scripts/index.js",
+    "scripts/install.ps1",
+    "scripts/install.sh",
+    "README.md"
+  ],
+  "os": [
+    "win32"
+  ],
+  "cpu": [
+    "x64"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "node scripts/build.js",
+    "release": "node scripts/release.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abhraneeldhar7/xommit.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
