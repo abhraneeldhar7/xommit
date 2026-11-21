@@ -3,5 +3,5 @@
 - Don't overengineer, comlpicate, future proof. Simple plain stuff is fine.
 - I make often make heavy changes between prompts, don't overwrite those.
 - Don't use this em dashes for comments.
-- Git commit only when significant changes are done. Write Conventional Commits.
+- Write conventional commits in proper phases with significant changes are made.
 - Output should be clean proper structured code, non-slop, not complicated.
