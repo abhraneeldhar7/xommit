@@ -9,7 +9,7 @@ xommit reads the staged diff, asks your AI provider for three commit message opt
 ### npm
 
 ```sh
-npm install -g @abhraneeldhar7/xommit
+npm install -g @antkin/xommit
 ```
 
 The npm package ships a small Node shim. The first run downloads the matching `xommit.exe` release into `%LOCALAPPDATA%\xommit\bin`.

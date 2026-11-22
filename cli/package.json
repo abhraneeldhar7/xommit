@@ -1,8 +1,27 @@
 {
-  "name": "@abhraneeldhar7/xommit",
-  "version": "1.0.3",
+  "name": "@antkin/xommit",
+  "version": "1.0.4",
   "description": "Generate conventional commit messages from staged changes",
+  "keywords": [
+    "cli",
+    "ai",
+    "conventional",
+    "commits",
+    "git",
+    "github"
+  ],
+  "homepage": "https://github.com/abhraneeldhar7/xommit#readme",
+  "bugs": {
+    "url": "https://github.com/abhraneeldhar7/xommit/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abhraneeldhar7/xommit.git"
+  },
   "license": "MIT",
+  "author": "abhraneeldhar7",
+  "type": "commonjs",
+  "main": "index.js",
   "bin": {
     "xommit": "scripts/index.js"
   },
@@ -11,23 +30,19 @@
     "scripts/install.ps1",
     "README.md"
   ],
+  "scripts": {
+    "build": "node scripts/build.js",
+    "release": "node scripts/release.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
   "os": [
     "win32"
   ],
   "cpu": [
     "x64"
   ],
-  "engines": {
-    "node": ">=18"
-  },
-  "scripts": {
-    "build": "node scripts/build.js",
-    "release": "node scripts/release.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/abhraneeldhar7/xommit.git"
-  },
   "publishConfig": {
     "access": "public"
   }

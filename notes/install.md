@@ -16,14 +16,14 @@ The binary is not code signed. Windows SmartScreen may show "Windows protected y
 ## npm
 
 ```sh
-npm install -g @abhraneeldhar7/xommit
+npm install -g @antkin/xommit
 ```
 
 The published package contains only the Node shim and the install scripts. It does not contain `xommit.exe`.
 
 What npm does:
 
-1. It installs the package into the global prefix. On Windows that is usually `%APPDATA%\npm\node_modules\@abhraneeldhar7\xommit`.
+1. It installs the package into the global prefix. On Windows that is usually `%APPDATA%\npm\node_modules\@antkin\xommit`.
 2. It reads the `bin` field from `package.json`:
 
    ```json

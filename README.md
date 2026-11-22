@@ -33,7 +33,7 @@ Pick whichever route fits how you work. All three install the same binary to `%L
 ### npm
 
 ```sh
-npm install -g @abhraneeldhar7/xommit
+npm install -g @antkin/xommit
 ```
 
 The npm package ships a small Node shim instead of the binary. On first run the shim downloads the matching `xommit.exe` release into `%LOCALAPPDATA%\xommit\bin` and runs it. The shim checks `version.txt` first, so it never replaces a newer binary you installed with `xommit --update`.

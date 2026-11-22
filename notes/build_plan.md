@@ -158,7 +158,7 @@ g++ -std=c++20 -O2 -Wall -Wextra -municode -DUNICODE -D_UNICODE \
 
 ### 1. npm global shim
 ```
-npm install -g @abhraneeldhar7/xommit
+npm install -g @antkin/xommit
 ```
 - Package contains only `scripts/index.js`, `scripts/install.ps1`, `README.md`
 - Shim downloads pinned binary to `%LOCALAPPDATA%\xommit\bin` on first run (or if older)
@@ -286,7 +286,7 @@ type(scope): subject
 | Code signing | Skipped, document SmartScreen in install notes |
 | Version start | 1.0.0 |
 | Repo | `abhraneeldhar7/xommit` |
-| npm scope | `@abhraneeldhar7/xommit` |
+| npm scope | `@antkin/xommit` |
 | Logo | From `salvage/terminal_ui.h`, ≥80 cols only |
 | Old code reuse | Logo, password input, picker/spinner concepts only |
 

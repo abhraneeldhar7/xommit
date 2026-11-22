@@ -59,7 +59,7 @@ Renaming the asset or the tag format breaks all three install routes.
 
 The workflow has `id-token: write` and publishes without a token. npm exchanges the GitHub OIDC identity for a short lived publish credential.
 
-One time setup on npmjs.com, for `@abhraneeldhar7/xommit`:
+One time setup on npmjs.com, for `@antkin/xommit`:
 
 - Repository: `abhraneeldhar7/xommit`
 - Workflow file: `release.yml`
@@ -87,4 +87,4 @@ The exe is never part of the npm package. It is downloaded from the GitHub Relea
 2. Commit.
 3. `cd cli && npm run release`.
 4. Watch the workflow: build, GitHub Release, npm publish.
-5. `npm install -g @abhraneeldhar7/xommit` in a clean shell to verify the download path.
+5. `npm install -g @antkin/xommit` in a clean shell to verify the download path.
