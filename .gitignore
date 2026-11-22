@@ -18,3 +18,5 @@ pnpm-debug.log*
 .agents/
 bin/
 webapp/dist/
+
+.vscode/*
