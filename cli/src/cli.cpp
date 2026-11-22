@@ -338,7 +338,7 @@ int run_model_select() {
 
     std::unique_ptr<Provider> provider = make_provider(config.provider);
 
-    // Verify API key by fetching models
+    // Fetch models for listing (key already verified in --connect)
     std::vector<ModelSpec> models;
     try {
         models = with_retry("fetching models", [&]() {
