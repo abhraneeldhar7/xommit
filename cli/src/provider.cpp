@@ -203,8 +203,6 @@ void rank_models(std::vector<ModelSpec>& models) {
 
 std::string format_model(const ModelSpec& model) {
     std::string label = model.id;
-    label += "  " + format_count(model.context_window) + " ctx";
-    label += "  " + format_count(model.max_output_tokens) + " out";
     if (model.free) {
         label += "  Free";
     }

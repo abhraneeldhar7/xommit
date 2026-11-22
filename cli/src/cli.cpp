@@ -24,7 +24,7 @@ namespace xommit {
 namespace {
 
 // Forward declarations
-int run_connect(bool show_logo);
+int run_connect(const std::string& hint = "", bool show_logo = true);
 
 // Centralized color/style constants
 const char* C_RESET    = "\033[0m";
@@ -142,7 +142,7 @@ int run_commit(const std::string& hint) {
         config = load_config();
     } catch (const std::exception&) {
         std::cout << style_dim("Connect your AI provider to begin") << "\n\n";
-        return run_connect(false);
+        return run_connect(hint, false);
     }
 
     ModelSpec model;
@@ -195,7 +195,7 @@ int run_commit(const std::string& hint) {
     return git_commit(options[choice]);
 }
 
-int run_connect(bool show_logo = true) {
+int run_connect(const std::string& hint, bool show_logo) {
     if (show_logo) {
         std::cout << "\n";
         print_logo();
@@ -253,6 +253,7 @@ int run_connect(bool show_logo = true) {
 
     int model_choice = -1;
     int drawn_after_test = 0;
+    ModelSpec selected_model;
     while (true) {
         if (drawn_after_test > 0) {
             clear_lines(drawn_after_test);
@@ -264,7 +265,7 @@ int run_connect(bool show_logo = true) {
             return 1;
         }
 
-        const ModelSpec& selected_model = models[model_choice];
+        selected_model = models[model_choice];
         std::cout << "  testing " << selected_model.id << "... " << std::flush;
         drawn_after_test = 1;
 
@@ -290,16 +291,23 @@ int run_connect(bool show_logo = true) {
     Config config;
     config.provider = provider_id;
     config.api_key = api_key;
-    config.model_id = models[model_choice].id;
+    config.model_id = selected_model.id;
     save_config(config);
 
     print_success("saved " + provider_label(provider_id) + " with " + config.model_id);
+
+    // If called from commit flow with a hint, continue to commit
+    if (!hint.empty()) {
+        // Clear the success message and run commit
+        clear_lines(2); // success message + blank line
+        return run_commit(hint);
+    }
     return 0;
 }
 
 int run_reset() {
     reset_config();
-    print_success("config deleted");
+    print_success("Your saved data is deleted");
     return 0;
 }
 
