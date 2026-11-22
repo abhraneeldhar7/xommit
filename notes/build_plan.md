@@ -291,7 +291,7 @@ type(scope): subject
 | Empty index | Run `git commit` no args, show git output |
 | All ignored | Print message, exit 0 |
 | Code signing | Skipped, document SmartScreen in install notes |
-| Version start | 0.1.0 |
+| Version start | 1.0.0 |
 | Repo | `abhraneeldhar7/xommit` |
 | npm scope | `@abhraneeldhar7/xommit` |
 | Logo | From `salvage/terminal_ui.h`, ≥80 cols only |

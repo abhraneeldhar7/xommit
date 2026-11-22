@@ -1,6 +1,6 @@
 {
   "name": "@abhraneeldhar7/xommit",
-  "version": "0.1.1",
+  "version": "0.1.0",
   "description": "Generate conventional commit messages from staged changes",
   "license": "MIT",
   "bin": {
