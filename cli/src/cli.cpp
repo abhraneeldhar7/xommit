@@ -38,6 +38,11 @@ inline std::string style_dim(const std::string& s)  { return stdout_is_tty() ? (
 inline std::string style_green(const std::string& s){ return stdout_is_tty() ? (C_GREEN + s + C_RESET) : s; }
 inline std::string style_cyan(const std::string& s) { return stdout_is_tty() ? (C_CYAN  + s + C_RESET) : s; }
 
+// ANSI hyperlink: \033]8;;URL\033\text\033]8;;
+inline std::string style_link(const std::string& text, const std::string& url) {
+    return stdout_is_tty() ? ("\033]8;;" + url + "\033\\" + text + "\033]8;;\033\\") : text;
+}
+
 // Links
 const char* LINK_XOMMIT = "https://xommit.antk.in";
 
@@ -46,8 +51,7 @@ void print_help() {
     print_logo();
     std::cout << "\n";
 
-    std::cout << style_dim("Hello, I made ") << style_cyan("xommit") << style_dim(" as a cli tool to turn your vague commits into conventional like a pro :D") << "\n";
-    std::cout << style_dim("  ") << style_cyan(LINK_XOMMIT) << "\n";
+    std::cout << style_dim("Hello, I made ") << style_link(style_cyan("xommit"), LINK_XOMMIT) << style_dim(" as a cli tool to turn your vague commits into conventional like a pro :D") << "\n";
     std::cout << "\n";
 
     std::cout << "version " << style_bold(XOMMIT_VERSION) << "\n";
@@ -241,20 +245,6 @@ int run_connect(bool show_logo = true) {
         return 1;
     }
 
-    // Test free models to verify they work (for Vercel)
-    if (provider_id == "vercel") {
-        print_dim("verifying free models...");
-        for (ModelSpec& model : models) {
-            if (model.free && !model.verified_free) {
-                std::cout << "  testing " << model.id << "... " << std::flush;
-                bool works = provider->test_model(api_key, model);
-                model.verified_free = works;
-                std::cout << (works ? "ok" : "failed") << "\n";
-            }
-        }
-        rank_models(models);
-    }
-
     std::vector<std::string> labels_models;
     labels_models.reserve(models.size());
     for (const ModelSpec& model : models) {
@@ -262,7 +252,12 @@ int run_connect(bool show_logo = true) {
     }
 
     int model_choice = -1;
+    int drawn_after_test = 0;
     while (true) {
+        if (drawn_after_test > 0) {
+            clear_lines(drawn_after_test);
+            drawn_after_test = 0;
+        }
         model_choice = select_option(labels_models, "Choose a model (type to search):");
         if (model_choice < 0) {
             print_dim("cancelled");
@@ -271,15 +266,23 @@ int run_connect(bool show_logo = true) {
 
         const ModelSpec& selected_model = models[model_choice];
         std::cout << "  testing " << selected_model.id << "... " << std::flush;
+        drawn_after_test = 1;
 
         try {
             provider->complete(api_key, selected_model, "Test", "hi");
             std::cout << "ok\n";
+            drawn_after_test++;
             break;
         } catch (const std::exception& e) {
             std::string msg = e.what();
             std::cout << "failed\n";
-            std::cout << style_dim("[" + provider_label(provider_id) + " says: ") << msg << style_dim("]") << "\n\n";
+            drawn_after_test++;
+            if (drawn_after_test > 0) {
+                clear_lines(drawn_after_test);
+                drawn_after_test = 0;
+            }
+            std::cout << "\n";
+            std::cout << style_green(provider_label(provider_id)) << " says: " << msg << "\n\n";
             // Continue loop to re-show selection
         }
     }
