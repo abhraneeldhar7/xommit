@@ -59,6 +59,7 @@ void print_help() {
 
     std::cout << style_dim("xommit") << " " << style_green("<your message (optional)>") << "\n";
     std::cout << style_dim("xommit") << " " << style_green("--connect") << "              save a provider, API key, and model\n";
+    std::cout << style_dim("xommit") << " " << style_green("--model") << "                change model for current provider\n";
     std::cout << style_dim("xommit") << " " << style_green("--reset") << "                delete the saved config\n";
     std::cout << style_dim("xommit") << " " << style_green("--update") << "               download the latest release\n";
     std::cout << style_dim("xommit") << " " << style_green("--version") << "              print the version\n";
@@ -153,8 +154,6 @@ int run_commit(const std::string& hint) {
         return 1;
     }
 
-    print_provider_model(config);
-
     int budget = context_budget_chars(model, system_prompt(), hint);
     bool truncated = false;
     std::string context = build_diff_context(sendable, budget, truncated);
@@ -192,7 +191,26 @@ int run_commit(const std::string& hint) {
         print_dim("cancelled");
         return 1;
     }
-    return git_commit(options[choice]);
+    // Sanitize the chosen message to avoid git pathspec issues
+    std::string msg = options[choice];
+    msg = replace_all(msg, "\n", " ");
+    msg = replace_all(msg, "\r", " ");
+    // collapse multiple spaces
+    std::string cleaned;
+    bool last_space = false;
+    for (char c : msg) {
+        if (std::isspace(static_cast<unsigned char>(c))) {
+            if (!last_space && !cleaned.empty()) {
+                cleaned += ' ';
+            }
+            last_space = true;
+        } else {
+            cleaned += c;
+            last_space = false;
+        }
+    }
+    msg = trim(cleaned);
+    return git_commit(msg);
 }
 
 int run_connect(const std::string& hint, bool show_logo) {
@@ -305,6 +323,92 @@ int run_connect(const std::string& hint, bool show_logo) {
     return 0;
 }
 
+int run_model_select() {
+    std::cout << "\n";
+    print_logo();
+    std::cout << "\n";
+
+    Config config;
+    try {
+        config = load_config();
+    } catch (const std::exception&) {
+        std::cout << style_dim("Connect your AI provider first") << "\n\n";
+        return run_connect("", true);
+    }
+
+    std::unique_ptr<Provider> provider = make_provider(config.provider);
+
+    // Verify API key by fetching models
+    std::vector<ModelSpec> models;
+    try {
+        models = with_retry("fetching models", [&]() {
+            return provider->list_models(config.api_key);
+        });
+    } catch (const std::exception& e) {
+        std::string msg = e.what();
+        if (msg.find("network") != std::string::npos ||
+            msg.find("connection") != std::string::npos ||
+            msg.find("timeout") != std::string::npos ||
+            msg.find("resolve") != std::string::npos) {
+            print_error("Can't reach AI models");
+        } else if (msg.find("401") != std::string::npos || msg.find("403") != std::string::npos) {
+            std::cout << style_dim("API key invalid or expired") << "\n\n";
+            return run_connect("", true);
+        } else {
+            print_error(msg);
+        }
+        return 1;
+    }
+
+    std::vector<std::string> labels_models;
+    labels_models.reserve(models.size());
+    for (const ModelSpec& model : models) {
+        labels_models.push_back(format_model(model));
+    }
+
+    int model_choice = -1;
+    int drawn_after_test = 0;
+    ModelSpec selected_model;
+    while (true) {
+        if (drawn_after_test > 0) {
+            clear_lines(drawn_after_test);
+            drawn_after_test = 0;
+        }
+        model_choice = select_option(labels_models, "Choose a model (type to search):");
+        if (model_choice < 0) {
+            print_dim("cancelled");
+            return 1;
+        }
+
+        selected_model = models[model_choice];
+        std::cout << "  testing " << selected_model.id << "... " << std::flush;
+        drawn_after_test = 1;
+
+        try {
+            provider->complete(config.api_key, selected_model, "Test", "hi");
+            std::cout << "ok\n";
+            drawn_after_test++;
+            break;
+        } catch (const std::exception& e) {
+            std::string msg = e.what();
+            std::cout << "failed\n";
+            drawn_after_test++;
+            if (drawn_after_test > 0) {
+                clear_lines(drawn_after_test);
+                drawn_after_test = 0;
+            }
+            std::cout << "\n";
+            std::cout << style_green(provider_label(config.provider)) << " says: " << msg << "\n\n";
+        }
+    }
+
+    config.model_id = selected_model.id;
+    save_config(config);
+
+    print_success("saved " + provider_label(config.provider) + " with " + config.model_id);
+    return 0;
+}
+
 int run_reset() {
     reset_config();
     print_success("Your saved data is deleted");
@@ -340,6 +444,9 @@ int run_cli(int argc, wchar_t** argv) {
         if (arg == "--update") {
             update_binary();
             return 0;
+        }
+        if (arg == "--model") {
+            return run_model_select();
         }
         if (arg.rfind("--", 0) == 0) {
             // Unknown flag starting with --
