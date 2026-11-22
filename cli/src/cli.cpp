@@ -141,7 +141,11 @@ int run_commit(const std::string& hint) {
     Config config;
     try {
         config = load_config();
-    } catch (const std::exception&) {
+    } catch (const std::exception& error) {
+        if (config_exists()) {
+            print_error(error.what());
+            return 1;
+        }
         std::cout << style_dim("Connect your AI provider to begin") << "\n\n";
         return run_connect(hint, false);
     }
@@ -331,7 +335,11 @@ int run_model_select() {
     Config config;
     try {
         config = load_config();
-    } catch (const std::exception&) {
+    } catch (const std::exception& error) {
+        if (config_exists()) {
+            print_error(error.what());
+            return 1;
+        }
         std::cout << style_dim("Connect your AI provider first") << "\n\n";
         return run_connect("", true);
     }
