@@ -34,12 +34,12 @@ void Spinner::stop() {
 }
 
 void Spinner::loop() {
-    const char* frames[] = {"-", "--", "---", "----"};
+    const char frames[] = {'o', '0', 'O', '0'};
     int index = 0;
     while (running_) {
         std::cout << "\r" << frames[index] << " " << text_ << std::flush;
         index = (index + 1) % 4;
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::this_thread::sleep_for(std::chrono::milliseconds(120));
     }
 }
 
