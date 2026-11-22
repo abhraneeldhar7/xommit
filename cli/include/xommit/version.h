@@ -1,13 +1,14 @@
 #pragma once
 
+// Must be defined by build system (-D flags)
 #ifndef XOMMIT_VERSION
-#define XOMMIT_VERSION "dev"
+#error "XOMMIT_VERSION must be defined by build system"
 #endif
 
 #ifndef XOMMIT_REPO
-#define XOMMIT_REPO "abhraneeldhar7/xommit"
+#error "XOMMIT_REPO must be defined by build system"
 #endif
 
 #ifndef XOMMIT_ASSET
-#define XOMMIT_ASSET "xommit.exe"
+#error "XOMMIT_ASSET must be defined by build system"
 #endif
