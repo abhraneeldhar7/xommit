@@ -10,7 +10,7 @@
     "git",
     "github"
   ],
-  "homepage": "https://github.com/abhraneeldhar7/xommit#readme",
+  "homepage": "https://xommit.antk.in",
   "bugs": {
     "url": "https://github.com/abhraneeldhar7/xommit/issues"
   },
@@ -21,7 +21,6 @@
   "license": "MIT",
   "author": "abhraneeldhar7",
   "type": "commonjs",
-  "main": "index.js",
   "bin": {
     "xommit": "scripts/index.js"
   },

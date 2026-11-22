@@ -1,3 +1,7 @@
+// to run this after git commit only.
+// this thing makes sure if package.json->version matches with git tag version.
+// then pushes the tag to origin.
+
 const { execFileSync } = require("node:child_process");
 const fs = require("node:fs");
 const path = require("node:path");

@@ -1,3 +1,5 @@
+# for windows people without nodejs. thing downloads the exe, stores in LOCALAPPDATA%\xommit\bin -> adds this to env path so "xommit" in cmd line is recognized
+
 param(
     [string]$Version = ""
 )
@@ -27,7 +29,6 @@ if ((Get-Item $temporary).Length -lt 100000) {
 }
 
 Move-Item -Force $temporary $exe
-Set-Content -Path (Join-Path $dir "version.txt") -Value $Version
 
 $userPath = [Environment]::GetEnvironmentVariable("Path", "User")
 if ($userPath -notlike "*$dir*") {

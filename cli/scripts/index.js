@@ -10,20 +10,6 @@ const pkg = require("../package.json");
 const repo = "abhraneeldhar7/xommit";
 const version = pkg.version;
 
-function compareVersions(left, right) {
-  const a = left.split(".").map((part) => Number.parseInt(part, 10) || 0);
-  const b = right.split(".").map((part) => Number.parseInt(part, 10) || 0);
-  const count = Math.max(a.length, b.length);
-  for (let i = 0; i < count; i++) {
-    const x = a[i] || 0;
-    const y = b[i] || 0;
-    if (x !== y) {
-      return x < y ? -1 : 1;
-    }
-  }
-  return 0;
-}
-
 function download(url, target, redirects = 0) {
   return new Promise((resolve, reject) => {
     if (redirects > 5) {
@@ -64,17 +50,14 @@ async function ensureBinary() {
   const local = process.env.LOCALAPPDATA || path.join(os.homedir(), "AppData", "Local");
   const dir = path.join(local, "xommit", "bin");
   const exe = path.join(dir, "xommit.exe");
-  const stamp = path.join(dir, "version.txt");
+  const cacheFile = path.join(dir, ".npm-version");
 
-  let installed = "";
-  try {
-    installed = fs.readFileSync(stamp, "utf8").trim();
-  } catch {
-    installed = "";
-  }
-
-  if (fs.existsSync(exe) && installed && compareVersions(installed, version) >= 0) {
-    return exe;
+  if (fs.existsSync(exe)) {
+    let cached = "";
+    try { cached = fs.readFileSync(cacheFile, "utf8").trim(); } catch {}
+    if (cached === version) {
+      return exe;
+    }
   }
 
   fs.mkdirSync(dir, { recursive: true });
@@ -92,7 +75,7 @@ async function ensureBinary() {
   }
 
   fs.renameSync(temporary, exe);
-  fs.writeFileSync(stamp, `${version}\n`);
+  fs.writeFileSync(cacheFile, version);
   return exe;
 }
 
