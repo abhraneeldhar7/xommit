@@ -57,7 +57,7 @@ void print_help() {
     std::cout << "version " << style_bold(XOMMIT_VERSION) << "\n";
     std::cout << "\n";
 
-    std::cout << style_dim("xommit") << " " << style_green("<your message (optional)>") << "      generate commit messages from staged changes\n";
+    std::cout << style_dim("xommit") << " " << style_green("<your message (optional)>") << "\n";
     std::cout << style_dim("xommit") << " " << style_green("--connect") << "              save a provider, API key, and model\n";
     std::cout << style_dim("xommit") << " " << style_green("--reset") << "                delete the saved config\n";
     std::cout << style_dim("xommit") << " " << style_green("--update") << "               download the latest release\n";
