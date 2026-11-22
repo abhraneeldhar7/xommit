@@ -341,6 +341,14 @@ int run_cli(int argc, wchar_t** argv) {
             update_binary();
             return 0;
         }
+        if (arg.rfind("--", 0) == 0) {
+            // Unknown flag starting with --
+            std::cout << "\n";
+            print_logo();
+            std::cout << "\n";
+            std::cout << style_dim("Command not recognized, use ") << style_green("--help") << "\n\n";
+            return 1;
+        }
         hint_words.push_back(arg);
     }
 
