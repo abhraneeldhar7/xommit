@@ -103,6 +103,60 @@ int run_git(const wchar_t* const* arguments) {
     return static_cast<int>(result);
 }
 
+// Quote one argument for the Windows command line parser.
+std::wstring quote_argument(const std::wstring& value) {
+    if (value.empty()) {
+        return L"\"\"";
+    }
+    if (value.find_first_of(L" \t\n\v\"") == std::wstring::npos) {
+        return value;
+    }
+
+    std::wstring result = L"\"";
+    size_t backslashes = 0;
+    for (wchar_t c : value) {
+        if (c == L'\\') {
+            backslashes++;
+        } else if (c == L'"') {
+            result.append(backslashes * 2 + 1, L'\\');
+            result += L'"';
+            backslashes = 0;
+        } else {
+            result.append(backslashes, L'\\');
+            backslashes = 0;
+            result += c;
+        }
+    }
+    result.append(backslashes * 2, L'\\');
+    result += L'"';
+    return result;
+}
+
+int run_git_inherit(const std::wstring& command) {
+    STARTUPINFOW startup{};
+    startup.cb = sizeof(startup);
+
+    PROCESS_INFORMATION process{};
+    std::vector<wchar_t> buffer(command.begin(), command.end());
+    buffer.push_back(L'\0');
+
+    if (!CreateProcessW(nullptr, buffer.data(), nullptr, nullptr, TRUE, 0, nullptr, nullptr,
+                        &startup, &process)) {
+        DWORD code = GetLastError();
+        if (code == ERROR_FILE_NOT_FOUND) {
+            throw std::runtime_error("git is not installed or not on PATH");
+        }
+        throw std::runtime_error("cannot run git: " + windows_error(code));
+    }
+
+    WaitForSingleObject(process.hProcess, INFINITE);
+    DWORD exit_code = 0;
+    GetExitCodeProcess(process.hProcess, &exit_code);
+    CloseHandle(process.hProcess);
+    CloseHandle(process.hThread);
+    return static_cast<int>(exit_code);
+}
+
 }
 
 std::string git_diff_cached() {
@@ -119,9 +173,8 @@ std::string git_diff_cached() {
 }
 
 int git_commit(const std::string& message) {
-    std::wstring wide_message = utf8_to_wide(message);
-    const wchar_t* arguments[] = {L"git", L"commit", L"-m", wide_message.c_str(), nullptr};
-    return run_git(arguments);
+    std::wstring command = L"git commit -m " + quote_argument(utf8_to_wide(message));
+    return run_git_inherit(command);
 }
 
 int git_commit_no_args() {
