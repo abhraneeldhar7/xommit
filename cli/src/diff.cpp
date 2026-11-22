@@ -27,6 +27,19 @@ bool is_header_line(const std::string& line) {
 
 std::string header_path(const std::string& line, bool new_side) {
     std::string rest = line.substr(11);
+
+    // Fast path for the common form: "a/<path> b/<path>".
+    if (starts_with(rest, "a/") && rest.size() >= 5) {
+        size_t length = (rest.size() - 5) / 2;
+        if (rest.size() == length * 2 + 5) {
+            std::string candidate = rest.substr(2, length);
+            if (rest.compare(2 + length, 3, " b/") == 0 &&
+                rest.compare(5 + length, length, candidate) == 0) {
+                return candidate;
+            }
+        }
+    }
+
     size_t split = rest.rfind(" b/");
     if (split == std::string::npos) {
         return "";
