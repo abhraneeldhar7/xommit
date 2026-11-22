@@ -94,19 +94,6 @@ std::string error_detail(const std::string& body) {
     return detail;
 }
 
-std::string format_count(int value) {
-    std::ostringstream out;
-    if (value >= 1000000) {
-        out << std::fixed << std::setprecision(1) << (value / 1000000.0) << "M";
-        return out.str();
-    }
-    if (value >= 1000) {
-        out << std::fixed << std::setprecision(1) << (value / 1000.0) << "K";
-        return out.str();
-    }
-    return std::to_string(value);
-}
-
 int google_score(const std::string& id) {
     std::string lower = to_lower(id);
     if (contains(lower, "preview") || contains(lower, "exp") || contains(lower, "tts") ||
