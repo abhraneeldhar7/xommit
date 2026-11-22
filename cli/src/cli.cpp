@@ -23,17 +23,43 @@ namespace xommit {
 
 namespace {
 
+// Forward declarations
+int run_connect();
+
+// Centralized color/style constants
+const char* C_RESET    = "\033[0m";
+const char* C_BOLD     = "\033[1m";
+const char* C_DIM      = "\033[90m";
+const char* C_GREEN    = "\033[1;32m";
+const char* C_CYAN     = "\033[1;36m";
+
+inline std::string style_bold(const std::string& s) { return stdout_is_tty() ? (C_BOLD + s + C_RESET) : s; }
+inline std::string style_dim(const std::string& s)  { return stdout_is_tty() ? (C_DIM  + s + C_RESET) : s; }
+inline std::string style_green(const std::string& s){ return stdout_is_tty() ? (C_GREEN + s + C_RESET) : s; }
+inline std::string style_cyan(const std::string& s) { return stdout_is_tty() ? (C_CYAN  + s + C_RESET) : s; }
+
+// Links
+const char* LINK_XOMMIT = "https://xommit.antk.in";
+
 void print_help() {
-    std::cout
-        << "xommit " << XOMMIT_VERSION << "\n"
-        << "\n"
-        << "usage:\n"
-        << "  xommit [hint]      generate commit messages from staged changes\n"
-        << "  xommit --connect   save a provider, API key, and model\n"
-        << "  xommit --reset     delete the saved config\n"
-        << "  xommit --update    download the latest release\n"
-        << "  xommit --version   print the version\n"
-        << "  xommit --help      print this help\n";
+    std::cout << "\n";
+    print_logo();
+    std::cout << "\n";
+
+    std::cout << style_dim("Hello, I made ") << style_cyan("xommit") << style_dim(" as a cli tool to turn your vague commits into conventional like a pro :D") << "\n";
+    std::cout << style_dim("  ") << style_cyan(LINK_XOMMIT) << "\n";
+    std::cout << "\n";
+
+    std::cout << "version " << style_bold(XOMMIT_VERSION) << "\n";
+    std::cout << "\n";
+
+    std::cout << style_dim("xommit") << " " << style_green("<your message (optional)>") << "      generate commit messages from staged changes\n";
+    std::cout << style_dim("xommit") << " " << style_green("--connect") << "              save a provider, API key, and model\n";
+    std::cout << style_dim("xommit") << " " << style_green("--reset") << "                delete the saved config\n";
+    std::cout << style_dim("xommit") << " " << style_green("--update") << "               download the latest release\n";
+    std::cout << style_dim("xommit") << " " << style_green("--version") << "              print the version\n";
+    std::cout << style_dim("xommit") << " " << style_green("--help") << "                 print this help\n";
+    std::cout << "\n";
 }
 
 std::vector<std::string> to_args(int argc, wchar_t** argv) {
@@ -42,6 +68,18 @@ std::vector<std::string> to_args(int argc, wchar_t** argv) {
         result.push_back(wide_to_utf8(argv[i]));
     }
     return result;
+}
+
+// Resolve model_id to full ModelSpec by fetching model list
+ModelSpec resolve_model(const std::string& provider_id, const std::string& api_key, const std::string& model_id) {
+    std::unique_ptr<Provider> provider = make_provider(provider_id);
+    std::vector<ModelSpec> models = provider->list_models(api_key);
+    for (const ModelSpec& m : models) {
+        if (m.id == model_id) {
+            return m;
+        }
+    }
+    throw std::runtime_error("model not found: " + model_id);
 }
 
 template <typename Function>
@@ -65,13 +103,20 @@ auto with_retry(const std::string& label, Function function) -> decltype(functio
     throw std::runtime_error("request failed");
 }
 
+void print_provider_model(const Config& config) {
+    std::cout << style_dim("provider: ") << config.provider << "  " << style_dim("model: ") << config.model_id << "\n\n";
+}
+
 int run_commit(const std::string& hint) {
+    std::cout << "\n";
     print_logo();
+    std::cout << "\n";
 
     std::string root = git_repo_root();
     std::string raw = git_diff_cached();
     if (trim(raw).empty()) {
-        return git_commit_no_args();
+        print_dim("No files are staged");
+        return 0;
     }
 
     std::vector<DiffFile> files = parse_diff(raw);
@@ -87,21 +132,56 @@ int run_commit(const std::string& hint) {
         return 0;
     }
 
-    Config config = load_config();
-    int budget = context_budget_chars(config.model, system_prompt(), hint);
+    // Load config and resolve model
+    Config config;
+    try {
+        config = load_config();
+    } catch (const std::exception&) {
+        std::cout << style_dim("Connect your AI provider to begin") << "\n\n";
+        return run_connect();
+    }
+
+    ModelSpec model;
+    try {
+        model = resolve_model(config.provider, config.api_key, config.model_id);
+    } catch (const std::exception& e) {
+        print_error("failed to resolve model: " + std::string(e.what()));
+        return 1;
+    }
+
+    print_provider_model(config);
+
+    int budget = context_budget_chars(model, system_prompt(), hint);
     bool truncated = false;
     std::string context = build_diff_context(sendable, budget, truncated);
     std::string user = build_user_prompt(hint, context);
 
     std::unique_ptr<Provider> provider = make_provider(config.provider);
-    std::string response = with_retry("asking " + config.model.id, [&]() {
-        return provider->complete(config.api_key, config.model, system_prompt(), user);
-    });
+    std::string response;
+    try {
+        response = with_retry("asking " + model.id, [&]() {
+            return provider->complete(config.api_key, model, system_prompt(), user);
+        });
+    } catch (const std::exception& e) {
+        std::string msg = e.what();
+        if (msg.find("network") != std::string::npos ||
+            msg.find("connection") != std::string::npos ||
+            msg.find("timeout") != std::string::npos ||
+            msg.find("resolve") != std::string::npos) {
+            print_error("Can't reach AI models");
+        } else {
+            print_error(msg);
+        }
+        return 1;
+    }
 
     std::vector<std::string> options = parse_commit_options(response);
     if (options.empty()) {
-        throw std::runtime_error("could not read commit messages from the model response");
+        print_error("could not read commit messages from the model response");
+        return 1;
     }
+
+    print_provider_model(config);
 
     int choice = select_option(options, "Choose a commit message:");
     if (choice < 0) {
@@ -112,7 +192,9 @@ int run_commit(const std::string& hint) {
 }
 
 int run_connect() {
+    std::cout << "\n";
     print_logo();
+    std::cout << "\n";
 
     std::vector<std::string> ids = provider_ids();
     std::vector<std::string> labels;
@@ -139,9 +221,37 @@ int run_connect() {
     }
 
     std::unique_ptr<Provider> provider = make_provider(provider_id);
-    std::vector<ModelSpec> models = with_retry("fetching models", [&]() {
-        return provider->list_models(api_key);
-    });
+    std::vector<ModelSpec> models;
+    try {
+        models = with_retry("fetching models", [&]() {
+            return provider->list_models(api_key);
+        });
+    } catch (const std::exception& e) {
+        std::string msg = e.what();
+        if (msg.find("network") != std::string::npos ||
+            msg.find("connection") != std::string::npos ||
+            msg.find("timeout") != std::string::npos ||
+            msg.find("resolve") != std::string::npos) {
+            print_error("Can't reach AI models");
+        } else {
+            print_error(msg);
+        }
+        return 1;
+    }
+
+    // Test free models to verify they work (for Vercel)
+    if (provider_id == "vercel") {
+        print_dim("verifying free models...");
+        for (ModelSpec& model : models) {
+            if (model.free && !model.verified_free) {
+                std::cout << "  testing " << model.id << "... " << std::flush;
+                bool works = provider->test_model(api_key, model);
+                model.verified_free = works;
+                std::cout << (works ? "ok" : "failed") << "\n";
+            }
+        }
+        rank_models(models);
+    }
 
     std::vector<std::string> labels_models;
     labels_models.reserve(models.size());
@@ -149,7 +259,7 @@ int run_connect() {
         labels_models.push_back(format_model(model));
     }
 
-    int model_choice = select_option(labels_models, "Choose a model:");
+    int model_choice = select_option(labels_models, "Choose a model (type to search):");
     if (model_choice < 0) {
         print_dim("cancelled");
         return 1;
@@ -158,10 +268,10 @@ int run_connect() {
     Config config;
     config.provider = provider_id;
     config.api_key = api_key;
-    config.model = models[model_choice];
+    config.model_id = models[model_choice].id;
     save_config(config);
 
-    print_success("saved " + provider_label(provider_id) + " with " + config.model.id);
+    print_success("saved " + provider_label(provider_id) + " with " + config.model_id);
     return 0;
 }
 

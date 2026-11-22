@@ -15,6 +15,32 @@ namespace xommit {
 
 namespace {
 
+// Vercel models known to be truly free (pricing = $0) and confirmed working
+const char* VERIFIED_FREE_VERCEL_MODELS[] = {
+    "nvidia/nemotron-3.5-lightning-free",
+    "reflection/beam-free",
+    "humansand/ampersand-v0.1",
+    "recursive/flint-v1.0",
+    "stealth/glyph-cluster",
+};
+
+bool is_verified_free_vercel(const std::string& id) {
+    for (const char* verified : VERIFIED_FREE_VERCEL_MODELS) {
+        if (id == verified) return true;
+    }
+    return false;
+}
+
+constexpr double ULTRA_CHEAP_THRESHOLD = 0.000001; // $0.000001 per 1k tokens combined
+
+int vercel_tier(const ModelSpec& model) {
+    if (model.verified_free) return 1;
+    if (model.free) return 2;
+    double combined = model.input_price + model.output_price;
+    if (combined > 0 && combined <= ULTRA_CHEAP_THRESHOLD) return 3;
+    return 4;
+}
+
 std::string collapse(const std::string& value) {
     std::string result;
     bool last_space = false;
@@ -87,6 +113,10 @@ int google_score(const std::string& id) {
     return 50;
 }
 
+bool google_is_free_tier(const std::string& id) {
+    return google_score(id) <= 2; // flash-lite or flash
+}
+
 }
 
 std::unique_ptr<Provider> make_provider(const std::string& id) {
@@ -131,12 +161,21 @@ void rank_models(std::vector<ModelSpec>& models) {
             return a.id > b.id;
         });
         for (ModelSpec& model : models) {
-            model.free = google_score(model.id) <= 2;
+            model.free = google_is_free_tier(model.id);
+            // Google free tier models (flash-lite, flash) are effectively verified free
+            model.verified_free = model.free;
         }
     } else {
+        // Vercel: tier-based ranking
+        // Tier 1: Verified free (tested working)
+        // Tier 2: Unverified free (API says $0)
+        // Tier 3: Ultra cheap (combined price <= $0.000001/1k)
+        // Tier 4: Everything else by price
         std::sort(models.begin(), models.end(), [](const ModelSpec& a, const ModelSpec& b) {
-            if (a.free != b.free) {
-                return a.free;
+            int tier_a = vercel_tier(a);
+            int tier_b = vercel_tier(b);
+            if (tier_a != tier_b) {
+                return tier_a < tier_b;
             }
             double cost_a = a.input_price + a.output_price;
             double cost_b = b.input_price + b.output_price;
@@ -148,6 +187,12 @@ void rank_models(std::vector<ModelSpec>& models) {
             }
             return a.id < b.id;
         });
+        // Mark verified free models
+        for (ModelSpec& model : models) {
+            if (model.free && is_verified_free_vercel(model.id)) {
+                model.verified_free = true;
+            }
+        }
     }
 
     for (size_t i = 0; i < models.size(); i++) {
@@ -159,7 +204,9 @@ std::string format_model(const ModelSpec& model) {
     std::string label = model.id;
     label += "  " + format_count(model.context_window) + " ctx";
     label += "  " + format_count(model.max_output_tokens) + " out";
-    if (model.free) {
+    if (model.verified_free) {
+        label += "  Verified";
+    } else if (model.free) {
         label += "  Free";
     }
     if (model.recommended) {

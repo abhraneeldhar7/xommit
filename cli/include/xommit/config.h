@@ -9,7 +9,7 @@ namespace xommit {
 struct Config {
     std::string provider;
     std::string api_key;
-    ModelSpec model;
+    std::string model_id;
 };
 
 std::string config_path();

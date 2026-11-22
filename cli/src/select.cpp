@@ -92,7 +92,7 @@ int select_interactive(const std::vector<std::string>& options, const std::strin
             std::cout << title << "\n";
             drawn++;
         }
-        std::cout << color_dim() << "Filter: " << color_reset() << filter << "\n";
+        std::cout << color_dim() << "Type to search: " << color_reset() << filter << "\n";
         drawn++;
 
         if (visible.empty()) {
@@ -132,12 +132,12 @@ int select_interactive(const std::vector<std::string>& options, const std::strin
                 continue;
             }
             if (special == 72) {
-                if (!visible.empty()) {
-                    selected = (selected - 1 + static_cast<int>(visible.size())) % static_cast<int>(visible.size());
+                if (!visible.empty() && selected > 0) {
+                    selected--;
                 }
             } else if (special == 80) {
-                if (!visible.empty()) {
-                    selected = (selected + 1) % static_cast<int>(visible.size());
+                if (!visible.empty() && selected < static_cast<int>(visible.size()) - 1) {
+                    selected++;
                 }
             } else if (special == 73) {
                 selected = std::max(0, selected - VISIBLE_ROWS);

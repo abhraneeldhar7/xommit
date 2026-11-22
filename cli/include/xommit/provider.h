@@ -31,6 +31,17 @@ public:
                                  const ModelSpec& model,
                                  const std::string& system,
                                  const std::string& user) = 0;
+
+    // Test if a model works (returns true on success, false on failure)
+    // Default implementation does a minimal completion call
+    virtual bool test_model(const std::string& api_key, const ModelSpec& model) {
+        try {
+            complete(api_key, model, "Test", "Reply with 'ok'");
+            return true;
+        } catch (const std::exception&) {
+            return false;
+        }
+    }
 };
 
 std::unique_ptr<Provider> make_provider(const std::string& id);

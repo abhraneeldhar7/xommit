@@ -75,18 +75,21 @@ void clear_lines(int count) {
 }
 
 int print_logo() {
-    if (!stdout_is_tty() || terminal_width() < 80) {
-        return 0;
+    int width = terminal_width();
+    if (stdout_is_tty() && width >= 80) {
+        std::cout
+            << LOGO_COLOR << "██╗  ██╗" << color_reset() << "  ██████╗  ███╗   ███╗ ███╗   ███╗ ██╗ ████████╗\n"
+            << LOGO_COLOR << "╚██╗██╔╝" << color_reset() << " ██╔═══██╗ ████╗ ████║ ████╗ ████║ ██║ ╚══██╔══╝\n"
+            << LOGO_COLOR << " ╚███╔╝ " << color_reset() << " ██║   ██║ ██╔████╔██║ ██╔████╔██║ ██║    ██║   \n"
+            << LOGO_COLOR << " ██╔██╗ " << color_reset() << " ██║   ██║ ██║╚██╔╝██║ ██║╚██╔╝██║ ██║    ██║   \n"
+            << LOGO_COLOR << "██╔╝ ██╗" << color_reset() << " ╚██████╔╝ ██║ ╚═╝ ██║ ██║ ╚═╝ ██║ ██║    ██║   \n"
+            << LOGO_COLOR << "╚═╝  ╚═╝" << color_reset() << "  ╚═════╝  ╚═╝     ╚═╝ ╚═╝     ╚═╝ ╚═╝    ╚═╝   \n"
+            << color_reset();
+        return LOGO_LINES;
     }
-    std::cout
-        << LOGO_COLOR << "██╗  ██╗" << color_reset() << "  ██████╗  ███╗   ███╗ ███╗   ███╗ ██╗ ████████╗\n"
-        << LOGO_COLOR << "╚██╗██╔╝" << color_reset() << " ██╔═══██╗ ████╗ ████║ ████╗ ████║ ██║ ╚══██╔══╝\n"
-        << LOGO_COLOR << " ╚███╔╝ " << color_reset() << " ██║   ██║ ██╔████╔██║ ██╔████╔██║ ██║    ██║   \n"
-        << LOGO_COLOR << " ██╔██╗ " << color_reset() << " ██║   ██║ ██║╚██╔╝██║ ██║╚██╔╝██║ ██║    ██║   \n"
-        << LOGO_COLOR << "██╔╝ ██╗" << color_reset() << " ╚██████╔╝ ██║ ╚═╝ ██║ ██║ ╚═╝ ██║ ██║    ██║   \n"
-        << LOGO_COLOR << "╚═╝  ╚═╝" << color_reset() << "  ╚═════╝  ╚═╝     ╚═╝ ╚═╝     ╚═╝ ╚═╝    ╚═╝   \n"
-        << color_reset();
-    return LOGO_LINES;
+    // Compact single-line logo for narrow terminals or non-TTY
+    std::cout << LOGO_COLOR << "xommit" << color_reset() << "\n";
+    return 1;
 }
 
 void print_error(const std::string& message) {
