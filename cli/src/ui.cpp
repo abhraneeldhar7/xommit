@@ -88,7 +88,7 @@ int print_logo() {
         return LOGO_LINES;
     }
     // Compact single-line logo for narrow terminals or non-TTY
-    std::cout << LOGO_COLOR << "xommit" << color_reset() << "\n";
+    std::cout << (stdout_is_tty() ? LOGO_COLOR : "") << "xommit" << color_reset() << "\n";
     return 1;
 }
 
