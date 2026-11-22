@@ -60,7 +60,7 @@ irm https://raw.githubusercontent.com/abhraneeldhar7/xommit/master/cli/scripts/i
 Or with a pinned version:
 
 ```powershell
-.\install.ps1 -Version 0.1.0
+.\install.ps1 -Version <version>
 ```
 
 The script:

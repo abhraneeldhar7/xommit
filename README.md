@@ -47,7 +47,7 @@ irm https://raw.githubusercontent.com/abhraneeldhar7/xommit/master/cli/scripts/i
 To pin a version, download the script and pass it explicitly:
 
 ```powershell
-.\install.ps1 -Version 0.1.0
+.\install.ps1 -Version <version>
 ```
 
 The script adds the install directory to your user PATH. Open a new terminal after it runs.

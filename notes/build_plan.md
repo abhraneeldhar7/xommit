@@ -141,7 +141,7 @@ Timeouts: 10s connect, 30s send, 60s receive.
 **Command**:
 ```bash
 g++ -std=c++20 -O2 -Wall -Wextra -municode -DUNICODE -D_UNICODE \
-  -DXOMMIT_VERSION="0.1.0" \
+  -DXOMMIT_VERSION="<version>" \
   -DXOMMIT_REPO="abhraneeldhar7/xommit" \
   -DXOMMIT_ASSET="xommit.exe" \
   -Iinclude src/*.cpp -o bin/xommit.exe \
@@ -168,7 +168,7 @@ npm install -g @abhraneeldhar7/xommit
 ### 2. PowerShell
 ```powershell
 irm https://raw.githubusercontent.com/abhraneeldhar7/xommit/master/cli/scripts/install.ps1 | iex
-# or pinned: .\install.ps1 -Version 0.1.0
+# or pinned: .\install.ps1 -Version <version>
 ```
 - Downloads to `%LOCALAPPDATA%\xommit\bin`, adds to user PATH
 
@@ -195,7 +195,7 @@ xommit --update
 
 ## Publishing
 
-- **Tag format**: `v0.1.0` (matches `cli/package.json` version)
+- **Tag format**: `v<version>` (matches `cli/package.json` version)
 - **Workflow**: `.github/workflows/release.yml` on `v*` tags, `windows-latest`
 - **Steps**: version guard → build → GitHub Release (asset: `xommit.exe`) → npm OIDC publish
 - **npm trusted publishing**: OIDC, no token, provenance enabled

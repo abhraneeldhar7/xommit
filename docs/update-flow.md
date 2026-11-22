@@ -64,7 +64,7 @@ The update always targets `%LOCALAPPDATA%\xommit\bin\xommit.exe`. If you install
 
 | Situation | Result |
 | --- | --- |
-| You are on the latest version | `xommit is already up to date (0.1.0)`, exit 0 |
+| You are on the latest version | `xommit is already up to date (<version>)`, exit 0 |
 | A newer release exists | The binary is replaced, exit 0 |
 | GitHub is unreachable | `cannot check latest release (HTTP <status>)` or a network error, exit 1 |
 | The release has no tag | `latest release has no version tag`, exit 1 |

@@ -25,7 +25,7 @@ The script downloads the latest release asset, verifies it looks like a real bin
 To pin a specific version:
 
 ```powershell
-.\install.ps1 -Version 0.1.0
+.\install.ps1 -Version <version>
 ```
 
 ### Git Bash

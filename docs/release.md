@@ -8,7 +8,7 @@ This covers the local build, the release script, and the GitHub Actions workflow
 
 ```json
 {
-  "version": "0.1.0"
+  "version": "<version>"
 }
 ```
 
@@ -89,7 +89,7 @@ flowchart TD
     JOB --> CHECKOUT["actions/checkout"]
     CHECKOUT --> MSYS2["msys2/setup-msys2 with mingw-w64-ucrt-x86_64-gcc"]
     MSYS2 --> PATH["Add the ucrt64 bin directory to PATH"]
-    PATH --> NODE["actions/setup-node with Node 20"]
+    PATH --> NODE["actions/setup-node with Node 24"]
     NODE --> BUILD["npm install and npm run build in cli"]
     BUILD --> GUARD["Verify the tag matches the package.json version"]
     GUARD --> RELEASE["softprops/action-gh-release with cli/bin/xommit.exe"]
@@ -103,7 +103,7 @@ flowchart TD
 | Checkout | `actions/checkout@v4` |
 | Setup MSYS2 | `msys2/setup-msys2@v2` with `msystem: UCRT64` and `install: mingw-w64-ucrt-x86_64-gcc` |
 | Add MinGW to PATH | Appends the `ucrt64\bin` directory from the action's `msys2-location` output to `GITHUB_PATH` |
-| Setup Node | `actions/setup-node@v4` with Node 20 and the npm registry |
+| Setup Node | `actions/setup-node@v4` with Node 24 and the npm registry |
 | Build | `npm install` then `npm run build` in `cli` |
 | Verify version | Fails the job when the tag does not equal `v<package.json version>` |
 | Create GitHub Release | `softprops/action-gh-release@v2` with `cli/bin/xommit.exe` as the asset and generated release notes |
@@ -117,7 +117,7 @@ permissions:
   id-token: write
 ```
 
-`contents: write` lets the release action create the release. `id-token: write` lets npm generate provenance without a long lived token.
+`contents: write` lets the release action create the release. `id-token: write` lets npm authenticate through trusted publishing and generate provenance without a long lived token.
 
 ### The npm package
 
@@ -134,7 +134,7 @@ The binary itself is not in the npm package. The shim downloads `xommit.exe` fro
 
 ### The version guard
 
-The workflow fails when the tag does not match the package version. For example, a `v0.2.0` tag with `0.1.0` in `package.json` stops the job before anything is published. This keeps the npm version and the release asset in sync.
+The workflow fails when the tag does not match the package version. For example, a `v1.2.0` tag with `1.1.0` in `package.json` stops the job before anything is published. This keeps the npm version and the release asset in sync.
 
 ## A full release checklist
 
