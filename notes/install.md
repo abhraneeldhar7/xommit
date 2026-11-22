@@ -73,16 +73,6 @@ The script:
 
 Open a new terminal after the script finishes so the new `PATH` is picked up.
 
-## Git Bash
-
-```sh
-curl -fsSL https://raw.githubusercontent.com/abhraneeldhar7/xommit/master/cli/scripts/install.sh | bash
-```
-
-The script does the same steps as the PowerShell route, using `curl`. It converts `LOCALAPPDATA` with `cygpath` when available, appends an `export PATH` line to `~/.bashrc`, and prints the installed path.
-
-This route only changes the Git Bash `PATH`. If you also want `xommit` in cmd or PowerShell, use the npm or PowerShell route.
-
 ## Updating
 
 ```sh

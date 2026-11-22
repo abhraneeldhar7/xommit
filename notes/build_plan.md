@@ -160,7 +160,7 @@ g++ -std=c++20 -O2 -Wall -Wextra -municode -DUNICODE -D_UNICODE \
 ```
 npm install -g @abhraneeldhar7/xommit
 ```
-- Package contains only `scripts/index.js`, `scripts/install.ps1`, `scripts/install.sh`, `README.md`
+- Package contains only `scripts/index.js`, `scripts/install.ps1`, `README.md`
 - Shim downloads pinned binary to `%LOCALAPPDATA%\xommit\bin` on first run (or if older)
 - Never downgrades a newer `--update` binary
 - Spawns exe with inherited stdio
@@ -171,12 +171,6 @@ irm https://raw.githubusercontent.com/abhraneeldhar7/xommit/master/cli/scripts/i
 # or pinned: .\install.ps1 -Version <version>
 ```
 - Downloads to `%LOCALAPPDATA%\xommit\bin`, adds to user PATH
-
-### 3. Git Bash
-```bash
-curl -fsSL https://raw.githubusercontent.com/abhraneeldhar7/xommit/master/cli/scripts/install.sh | bash
-```
-- Same, appends PATH to `~/.bashrc`
 
 ---
 
@@ -219,7 +213,6 @@ xommit/
 │   │   ├── build.js
 │   │   ├── index.js             # npm shim
 │   │   ├── install.ps1
-│   │   ├── install.sh
 │   │   └── release.js
 │   └── bin/                     # gitignored, build output
 ├── notes/

@@ -76,7 +76,6 @@ The `files` field limits the package to:
 ```
 scripts/index.js
 scripts/install.ps1
-scripts/install.sh
 README.md
 ```
 

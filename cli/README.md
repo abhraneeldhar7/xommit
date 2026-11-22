@@ -20,12 +20,6 @@ The npm package ships a small Node shim. The first run downloads the matching `x
 irm https://raw.githubusercontent.com/abhraneeldhar7/xommit/master/cli/scripts/install.ps1 | iex
 ```
 
-### Git Bash
-
-```sh
-curl -fsSL https://raw.githubusercontent.com/abhraneeldhar7/xommit/master/cli/scripts/install.sh | bash
-```
-
 ## Use
 
 ```sh

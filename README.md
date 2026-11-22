@@ -52,14 +52,6 @@ To pin a version, download the script and pass it explicitly:
 
 The script adds the install directory to your user PATH. Open a new terminal after it runs.
 
-### Git Bash
-
-```sh
-curl -fsSL https://raw.githubusercontent.com/abhraneeldhar7/xommit/master/cli/scripts/install.sh | bash
-```
-
-The script appends the install directory to `~/.bashrc`.
-
 ### Requirements
 
 - Windows x64
