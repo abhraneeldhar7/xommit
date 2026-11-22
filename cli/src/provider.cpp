@@ -15,30 +15,43 @@ namespace xommit {
 
 namespace {
 
-// Vercel models known to be truly free (pricing = $0) and confirmed working
-const char* VERIFIED_FREE_VERCEL_MODELS[] = {
-    "nvidia/nemotron-3.5-lightning-free",
-    "reflection/beam-free",
-    "humansand/ampersand-v0.1",
-    "recursive/flint-v1.0",
-    "stealth/glyph-cluster",
-};
-
-bool is_verified_free_vercel(const std::string& id) {
-    for (const char* verified : VERIFIED_FREE_VERCEL_MODELS) {
-        if (id == verified) return true;
-    }
-    return false;
-}
-
 constexpr double ULTRA_CHEAP_THRESHOLD = 0.000001; // $0.000001 per 1k tokens combined
 
-int vercel_tier(const ModelSpec& model) {
-    if (model.verified_free) return 1;
-    if (model.free) return 2;
+// Score a model for recommendation (lower = better)
+int model_recommendation_score(const ModelSpec& model) {
+    int score = 0;
+
+    // Free tier gets massive priority
+    if (model.free) {
+        score -= 10000;
+    }
+
+    // Ultra cheap gets priority
     double combined = model.input_price + model.output_price;
-    if (combined > 0 && combined <= ULTRA_CHEAP_THRESHOLD) return 3;
-    return 4;
+    if (combined > 0 && combined <= ULTRA_CHEAP_THRESHOLD) {
+        score -= 5000;
+    }
+
+    // Larger context window is better (up to a point)
+    if (model.context_window > 0) {
+        score -= std::min(model.context_window / 1000, 1000);
+    }
+
+    // Larger output tokens is better
+    if (model.max_output_tokens > 0) {
+        score -= std::min(model.max_output_tokens / 100, 100);
+    }
+
+    // Penalize preview/experimental models
+    std::string lower = to_lower(model.id);
+    if (contains(lower, "preview") || contains(lower, "exp") || contains(lower, "beta") ||
+        contains(lower, "alpha") || contains(lower, "tts") || contains(lower, "audio") ||
+        contains(lower, "image") || contains(lower, "vision") || contains(lower, "robotics") ||
+        contains(lower, "computer-use") || contains(lower, "embedding") || contains(lower, "rerank")) {
+        score += 10000;
+    }
+
+    return score;
 }
 
 std::string collapse(const std::string& value) {
@@ -162,20 +175,14 @@ void rank_models(std::vector<ModelSpec>& models) {
         });
         for (ModelSpec& model : models) {
             model.free = google_is_free_tier(model.id);
-            // Google free tier models (flash-lite, flash) are effectively verified free
-            model.verified_free = model.free;
         }
     } else {
-        // Vercel: tier-based ranking
-        // Tier 1: Verified free (tested working)
-        // Tier 2: Unverified free (API says $0)
-        // Tier 3: Ultra cheap (combined price <= $0.000001/1k)
-        // Tier 4: Everything else by price
+        // Vercel: rank by recommendation score
         std::sort(models.begin(), models.end(), [](const ModelSpec& a, const ModelSpec& b) {
-            int tier_a = vercel_tier(a);
-            int tier_b = vercel_tier(b);
-            if (tier_a != tier_b) {
-                return tier_a < tier_b;
+            int score_a = model_recommendation_score(a);
+            int score_b = model_recommendation_score(b);
+            if (score_a != score_b) {
+                return score_a < score_b;
             }
             double cost_a = a.input_price + a.output_price;
             double cost_b = b.input_price + b.output_price;
@@ -187,12 +194,6 @@ void rank_models(std::vector<ModelSpec>& models) {
             }
             return a.id < b.id;
         });
-        // Mark verified free models
-        for (ModelSpec& model : models) {
-            if (model.free && is_verified_free_vercel(model.id)) {
-                model.verified_free = true;
-            }
-        }
     }
 
     for (size_t i = 0; i < models.size(); i++) {
@@ -204,13 +205,11 @@ std::string format_model(const ModelSpec& model) {
     std::string label = model.id;
     label += "  " + format_count(model.context_window) + " ctx";
     label += "  " + format_count(model.max_output_tokens) + " out";
-    if (model.verified_free) {
-        label += "  Verified";
-    } else if (model.free) {
+    if (model.free) {
         label += "  Free";
     }
     if (model.recommended) {
-        label += "  Recommended";
+        label += "  (recommended)";
     }
     return label;
 }

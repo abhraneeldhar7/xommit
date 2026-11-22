@@ -96,7 +96,10 @@ std::vector<ModelSpec> GoogleProvider::list_models(const std::string& api_key) {
         }
 
         std::string lower = to_lower(id);
-        if (contains(lower, "embedding") || contains(lower, "aqa")) {
+        if (contains(lower, "embedding") || contains(lower, "aqa") ||
+            contains(lower, "tts") || contains(lower, "audio") || contains(lower, "image") ||
+            contains(lower, "vision") || contains(lower, "robotics") || contains(lower, "computer-use") ||
+            contains(lower, "transcribe") || contains(lower, "tts")) {
             continue;
         }
 

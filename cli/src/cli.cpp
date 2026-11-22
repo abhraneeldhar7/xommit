@@ -261,10 +261,27 @@ int run_connect(bool show_logo = true) {
         labels_models.push_back(format_model(model));
     }
 
-    int model_choice = select_option(labels_models, "Choose a model (type to search):");
-    if (model_choice < 0) {
-        print_dim("cancelled");
-        return 1;
+    int model_choice = -1;
+    while (true) {
+        model_choice = select_option(labels_models, "Choose a model (type to search):");
+        if (model_choice < 0) {
+            print_dim("cancelled");
+            return 1;
+        }
+
+        const ModelSpec& selected_model = models[model_choice];
+        std::cout << "  testing " << selected_model.id << "... " << std::flush;
+
+        try {
+            provider->complete(api_key, selected_model, "Test", "hi");
+            std::cout << "ok\n";
+            break;
+        } catch (const std::exception& e) {
+            std::string msg = e.what();
+            std::cout << "failed\n";
+            std::cout << style_dim("[" + provider_label(provider_id) + " says: ") << msg << style_dim("]") << "\n\n";
+            // Continue loop to re-show selection
+        }
     }
 
     Config config;

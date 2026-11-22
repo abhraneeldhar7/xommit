@@ -123,9 +123,18 @@ std::vector<ModelSpec> VercelProvider::list_models(const std::string& api_key) {
             continue;
         }
 
+        std::string id = item.get_string("id");
+        std::string lower = to_lower(id);
+        if (contains(lower, "tts") || contains(lower, "audio") || contains(lower, "image") ||
+            contains(lower, "vision") || contains(lower, "robotics") || contains(lower, "computer-use") ||
+            contains(lower, "embedding") || contains(lower, "rerank") || contains(lower, "video") ||
+            contains(lower, "transcribe") || contains(lower, "speech")) {
+            continue;
+        }
+
         ModelSpec model;
         model.provider = "vercel";
-        model.id = item.get_string("id");
+        model.id = id;
         if (model.id.empty()) {
             continue;
         }
