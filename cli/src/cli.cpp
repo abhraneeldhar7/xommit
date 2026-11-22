@@ -24,7 +24,7 @@ namespace xommit {
 namespace {
 
 // Forward declarations
-int run_connect();
+int run_connect(bool show_logo);
 
 // Centralized color/style constants
 const char* C_RESET    = "\033[0m";
@@ -138,7 +138,7 @@ int run_commit(const std::string& hint) {
         config = load_config();
     } catch (const std::exception&) {
         std::cout << style_dim("Connect your AI provider to begin") << "\n\n";
-        return run_connect();
+        return run_connect(false);
     }
 
     ModelSpec model;
@@ -191,10 +191,12 @@ int run_commit(const std::string& hint) {
     return git_commit(options[choice]);
 }
 
-int run_connect() {
-    std::cout << "\n";
-    print_logo();
-    std::cout << "\n";
+int run_connect(bool show_logo = true) {
+    if (show_logo) {
+        std::cout << "\n";
+        print_logo();
+        std::cout << "\n";
+    }
 
     std::vector<std::string> ids = provider_ids();
     std::vector<std::string> labels;
