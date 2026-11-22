@@ -1,3 +1,6 @@
+// main cli logic. handles all commands (--connect, --update, --reset, etc)
+// runs the commit flow: git diff -> filter -> ai -> picker -> git commit
+
 #include "xommit/cli.h"
 
 #include <iostream>
@@ -62,6 +65,7 @@ void print_help() {
     std::cout << style_dim("xommit") << " " << style_green("--model") << "                change model for current provider\n";
     std::cout << style_dim("xommit") << " " << style_green("--reset") << "                delete the saved config\n";
     std::cout << style_dim("xommit") << " " << style_green("--update") << "               download the latest release\n";
+    std::cout << style_dim("xommit") << " " << style_green("--uninstall") << "            remove binary, config, and cache\n";
     std::cout << style_dim("xommit") << " " << style_green("--version") << "              print the version\n";
     std::cout << style_dim("xommit") << " " << style_green("--help") << "                 print this help\n";
     std::cout << "\n";
@@ -451,6 +455,10 @@ int run_cli(int argc, wchar_t** argv) {
         }
         if (arg == "--update") {
             update_binary();
+            return 0;
+        }
+        if (arg == "--uninstall") {
+            uninstall();
             return 0;
         }
         if (arg == "--model") {

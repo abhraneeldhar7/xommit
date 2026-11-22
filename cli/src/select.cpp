@@ -1,3 +1,7 @@
+// interactive picker. shows 3 commit options, arrow keys to navigate
+// type-to-filter, pgup/pgdn, home/end, esc=cancel
+// falls back to numbered list in non-tty
+
 #include "xommit/select.h"
 
 #include <conio.h>

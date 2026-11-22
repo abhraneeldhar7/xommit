@@ -1,3 +1,5 @@
+// entry point. sets up utf8 and vt, calls run_cli, catches exceptions
+
 #include <exception>
 
 #include "xommit/cli.h"

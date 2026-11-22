@@ -1,3 +1,10 @@
+// provider interface + registry
+// ProviderError: status code, retryable on 5xx
+// Provider abstract: list_models, complete, test_model
+// make_provider: "google" | "vercel" -> concrete impl
+// rank_models: google flash-lite->flash->pro, vercel free->cheap->big context
+// format_model: "model-id (provider) [free/paid]"
+
 #pragma once
 
 #include <memory>

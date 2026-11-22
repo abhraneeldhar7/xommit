@@ -1,3 +1,6 @@
+// config file handling. reads/writes %APPDATA%\xommit\config.json
+// provider, api_key, model_id
+
 #include "xommit/config.h"
 
 #include <filesystem>

@@ -1,3 +1,7 @@
+// utils. trim, split, join, starts_with, get_env
+// utf8/wide conversion, path join, file read/write
+// stdout_is_tty, set_utf8, enable_vt
+
 #include "xommit/util.h"
 
 #include <windows.h>

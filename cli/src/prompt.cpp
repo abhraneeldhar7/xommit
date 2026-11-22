@@ -1,3 +1,7 @@
+// prompt building. system prompt + user hint + diff context
+// response parsing: extracts 3 conventional commit messages
+// validation: subject <=72 chars, valid type/scope, no trailing period
+
 #include "xommit/prompt.h"
 
 #include <algorithm>

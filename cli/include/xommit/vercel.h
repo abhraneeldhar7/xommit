@@ -1,3 +1,7 @@
+// vercel ai gateway provider. ai-gateway.vercel.sh
+// bearer token auth, lists models via /v1/models
+// chat/completions endpoint, openai-compatible
+
 #pragma once
 
 #include "xommit/provider.h"

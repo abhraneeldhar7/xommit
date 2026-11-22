@@ -1,3 +1,9 @@
+// prompt building + response parsing
+// system_prompt: tells ai to write conventional commits
+// build_user_prompt: combines hint + diff context
+// parse_commit_options: extracts 3 messages from ai response
+// sanitize_message: validates conventional commit format
+
 #pragma once
 
 #include <string>

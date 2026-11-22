@@ -1,3 +1,7 @@
+// provider registry. lists models for google/vercel
+// ranks: google flash-lite->flash->pro, vercel free->cheap->big context
+// instantiates correct provider client
+
 #include "xommit/provider.h"
 
 #include <algorithm>

@@ -1,3 +1,6 @@
+// ignore rules. built-in patterns + .xommitignore file
+// filters files from ai context (not from commit)
+
 #include "xommit/ignore.h"
 
 #include <algorithm>

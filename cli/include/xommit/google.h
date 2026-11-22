@@ -1,3 +1,7 @@
+// google ai studio provider. generativelanguage.googleapis.com
+// x-goog-api-key header, lists models with generateContent
+// generateContent endpoint, systemInstruction + contents
+
 #pragma once
 
 #include "xommit/provider.h"

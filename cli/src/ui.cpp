@@ -1,3 +1,7 @@
+// terminal ui. ansi colors, vt sequences, win32 console mode
+// print_error, print_success, print_dim, logo
+// enable_vt for ansi support on windows
+
 #include "xommit/ui.h"
 
 #include <conio.h>

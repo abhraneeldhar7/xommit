@@ -1,3 +1,7 @@
+// self-update. --update flag
+// checks github releases/latest, downloads new exe, atomically replaces
+// --uninstall flag: removes %LOCALAPPDATA%\xommit and %APPDATA%\xommit
+
 #include "xommit/update.h"
 
 #include <filesystem>
@@ -74,13 +78,21 @@ std::string exe_path() {
     return path_join(install_dir(), XOMMIT_ASSET);
 }
 
-std::string version_file_path() {
-    return path_join(install_dir(), "version.txt");
-}
-
 void cleanup_old_binary() {
     std::error_code error;
     std::filesystem::remove(std::filesystem::path(utf8_to_wide(path_join(install_dir(), "xommit.old.exe"))), error);
+}
+
+void uninstall() {
+    std::string local_base = path_join(local_appdata(), "xommit");
+    std::string roaming = path_join(get_env("APPDATA"), "xommit");
+
+    std::error_code error;
+    std::filesystem::remove_all(std::filesystem::path(utf8_to_wide(local_base)), error);
+    std::filesystem::remove_all(std::filesystem::path(utf8_to_wide(roaming)), error);
+    if (!error) {
+        print_success("Removed all xommit data");
+    }
 }
 
 void update_binary() {
@@ -125,7 +137,6 @@ void update_binary() {
         throw std::runtime_error("cannot install the new binary");
     }
 
-    write_file(version_file_path(), latest + "\n");
     print_success("updated to xommit " + latest);
 }
 

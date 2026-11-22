@@ -1,3 +1,6 @@
+// config struct + file ops. %APPDATA%\xommit\config.json
+// provider, api_key, model_id
+
 #pragma once
 
 #include <string>

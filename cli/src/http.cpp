@@ -1,3 +1,7 @@
+// http client. winhttp wrapper for GET/POST with headers/body
+// retry on 5xx/network, timeout 120s
+// user-agent: xommit/<version>
+
 #include "xommit/http.h"
 
 #ifndef _WIN32_WINNT

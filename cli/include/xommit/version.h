@@ -1,3 +1,8 @@
+// build-time constants. must be defined by build.js via -D flags
+// XOMMIT_VERSION: "1.0.6" (from package.json)
+// XOMMIT_REPO: "abhraneeldhar7/xommit" (github api urls)
+// XOMMIT_ASSET: "xommit.exe" (release asset name)
+
 #pragma once
 
 // Must be defined by build system (-D flags)

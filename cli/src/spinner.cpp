@@ -1,3 +1,7 @@
+// spinner animation. runs in background thread
+// shows cycling chars while waiting for ai response
+// auto-stops on destruction, shows checkmark on success
+
 #include "xommit/spinner.h"
 
 #include <chrono>

@@ -1,3 +1,6 @@
+// git diff parsing. runs git diff --cached, parses output into DiffFile list
+// splits into hunks, filters by ignore rules
+
 #include "xommit/diff.h"
 
 #include <algorithm>

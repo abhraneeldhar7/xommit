@@ -1,3 +1,6 @@
+// git wrapper. runs git commands (diff, commit, rev-parse, log)
+// uses CreateProcess for proper windows quoting
+
 #include "xommit/git.h"
 
 #include <windows.h>

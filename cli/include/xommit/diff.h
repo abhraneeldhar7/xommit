@@ -1,3 +1,9 @@
+// diff parsing + context budgeting
+// DiffFile: path + body (or binary flag)
+// parse_diff: git diff --cached -> vector<DiffFile>
+// build_diff_context: water-fill algorithm for token budget
+// context_budget_chars: fits diff into model context window
+
 #pragma once
 
 #include <string>

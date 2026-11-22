@@ -1,3 +1,6 @@
+// minimal json parser. string/number/bool/null/array/object
+// used for provider requests/responses, config file
+
 #include "xommit/json.h"
 
 #include <cmath>

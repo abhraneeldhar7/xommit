@@ -1,3 +1,7 @@
+// google ai studio provider. generativelanguage.googleapis.com
+// list models (filter generateContent), generate content
+// x-goog-api-key auth
+
 #include "xommit/google.h"
 
 #include <algorithm>
