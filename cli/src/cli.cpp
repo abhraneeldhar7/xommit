@@ -54,7 +54,7 @@ void print_help() {
     print_logo();
     std::cout << "\n";
 
-    std::cout << style_dim("Hello, I made ") << style_link(style_cyan("xommit"), LINK_XOMMIT) << style_dim(" as a cli tool to turn your vague commits into conventional like a pro :D") << "\n";
+    std::cout << style_dim("Hello, I made ") << style_link(style_cyan("xommit"), LINK_XOMMIT) << style_dim(" to turn your vague commits into conventional like a pro :D") << "\n";
     std::cout << "\n";
 
     std::cout << "version " << style_bold(XOMMIT_VERSION) << "\n";
