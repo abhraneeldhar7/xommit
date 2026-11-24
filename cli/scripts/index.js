@@ -11,84 +11,113 @@ const repo = "abhraneeldhar7/xommit";
 const version = pkg.version;
 
 function download(url, target, redirects = 0) {
-  return new Promise((resolve, reject) => {
-    if (redirects > 5) {
-      reject(new Error("too many redirects"));
-      return;
-    }
-    const request = https.get(
-      url,
-      { headers: { "User-Agent": `xommit/${version}` } },
-      (response) => {
-        const status = response.statusCode || 0;
-        if (status >= 300 && status < 400 && response.headers.location) {
-          response.resume();
-          const next = new URL(response.headers.location, url).toString();
-          download(next, target, redirects + 1).then(resolve, reject);
-          return;
+    return new Promise((resolve, reject) => {
+        if (redirects > 5) {
+            reject(new Error("too many redirects"));
+            return;
         }
-        if (status !== 200) {
-          response.resume();
-          reject(new Error(`HTTP ${status}`));
-          return;
-        }
-        const file = fs.createWriteStream(target);
-        response.on("error", reject);
-        response.pipe(file);
-        file.on("finish", () => file.close(resolve));
-        file.on("error", reject);
-      },
-    );
-    request.setTimeout(120000, () => {
-      request.destroy(new Error("download timed out"));
+        const request = https.get(
+            url,
+            { headers: { "User-Agent": `xommit/${version}` } },
+            (response) => {
+                const status = response.statusCode || 0;
+                if (status >= 300 && status < 400 && response.headers.location) {
+                    response.resume();
+                    const next = new URL(response.headers.location, url).toString();
+                    download(next, target, redirects + 1).then(resolve, reject);
+                    return;
+                }
+                if (status !== 200) {
+                    response.resume();
+                    reject(new Error(`HTTP ${status}`));
+                    return;
+                }
+                const file = fs.createWriteStream(target);
+                response.on("error", reject);
+                response.pipe(file);
+                file.on("finish", () => file.close(resolve));
+                file.on("error", reject);
+            },
+        );
+        request.setTimeout(120000, () => {
+            request.destroy(new Error("download timed out"));
+        });
+        request.on("error", reject);
     });
-    request.on("error", reject);
-  });
 }
 
 async function ensureBinary() {
-  const local = process.env.LOCALAPPDATA || path.join(os.homedir(), "AppData", "Local");
-  const dir = path.join(local, "xommit", "bin");
-  const exe = path.join(dir, "xommit.exe");
-  const cacheFile = path.join(dir, ".npm-version");
+    const platform = os.platform(); // 'win32' | 'linux' | 'darwin'
+    const arch = os.arch(); // 'x64' | 'arm64'
 
-  if (fs.existsSync(exe)) {
-    let cached = "";
-    try { cached = fs.readFileSync(cacheFile, "utf8").trim(); } catch {}
-    if (cached === version) {
-      return exe;
+    let asset;
+    let cacheDir;
+    let exeName;
+
+    if (platform === "win32") {
+        asset = `xommit-windows-${arch}.exe`;
+        exeName = "xommit.exe";
+        cacheDir = path.join(
+            process.env.LOCALAPPDATA || path.join(os.homedir(), "AppData", "Local"),
+            "xommit", "bin"
+        );
+    } else if (platform === "linux") {
+        asset = `xommit-linux-${arch === "x64" ? "x64" : "arm64"}`;
+        exeName = "xommit";
+        cacheDir = path.join(
+            process.env.XDG_BIN_HOME || path.join(os.homedir(), ".local", "bin")
+        );
+    } else {
+        throw new Error(`Unsupported platform: ${platform}`);
     }
-  }
 
-  fs.mkdirSync(dir, { recursive: true });
-  const temporary = path.join(dir, "xommit.download.exe");
-  process.stderr.write(`downloading xommit ${version}...\n`);
-  await download(
-    `https://github.com/${repo}/releases/download/v${version}/xommit.exe`,
-    temporary,
-  );
+    const exe = path.join(cacheDir, exeName);
+    const cacheFile = path.join(cacheDir, ".npm-version");
 
-  const size = fs.statSync(temporary).size;
-  if (size < 100000) {
-    fs.rmSync(temporary, { force: true });
-    throw new Error("downloaded file looks invalid");
-  }
+    if (fs.existsSync(exe)) {
+        let cached = "";
+        try { cached = fs.readFileSync(cacheFile, "utf8").trim(); } catch {}
+        if (cached === version) {
+            return exe;
+        }
+    }
 
-  fs.renameSync(temporary, exe);
-  fs.writeFileSync(cacheFile, version);
-  return exe;
+    fs.mkdirSync(cacheDir, { recursive: true });
+    const temporary = path.join(cacheDir, `${exeName}.download`);
+    process.stderr.write(`downloading xommit ${version}...\n`);
+
+    await download(
+        `https://github.com/${repo}/releases/download/v${version}/${asset}`,
+        temporary,
+    );
+
+    const size = fs.statSync(temporary).size;
+    if (size < 100000) {
+        fs.rmSync(temporary, { force: true });
+        throw new Error("downloaded file looks invalid");
+    }
+
+    fs.renameSync(temporary, exe);
+
+    // Make executable on Linux
+    if (platform === "linux") {
+        fs.chmodSync(exe, 0o755);
+    }
+
+    fs.writeFileSync(cacheFile, version);
+    return exe;
 }
 
 async function main() {
-  const exe = await ensureBinary();
-  const result = spawnSync(exe, process.argv.slice(2), { stdio: "inherit" });
-  if (result.error) {
-    throw new Error(`cannot run xommit: ${result.error.message}`);
-  }
-  process.exit(result.status ?? 1);
+    const exe = await ensureBinary();
+    const result = spawnSync(exe, process.argv.slice(2), { stdio: "inherit" });
+    if (result.error) {
+        throw new Error(`cannot run xommit: ${result.error.message}`);
+    }
+    process.exit(result.status ?? 1);
 }
 
 main().catch((error) => {
-  console.error(`error: ${error.message}`);
-  process.exit(1);
+    console.error(`error: ${error.message}`);
+    process.exit(1);
 });
