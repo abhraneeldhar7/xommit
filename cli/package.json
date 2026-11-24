@@ -27,17 +27,21 @@
   "files": [
     "scripts/index.js",
     "scripts/install.ps1",
+    "scripts/install.sh",
     "README.md"
   ],
   "scripts": {
     "build": "node scripts/build.js",
+    "build:linux": "node scripts/build.js --platform=linux",
+    "build:windows": "node scripts/build.js --platform=windows",
     "release": "node scripts/release.js"
   },
   "engines": {
     "node": ">=18"
   },
   "os": [
-    "win32"
+    "win32",
+    "linux"
   ],
   "cpu": [
     "x64"

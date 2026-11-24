@@ -4,6 +4,7 @@
 
 const { execFileSync } = require("node:child_process");
 const fs = require("node:fs");
+const os = require("node:os");
 const path = require("node:path");
 
 const root = path.resolve(__dirname, "..");
@@ -27,7 +28,9 @@ if (git(["tag", "--list", tag])) {
   fail(`tag ${tag} already exists`);
 }
 
-execFileSync("node", [path.join(root, "scripts", "build.js")], { stdio: "inherit" });
+// Build only current platform for local verification
+const platform = os.platform() === "win32" ? "windows" : "linux";
+execFileSync("node", [path.join(root, "scripts", "build.js"), `--platform=${platform}`], { stdio: "inherit" });
 
 git(["tag", tag]);
 git(["push", "origin", tag]);

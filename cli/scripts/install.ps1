@@ -21,7 +21,7 @@ $exe = Join-Path $dir "xommit.exe"
 $temporary = "$exe.download"
 
 Write-Host "downloading xommit $Version"
-Invoke-WebRequest -Headers $headers -Uri "https://github.com/$repo/releases/download/v$Version/xommit.exe" -OutFile $temporary
+Invoke-WebRequest -Headers $headers -Uri "https://github.com/$repo/releases/download/v$Version/xommit-windows-x64.exe" -OutFile $temporary
 
 if ((Get-Item $temporary).Length -lt 100000) {
     Remove-Item $temporary -Force
