@@ -70,7 +70,7 @@ ProcessResult run_capture(const std::wstring& command) {
         CloseHandle(error_read);
         CloseHandle(error_write);
         if (code == ERROR_FILE_NOT_FOUND) {
-            throw std::runtime_error("git is not installed or not on PATH");
+            throw std::runtime_error("git is not installed or added to PATH");
         }
         throw std::runtime_error("cannot run git: " + windows_error(code));
     }
@@ -101,7 +101,7 @@ ProcessResult run_capture(const std::wstring& command) {
 int run_git(const wchar_t* const* arguments) {
     intptr_t result = _wspawnvp(_P_WAIT, L"git", arguments);
     if (result == -1) {
-        throw std::runtime_error("git is not installed or not on PATH");
+        throw std::runtime_error("git is not installed or added to PATH");
     }
     return static_cast<int>(result);
 }
@@ -147,7 +147,7 @@ int run_git_inherit(const std::wstring& command) {
                         &startup, &process)) {
         DWORD code = GetLastError();
         if (code == ERROR_FILE_NOT_FOUND) {
-            throw std::runtime_error("git is not installed or not on PATH");
+            throw std::runtime_error("git is not installed or added to PATH");
         }
         throw std::runtime_error("cannot run git: " + windows_error(code));
     }
