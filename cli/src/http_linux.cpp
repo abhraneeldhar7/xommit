@@ -38,14 +38,6 @@ size_t write_callback(void* contents, size_t size, size_t nmemb, void* userp) {
     return total;
 }
 
-std::vector<std::string> build_curl_headers(const std::vector<std::string>& headers) {
-    std::vector<std::string> result;
-    for (const std::string& h : headers) {
-        result.push_back(h);
-    }
-    return result;
-}
-
 struct CurlSlistDeleter {
     void operator()(struct curl_slist* list) const {
         if (list) curl_slist_free_all(list);

@@ -114,6 +114,10 @@ void print_success(const std::string& message) {
     std::cout << color_green() << message << color_reset() << "\n";
 }
 
+void print_help_hint() {
+    std::cout << color_dim() << "run " << color_green() << "xommit --help" << color_dim() << " for guide" << color_reset() << "\n";
+}
+
 std::string read_password() {
     if (!stdin_is_tty()) {
         std::string value = read_line();
