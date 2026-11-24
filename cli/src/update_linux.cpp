@@ -104,6 +104,7 @@ void uninstall() {
     std::filesystem::remove_all(std::filesystem::path(config_base), error);
     if (!error) {
         print_success("Removed all xommit data");
+        print_help_hint();
     }
 }
 
@@ -111,6 +112,7 @@ void update_binary() {
     std::string latest = latest_version();
     if (!version_less(current_version(), latest)) {
         print_success("xommit is already up to date (" + current_version() + ")");
+        print_help_hint();
         return;
     }
 
@@ -156,6 +158,7 @@ void update_binary() {
         std::filesystem::perms::others_exec | std::filesystem::perms::others_read, error);
 
     print_success("updated to xommit " + latest);
+    print_help_hint();
 }
 
 } // namespace xommit

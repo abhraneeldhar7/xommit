@@ -125,6 +125,7 @@ int run_commit(const std::string& hint) {
     std::string raw = git_diff_cached();
     if (trim(raw).empty()) {
         print_dim("No files are staged");
+        print_help_hint();
         return 0;
     }
 
@@ -138,6 +139,7 @@ int run_commit(const std::string& hint) {
     }
     if (sendable.empty()) {
         print_dim("only ignored files are staged, nothing to send to the AI");
+        print_help_hint();
         return 0;
     }
 
@@ -197,6 +199,7 @@ int run_commit(const std::string& hint) {
     int choice = select_option(options, "Choose a commit message:");
     if (choice < 0) {
         print_dim("cancelled");
+        print_help_hint();
         return 1;
     }
     // Sanitize the chosen message to avoid git pathspec issues
@@ -241,6 +244,7 @@ int run_connect(const std::string& hint, bool show_logo) {
     int provider_choice = select_option(labels, "Choose a provider:");
     if (provider_choice < 0) {
         print_dim("cancelled");
+        print_help_hint();
         return 1;
     }
     std::string provider_id = ids[provider_choice];
@@ -288,6 +292,7 @@ int run_connect(const std::string& hint, bool show_logo) {
         model_choice = select_option(labels_models, "Choose a model (type to search):");
         if (model_choice < 0) {
             print_dim("cancelled");
+            print_help_hint();
             return 1;
         }
 
@@ -321,6 +326,7 @@ int run_connect(const std::string& hint, bool show_logo) {
     save_config(config);
 
     print_success("saved " + provider_label(provider_id) + " with " + config.model_id);
+    print_help_hint();
 
     // If called from commit flow with a hint, continue to commit
     if (!hint.empty()) {
@@ -389,6 +395,7 @@ int run_model_select() {
         model_choice = select_option(labels_models, "Choose a model (type to search):");
         if (model_choice < 0) {
             print_dim("cancelled");
+            print_help_hint();
             return 1;
         }
 
@@ -418,12 +425,14 @@ int run_model_select() {
     save_config(config);
 
     print_success("saved " + provider_label(config.provider) + " with " + config.model_id);
+    print_help_hint();
     return 0;
 }
 
 int run_reset() {
     reset_config();
     print_success("Your saved data is deleted");
+    print_help_hint();
     return 0;
 }
 

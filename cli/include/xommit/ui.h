@@ -30,6 +30,7 @@ int print_logo();
 void print_error(const std::string& message);
 void print_dim(const std::string& message);
 void print_success(const std::string& message);
+void print_help_hint();
 
 std::string read_password();
 std::string read_line();
