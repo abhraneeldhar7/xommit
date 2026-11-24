@@ -10,14 +10,26 @@
   --font-mono: 'Cascadia Mono', ui-monospace, monospace;
 
   /* Type scale */
-  --text-hero: clamp(2.25rem, 6vw, 3.75rem);
-  --text-hero--line-height: 1.05;
-  --text-hero--letter-spacing: -0.03em;
-  --text-section: 1.75rem;
-  --text-section--line-height: 1.25;
-  --text-section--letter-spacing: -0.02em;
-  --text-body: 15px;
-  --text-body--line-height: 1.6;
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1.333;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.428;
+  --text-base: 15px;
+  --text-base--line-height: 1.6;
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.555;
+  --text-xl: 1.25rem;
+  --text-xl--line-height: 1.4;
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: 1.333;
+  --text-3xl: 1.875rem;
+  --text-3xl--line-height: 1.266;
+  --text-4xl: 2.25rem;
+  --text-4xl--line-height: 1.111;
+  --text-5xl: 3rem;
+  --text-5xl--line-height: 1;
+  --text-6xl: 3.75rem;
+  --text-6xl--line-height: 1;
 
   /* Accent */
   --color-git: #fa583b;
@@ -42,6 +54,7 @@
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-ring: var(--ring);
+
 }
 
 :root {
@@ -102,8 +115,14 @@
     background-color: var(--background);
     color: var(--foreground);
     font-family: var(--font-sans);
-    font-size: var(--text-body);
+    font-size: 15px;
     line-height: 1.6;
     font-weight: 400;
+  }
+
+  .site-max {
+    max-width: 1000px;
+    width: full;
+    margin: 0 auto;
   }
 }
