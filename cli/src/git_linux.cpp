@@ -11,6 +11,7 @@
 #include <cstring>
 #include <stdexcept>
 #include <string>
+#include <thread>
 #include <vector>
 
 #include "xommit/util.h"
@@ -74,13 +75,18 @@ ProcessResult run_capture(const std::vector<std::string>& args) {
     }
 
     ProcessResult result;
-    read_fd(out_pipe[0], result.output);
-    read_fd(err_pipe[0], result.error);
-    close(out_pipe[0]);
-    close(err_pipe[0]);
+    std::thread out_thread(read_fd, out_pipe[0], std::ref(result.output));
+    std::thread err_thread(read_fd, err_pipe[0], std::ref(result.error));
 
     int status;
     waitpid(pid, &status, 0);
+
+    out_thread.join();
+    err_thread.join();
+
+    close(out_pipe[0]);
+    close(err_pipe[0]);
+
     if (WIFEXITED(status)) {
         result.exit_code = WEXITSTATUS(status);
     } else {
