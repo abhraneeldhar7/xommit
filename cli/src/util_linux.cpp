@@ -97,12 +97,15 @@ std::wstring utf8_to_wide(const std::string& value) {
         return L"";
     }
     std::mbstate_t state{};
-    size_t len = std::mbsrtowcs(nullptr, &value.c_str(), 0, &state);
+    const char* src = value.c_str();
+    size_t len = std::mbsrtowcs(nullptr, &src, 0, &state);
     if (len == static_cast<size_t>(-1)) {
         return L"";
     }
     std::wstring result(len, L'\0');
-    std::mbsrtowcs(result.data(), &value.c_str(), len + 1, &state);
+    state = std::mbstate_t{};
+    src = value.c_str();
+    std::mbsrtowcs(result.data(), &src, len, &state);
     return result;
 }
 
@@ -111,12 +114,15 @@ std::string wide_to_utf8(const std::wstring& value) {
         return "";
     }
     std::mbstate_t state{};
-    size_t len = std::wcsrtombs(nullptr, &value.c_str(), 0, &state);
+    const wchar_t* src = value.c_str();
+    size_t len = std::wcsrtombs(nullptr, &src, 0, &state);
     if (len == static_cast<size_t>(-1)) {
         return "";
     }
     std::string result(len, '\0');
-    std::wcsrtombs(result.data(), &value.c_str(), len + 1, &state);
+    state = std::mbstate_t{};
+    src = value.c_str();
+    std::wcsrtombs(result.data(), &src, len, &state);
     return result;
 }
 

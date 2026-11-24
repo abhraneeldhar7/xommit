@@ -11,6 +11,7 @@
 
 #include "xommit/ui.h"
 
+#include <clocale>
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <termios.h>
@@ -37,8 +38,8 @@ TermState g_term_state;
 } // namespace
 
 void set_utf8() {
-    // On Linux, UTF-8 is typically the default locale
-    // No action needed
+    // Initialize UTF-8 locale for proper multibyte/wide conversions
+    setlocale(LC_ALL, "C.UTF-8");
 }
 
 void enable_vt() {
