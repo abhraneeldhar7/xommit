@@ -75,7 +75,7 @@ std::string install_dir() {
 }
 
 std::string exe_path() {
-    return path_join(install_dir(), XOMMIT_ASSET);
+    return path_join(install_dir(), XOMMIT_EXE);
 }
 
 void cleanup_old_binary() {

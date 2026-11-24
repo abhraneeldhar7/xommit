@@ -16,6 +16,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
       - name: Setup MSYS2
         id: msys2
         uses: msys2/setup-msys2@v2
@@ -30,9 +35,7 @@ jobs:
 
       - name: Build Windows
         working-directory: cli
-        run: |
-          npm install
-          npm run build:windows
+        run: npm run build:windows
 
       - name: Verify version matches tag
         working-directory: cli
@@ -45,13 +48,17 @@ jobs:
             exit 1
           }
 
-      - name: Rename Windows binary
-        run: cp cli/bin/xommit.exe cli/bin/xommit-windows-x64.exe
+      - name: Prepare release assets (Windows)
+        run: |
+          cp cli/bin/xommit.exe cli/bin/xommit-windows-x64.exe
+          cp cli/bin/xommit.exe cli/bin/xommit.exe
 
-      - name: Upload Windows binary to release
+      - name: Upload Windows binaries to release
         uses: softprops/action-gh-release@v2
         with:
-          files: cli/bin/xommit-windows-x64.exe
+          files: |
+            cli/bin/xommit-windows-x64.exe
+            cli/bin/xommit.exe
           tag_name: ${{ github.ref_name }}
           generate_release_notes: true
         env:
@@ -63,14 +70,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install -y g++ libcurl4-openssl-dev
 
       - name: Build Linux
         working-directory: cli
-        run: |
-          npm install
-          npm run build:linux
+        run: npm run build:linux
 
       - name: Verify version matches tag
         working-directory: cli
@@ -83,13 +93,17 @@ jobs:
             exit 1
           fi
 
-      - name: Rename Linux binary
-        run: cp cli/bin/xommit cli/bin/xommit-linux-x64
+      - name: Prepare release assets (Linux)
+        run: |
+          cp cli/bin/xommit cli/bin/xommit-linux-x64
+          cp cli/bin/xommit cli/bin/xommit
 
-      - name: Upload Linux binary to release
+      - name: Upload Linux binaries to release
         uses: softprops/action-gh-release@v2
         with:
-          files: cli/bin/xommit-linux-x64
+          files: |
+            cli/bin/xommit-linux-x64
+            cli/bin/xommit
           tag_name: ${{ github.ref_name }}
           generate_release_notes: true
         env:

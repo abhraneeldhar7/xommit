@@ -87,7 +87,7 @@ std::string install_dir() {
 }
 
 std::string exe_path() {
-    return path_join(install_dir(), XOMMIT_ASSET);
+    return path_join(install_dir(), XOMMIT_EXE);
 }
 
 void cleanup_old_binary() {
@@ -96,7 +96,7 @@ void cleanup_old_binary() {
 }
 
 void uninstall() {
-    std::string bin_path = path_join(user_bin_dir(), XOMMIT_ASSET);
+    std::string bin_path = path_join(user_bin_dir(), XOMMIT_EXE);
     std::string config_base = path_join(user_config_dir(), "xommit");
 
     std::error_code error;

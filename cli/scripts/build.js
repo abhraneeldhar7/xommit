@@ -41,7 +41,7 @@ fs.mkdirSync(outDir, { recursive: true });
 
 const isWindows = platform === "windows";
 const exeName = isWindows ? "xommit.exe" : "xommit";
-const assetName = exeName;
+const assetName = isWindows ? "xommit-windows-x64.exe" : "xommit-linux-x64";
 
 let args = [
     "-std=c++20",
@@ -50,6 +50,7 @@ let args = [
     "-Wextra",
     `-DXOMMIT_VERSION="${pkg.version}"`,
     `-DXOMMIT_REPO="${repo}"`,
+    `-DXOMMIT_EXE="${exeName}"`,
     `-DXOMMIT_ASSET="${assetName}"`,
     `-DXOMMIT_HOMEPAGE="${pkg.homepage}"`,
     "-Iinclude",
