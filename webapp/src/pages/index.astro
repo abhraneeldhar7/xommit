@@ -5,7 +5,7 @@ import CLIDemoSection from "../components/cliDemoSection.tsx";
 import GithubLogo from "../assets/github_logo.svg";
 import npmLogo from "../assets/npm_logo.webp";
 import InstallSection from "../components/InstallSection.tsx";
-import LogoSpace from "../components/LogoSpace.tsx";
+import XommitLogo from "../components/XommitLogo";
 import MarkdownRender from "../components/markdown-render/markdown-render";
 import groqMd from "../content/groq.md?raw";
 ---
@@ -60,60 +60,14 @@ import groqMd from "../content/groq.md?raw";
 			<h1 class="text-3xl sm:text-4xl font-[450] mt-5">
 				Conventional commits <br />zero effort
 			</h1>
-			<p class="mt-4 text-foreground/70">
-				XOMMIT is a <span class="text-foreground font-medium"
-					>CLI tool</span
-				> that writes conventional commits from file diffs
+			<p class="mt-4 mb-15 text-foreground/70">
+				XOMMIT is an <span class="text-foreground font-medium"
+					>AI CLI tool</span
+				> that writes conventional commits from staged files
 			</p>
 
-			<h2
-				class="font-mono font-[350] text-[9px] sm:text-[20px] mx-auto sm:mx-0 w-fit mt-15 tracking-0 leading-[1em]"
-			>
-				<span class="text-git">██╗<LogoSpace /><LogoSpace />██╗</span
-				><span
-					><LogoSpace /><LogoSpace />██████╗<LogoSpace /><LogoSpace
-					/>███╗<LogoSpace /><LogoSpace /><LogoSpace />███╗<LogoSpace
-					/>███╗<LogoSpace /><LogoSpace /><LogoSpace />███╗<LogoSpace
-					/>██╗<LogoSpace />████████╗</span
-				><br />
-				<span class="text-git">╚██╗██╔╝</span><span
-					><LogoSpace />██╔═══██╗<LogoSpace />████╗<LogoSpace
-					/>████║<LogoSpace />████╗<LogoSpace />████║<LogoSpace
-					/>██║<LogoSpace />╚══██╔══╝</span
-				><br />
-				<span class="text-git"><LogoSpace />╚███╔╝<LogoSpace /></span
-				><span
-					><LogoSpace />██║<LogoSpace /><LogoSpace /><LogoSpace
-					/>██║<LogoSpace />██╔████╔██║<LogoSpace
-					/>██╔████╔██║<LogoSpace />██║<LogoSpace /><LogoSpace
-					/><LogoSpace /><LogoSpace />██║<LogoSpace /><LogoSpace
-					/><LogoSpace /></span
-				><br />
-				<span class="text-git"><LogoSpace />██╔██╗<LogoSpace /></span
-				><span
-					><LogoSpace />██║<LogoSpace /><LogoSpace /><LogoSpace
-					/>██║<LogoSpace />██║╚██╔╝██║<LogoSpace
-					/>██║╚██╔╝██║<LogoSpace />██║<LogoSpace /><LogoSpace
-					/><LogoSpace /><LogoSpace />██║<LogoSpace /><LogoSpace
-					/><LogoSpace /></span
-				><br />
-				<span class="text-git">██╔╝<LogoSpace />██╗</span><span
-					><LogoSpace />╚██████╔╝<LogoSpace />██║<LogoSpace
-					/>╚═╝<LogoSpace />██║<LogoSpace />██║<LogoSpace
-					/>╚═╝<LogoSpace />██║<LogoSpace />██║<LogoSpace /><LogoSpace
-					/><LogoSpace /><LogoSpace />██║<LogoSpace /><LogoSpace
-					/><LogoSpace /></span
-				><br />
-				<span class="text-git">╚═╝<LogoSpace /><LogoSpace />╚═╝</span
-				><span
-					><LogoSpace /><LogoSpace />╚═════╝<LogoSpace /><LogoSpace
-					/>╚═╝<LogoSpace /><LogoSpace /><LogoSpace /><LogoSpace
-					/><LogoSpace />╚═╝<LogoSpace />╚═╝<LogoSpace /><LogoSpace
-					/><LogoSpace /><LogoSpace /><LogoSpace />╚═╝<LogoSpace
-					/>╚═╝<LogoSpace /><LogoSpace /><LogoSpace /><LogoSpace
-					/>╚═╝<LogoSpace /><LogoSpace /><LogoSpace /></span
-				>
-			</h2>
+			<XommitLogo />
+
 			<div class="my-10">
 				<CLIDemoSection client:load />
 
@@ -128,13 +82,14 @@ import groqMd from "../content/groq.md?raw";
 					<div class="space-y-2 text-base">
 						<p>
 							xommit <span class="text-foreground/60"
-								>{"<"}your_message_here{">"}</span>
+								>{"<"}your_message_here{">"}</span
+							>
 						</p>
 						<p>
+							<span class="text-foreground/60">or just </span> xommit
 							<span class="text-foreground/60"
-								>or just 
-							</span> xommit <span class="text-foreground/60"
-								>works just fine</span>
+								>works just fine</span
+							>
 						</p>
 						<div class="w-full grid grid-cols-2 mt-6 gap-y-2.5">
 							<p class="text-[#16bd0c]">--help</p>
@@ -158,7 +113,9 @@ import groqMd from "../content/groq.md?raw";
 				<div class="mt-20">
 					<h2 class="text-3xl">How AI was used in this project</h2>
 					<p class="mt-3 text-foreground/70">
-						I'm inspired by the black magic <a
+						Every logic flow is mine, AI is used to translate all
+						that into organized cpp files. I'm inspired by the black
+						magic <a
 							href="https://x.com/RubenVeidt"
 							target="_blank"
 							class="text-foreground underline">@ruben</a
@@ -169,7 +126,12 @@ import groqMd from "../content/groq.md?raw";
 					</p>
 				</div>
 			</div>
-			<p class="text-foreground/80 mt-20 text-center">Made by <a href="https://x.com/veryNeel" target="_blank" class="text-foreground underline">abhraneel</a></p>
+			<p class="text-foreground/80 mt-20 text-center">
+				Made by <a
+					href="https://x.com/veryNeel"
+					target="_blank"
+					class="text-foreground underline">abhraneel</a>
+			</p>
 		</div>
 
 		<!-- <header>
