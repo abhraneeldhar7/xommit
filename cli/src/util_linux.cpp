@@ -8,6 +8,7 @@
 #include <cctype>
 #include <cerrno>
 #include <cstdlib>
+#include <cwchar>
 #include <filesystem>
 #include <fstream>
 #include <stdexcept>
@@ -92,23 +93,30 @@ std::string get_env(const std::string& name) {
 }
 
 std::wstring utf8_to_wide(const std::string& value) {
-    // On Linux, we can use a simple conversion for filesystem paths
-    // This is a stub for compatibility - not used on Linux
-    std::wstring result;
-    result.reserve(value.size());
-    for (char c : value) {
-        result.push_back(static_cast<wchar_t>(c));
+    if (value.empty()) {
+        return L"";
     }
+    std::mbstate_t state{};
+    size_t len = std::mbsrtowcs(nullptr, &value.c_str(), 0, &state);
+    if (len == static_cast<size_t>(-1)) {
+        return L"";
+    }
+    std::wstring result(len, L'\0');
+    std::mbsrtowcs(result.data(), &value.c_str(), len + 1, &state);
     return result;
 }
 
 std::string wide_to_utf8(const std::wstring& value) {
-    // Stub for compatibility - not used on Linux
-    std::string result;
-    result.reserve(value.size());
-    for (wchar_t c : value) {
-        result.push_back(static_cast<char>(c));
+    if (value.empty()) {
+        return "";
     }
+    std::mbstate_t state{};
+    size_t len = std::wcsrtombs(nullptr, &value.c_str(), 0, &state);
+    if (len == static_cast<size_t>(-1)) {
+        return "";
+    }
+    std::string result(len, '\0');
+    std::wcsrtombs(result.data(), &value.c_str(), len + 1, &state);
     return result;
 }
 
