@@ -1,0 +1,48 @@
+---
+import { Image } from "astro:assets";
+import XommitLogo from "../assets/xommitlogo.png";
+import GithubLogo from "../assets/github_logo.svg";
+import npmLogo from "../assets/npm_logo.webp";
+---
+
+<header
+	class="fixed inset-x-0 top-0 z-20 border-b border-border/60 bg-background/40 px-4 backdrop-blur-[20px]"
+>
+	<nav
+		class="mx-auto flex w-full max-w-[760px] items-center justify-between py-2"
+	>
+		<a href="/" class="flex items-center gap-2.5" aria-label="Xommit home">
+			<Image
+				src={XommitLogo}
+				alt=""
+				class="size-7 rounded-[4px] object-contain"
+			/>
+			<span class="text-sm text-muted-foreground">3mb</span>
+		</a>
+
+		<div class="flex items-center gap-1">
+			<a
+				href="https://github.com/abhraneeldhar7/xommit"
+				target="_blank"
+				rel="noopener noreferrer"
+				aria-label="Xommit on GitHub"
+				class="rounded-md p-2 transition-colors hover:bg-muted"
+			>
+				<img src={GithubLogo.src} alt="" class="size-5 invert" />
+			</a>
+			<a
+				href="https://www.npmjs.com/package/@antkin/xommit"
+				target="_blank"
+				rel="noopener noreferrer"
+				aria-label="Xommit on npm"
+				class="rounded-md p-2 transition-colors hover:bg-muted"
+			>
+				<Image
+					src={npmLogo}
+					alt=""
+					class="h-5 w-auto object-contain grayscale"
+				/>
+			</a>
+		</div>
+	</nav>
+</header>

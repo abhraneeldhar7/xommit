@@ -1,22 +1,30 @@
 ---
-import '../styles/global.css';
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Xommit",
+  description = "Professional commits for larping tech bros.",
+} = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-			<link rel="icon" type="image/png" href="/favicon.png" />
-		<meta name="generator" content={Astro.generator} />
-		<meta
-			name="description"
-			content="Easy conventional commits"
-		/>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="theme-color" content="#0f172a" />
+		<meta name="description" content={description} />
 		<meta property="og:image" content="/og-image.png" />
-		<title>Xommit</title>
+		<link rel="icon" type="image/png" href="/favicon.png" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
 	</head>
-	<body>
+	<body class="min-h-screen bg-background text-foreground antialiased">
 		<slot />
 	</body>
 </html>

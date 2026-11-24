@@ -1,0 +1,166 @@
+---
+interface InstallOption {
+	id: string;
+	label: string;
+	prompt: string;
+}
+
+const options: InstallOption[] = [
+	{
+		id: "pnpm",
+		label: "pnpm",
+		prompt: "pnpm add -g @antkin/xommit",
+	},
+	{
+		id: "npm",
+		label: "npm",
+		prompt: "npm install -g @antkin/xommit",
+	},
+	{
+		id: "agents",
+		label: "agents",
+		prompt: `Install "@antkin/xommit" globally using npm/pnpm/bun or whatever suitable package manager.
+[explain all the supported ways and platforms]
+[list supported ai providers]
+Ask the user for their [ai provider] keys before running "xommit --connect".
+Run "xommit --help" for full tutorial.
+If any instruction file (agent.md, AGENTS.md, etc) exists, add a rule to use xommit for committing staged files.`,
+	},
+];
+
+const [active] = options;
+---
+
+<section aria-labelledby="hero-title">
+	<h1
+		id="hero-title"
+		class="text-hero font-medium text-balance text-foreground"
+	>
+		Professional commits for larping tech bros
+	</h1>
+
+	<div
+		class="mt-8 inline-flex items-center gap-1 rounded-lg border border-border bg-card/40 p-1"
+		role="tablist"
+		aria-label="Install options"
+	>
+		{
+			options.map((option, index) => (
+				<button
+					type="button"
+					role="tab"
+					id={`install-tab-${option.id}`}
+					aria-selected={index === 0 ? "true" : "false"}
+					aria-controls="install-prompt"
+					data-install-tab
+					data-prompt={option.prompt}
+					class="cursor-pointer rounded-md px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground aria-selected:bg-muted aria-selected:text-foreground"
+				>
+					{option.label}
+				</button>
+			))
+		}
+	</div>
+
+	<div
+		id="install-prompt"
+		role="tabpanel"
+		aria-labelledby={`install-tab-${active.id}`}
+		class="mt-4 flex items-start justify-between gap-4 rounded-xl border border-border bg-card/40 px-4 py-3.5"
+	>
+		<pre
+			data-install-prompt
+			class="min-w-0 flex-1 whitespace-pre-wrap font-sans text-body text-foreground/85">{active.prompt}</pre>
+
+		<button
+			type="button"
+			data-copy-button
+			aria-label="Copy prompt"
+			class="inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md border border-border px-2 py-1 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+		>
+			<svg
+				data-copy-icon
+				width="14"
+				height="14"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				aria-hidden="true"
+			>
+				<rect x="9" y="9" width="13" height="13" rx="2"></rect>
+				<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+			</svg>
+			<svg
+				data-check-icon
+				class="hidden"
+				width="14"
+				height="14"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				aria-hidden="true"
+			>
+				<path d="M20 6 9 17l-5-5"></path>
+			</svg>
+			<span data-copy-label aria-live="polite">Copy</span>
+		</button>
+	</div>
+</section>
+
+<script>
+	const tabs = Array.from(
+		document.querySelectorAll<HTMLButtonElement>("[data-install-tab]"),
+	);
+	const promptEl =
+		document.querySelector<HTMLElement>("[data-install-prompt]");
+	const copyButton =
+		document.querySelector<HTMLButtonElement>("[data-copy-button]");
+	const copyIcon = document.querySelector<SVGElement>("[data-copy-icon]");
+	const checkIcon = document.querySelector<SVGElement>("[data-check-icon]");
+	const copyLabel = document.querySelector<HTMLElement>("[data-copy-label]");
+	const panel = document.querySelector<HTMLElement>("#install-prompt");
+
+	async function copyPrompt() {
+		const text = promptEl?.textContent?.trim();
+		if (!text || !copyLabel) return;
+
+		try {
+			await navigator.clipboard.writeText(text);
+		} catch {
+			return;
+		}
+
+		copyIcon?.classList.add("hidden");
+		checkIcon?.classList.remove("hidden");
+		copyLabel.textContent = "Copied";
+
+		window.setTimeout(() => {
+			copyIcon?.classList.remove("hidden");
+			checkIcon?.classList.add("hidden");
+			copyLabel.textContent = "Copy";
+		}, 1500);
+	}
+
+	if (tabs.length > 0 && promptEl) {
+		for (const tab of tabs) {
+			tab.addEventListener("click", () => {
+				for (const other of tabs) {
+					other.setAttribute("aria-selected", String(other === tab));
+				}
+
+				promptEl.textContent = tab.dataset.prompt ?? "";
+				if (panel) {
+					panel.setAttribute("aria-labelledby", tab.id);
+				}
+			});
+		}
+	}
+
+	copyButton?.addEventListener("click", copyPrompt);
+</script>
