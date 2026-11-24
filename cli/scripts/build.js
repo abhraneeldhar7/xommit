@@ -32,7 +32,7 @@ const sources = allSources.filter(src => {
             return true;
         }
         // Exclude windows-specific files
-        return !["http.cpp", "git.cpp", "ui.cpp", "util.cpp", "update.cpp", "main.cpp"].includes(basename);
+        return !["http.cpp", "git.cpp", "ui.cpp", "util.cpp", "update.cpp", "main.cpp", "select.cpp"].includes(basename);
     }
 });
 
