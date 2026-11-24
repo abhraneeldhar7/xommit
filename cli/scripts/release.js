@@ -1,4 +1,4 @@
-// to run this after git commit only.
+// to run this after git commit and push only.
 // this thing makes sure if package.json->version matches with git tag version.
 // then pushes the tag to origin.
 
