@@ -25,14 +25,14 @@ const allSources = fs
 const sources = allSources.filter(src => {
     const basename = path.basename(src);
     if (platform === "windows") {
-        return !basename.endsWith("_linux.cpp");
+        return !basename.endsWith("_linux.cpp") && basename !== "main_linux.cpp";
     } else {
         // For linux, use _linux.cpp variants instead of base ones
-        if (basename.endsWith("_linux.cpp")) {
+        if (basename.endsWith("_linux.cpp") || basename === "main_linux.cpp") {
             return true;
         }
         // Exclude windows-specific files
-        return !["http.cpp", "git.cpp", "ui.cpp", "util.cpp", "update.cpp"].includes(basename);
+        return !["http.cpp", "git.cpp", "ui.cpp", "util.cpp", "update.cpp", "main.cpp"].includes(basename);
     }
 });
 
@@ -71,9 +71,8 @@ if (isWindows) {
         "-lwinhttp"
     );
 } else {
-    // Linux: static link libcurl and dependencies
+    // Linux: dynamic link libcurl (static causes missing dep issues)
     args.push(
-        "-static",
         "-static-libgcc",
         "-static-libstdc++",
         "-lcurl",

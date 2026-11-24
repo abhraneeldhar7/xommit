@@ -6,6 +6,7 @@
 
 #include <curl/curl.h>
 
+#include <memory>
 #include <stdexcept>
 #include <string>
 #include <vector>
