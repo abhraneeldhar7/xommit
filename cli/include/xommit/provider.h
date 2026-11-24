@@ -1,9 +1,4 @@
 // provider interface + registry
-// ProviderError: status code, retryable on 5xx
-// Provider abstract: list_models, complete, test_model
-// make_provider: "google" | "vercel" -> concrete impl
-// rank_models: google flash-lite->flash->pro, vercel free->cheap->big context
-// format_model: "model-id (provider) [free/paid]"
 
 #pragma once
 
@@ -39,8 +34,6 @@ public:
                                  const std::string& system,
                                  const std::string& user) = 0;
 
-    // Test if a model works (returns true on success, false on failure)
-    // Default implementation does a minimal completion call
     virtual bool test_model(const std::string& api_key, const ModelSpec& model) {
         try {
             complete(api_key, model, "Test", "Reply with 'ok'");

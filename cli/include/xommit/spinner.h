@@ -1,6 +1,4 @@
-// spinner animation. background thread, cycles chars
-// constructor starts thread, destructor stops and shows checkmark
-// auto-detects tty: non-tty just prints text once
+// spinner animation
 
 #pragma once
 

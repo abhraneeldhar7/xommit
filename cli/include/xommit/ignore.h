@@ -1,6 +1,4 @@
-// ignore rules. built-in patterns + .xommitignore
-// IgnoreRules loads patterns, checks is_ignored(path)
-// dir/ matches directory, ! negates, * and ? wildcards
+// ignore rules
 
 #pragma once
 

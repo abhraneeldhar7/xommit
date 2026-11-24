@@ -1,14 +1,4 @@
 // terminal ui helpers
-// set_utf8: set console output to utf8
-// enable_vt: enable ansi vt sequences on windows
-// stdin/stdout_is_tty: check if interactive
-// terminal_width: for picker viewport
-// hide/show_cursor, clear_lines: for spinner/picker animation
-// print_logo: ascii art
-// print_error/dim/success: colored output
-// read_password: masked input (no echo)
-// read_line: normal input
-// color_*: ansi escape codes
 
 #pragma once
 

@@ -1,6 +1,4 @@
-// minimal json. parse string -> Json tree, dump -> string
-// types: null, bool, number, string, array, object
-// find(key), get_string/number/bool, at(index), size()
+// minimal json
 
 #pragma once
 

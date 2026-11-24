@@ -1,5 +1,4 @@
-// main entry point. called from main.cpp
-// parses args, dispatches to --connect, --update, --reset, --model, --uninstall, or commit flow
+// main entry point
 
 #pragma once
 

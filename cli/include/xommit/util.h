@@ -1,7 +1,4 @@
-// utils. string: trim, to_lower, starts_with, ends_with, contains, replace_all, split, join
-// env: get_env
-// encoding: utf8_to_wide, wide_to_utf8, windows_error
-// files: file_exists, read_file, write_file, ensure_dir, path_join
+// utils. string, env, encoding, files
 
 #pragma once
 

@@ -1,6 +1,4 @@
-// vercel ai gateway provider. ai-gateway.vercel.sh
-// bearer token auth, lists models via /v1/models
-// chat/completions endpoint, openai-compatible
+// vercel ai gateway provider
 
 #pragma once
 

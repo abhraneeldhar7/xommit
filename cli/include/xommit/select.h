@@ -1,6 +1,4 @@
-// interactive picker. select_option(options, title) -> index or -1
-// arrow keys, type-to-filter, pgup/pgdn, home/end, esc=cancel
-// 10-row viewport, non-tty falls back to numbered list
+// interactive picker
 
 #pragma once
 

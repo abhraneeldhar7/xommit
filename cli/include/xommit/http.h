@@ -1,7 +1,4 @@
-// http client. winhttp wrapper
-// http_request: GET/POST with headers/body -> HttpResponse
-// http_download: streaming download to file
-// user-agent: xommit/<version>, 120s timeout, retry on 5xx
+// http client
 
 #pragma once
 

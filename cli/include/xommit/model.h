@@ -1,6 +1,4 @@
-// model spec from provider. id, name, context_window, pricing
-// free flag for ranking, recommended for picker
-// resolved_* fields filled at runtime from provider list
+// model spec
 
 #pragma once
 
