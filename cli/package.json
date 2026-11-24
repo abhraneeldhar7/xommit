@@ -1,6 +1,6 @@
 {
   "name": "@antkin/xommit",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Generate conventional commit messages from staged changes",
   "keywords": [
     "cli",

@@ -45,10 +45,13 @@ jobs:
             exit 1
           }
 
+      - name: Rename Windows binary
+        run: cp cli/bin/xommit.exe cli/bin/xommit-windows-x64.exe
+
       - name: Upload Windows binary to release
         uses: softprops/action-gh-release@v2
         with:
-          files: cli/bin/xommit.exe
+          files: cli/bin/xommit-windows-x64.exe
           tag_name: ${{ github.ref_name }}
           generate_release_notes: true
         env:
@@ -80,10 +83,13 @@ jobs:
             exit 1
           fi
 
+      - name: Rename Linux binary
+        run: cp cli/bin/xommit cli/bin/xommit-linux-x64
+
       - name: Upload Linux binary to release
         uses: softprops/action-gh-release@v2
         with:
-          files: cli/bin/xommit
+          files: cli/bin/xommit-linux-x64
           tag_name: ${{ github.ref_name }}
           generate_release_notes: true
         env:
@@ -105,5 +111,3 @@ jobs:
       - name: Publish to npm
         working-directory: cli
         run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
