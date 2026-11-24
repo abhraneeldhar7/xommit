@@ -10,7 +10,7 @@ permissions:
   id-token: write
 
 jobs:
-  build-and-release:
+  build-windows:
     runs-on: windows-latest
     steps:
       - name: Checkout
@@ -34,11 +34,11 @@ jobs:
           node-version: '24'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Build
+      - name: Build Windows
         working-directory: cli
         run: |
           npm install
-          npm run build
+          npm run build:windows
 
       - name: Verify version matches tag
         working-directory: cli
@@ -51,10 +51,72 @@ jobs:
             exit 1
           }
 
+      - name: Upload Windows artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: xommit-windows-x64.exe
+          path: cli/bin/xommit.exe
+
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y g++ libcurl4-openssl-dev
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Build Linux
+        working-directory: cli
+        run: |
+          npm install
+          npm run build:linux
+
+      - name: Verify version matches tag
+        working-directory: cli
+        run: |
+          pkg=$(cat package.json | jq -r .version)
+          tag="${{ github.ref_name }}"
+          expected="v$pkg"
+          if [ "$tag" != "$expected" ]; then
+            echo "Tag $tag does not match package.json version $expected"
+            exit 1
+          fi
+
+      - name: Upload Linux artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: xommit-linux-x64
+          path: cli/bin/xommit
+
+  release:
+    needs: [build-windows, build-linux]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Windows artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: xommit-windows-x64.exe
+          path: artifacts/windows
+
+      - name: Download Linux artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: xommit-linux-x64
+          path: artifacts/linux
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: cli/bin/xommit.exe
+          files: |
+            artifacts/windows/xommit.exe
+            artifacts/linux/xommit
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

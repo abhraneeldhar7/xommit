@@ -27,7 +27,9 @@ if (git(["tag", "--list", tag])) {
   fail(`tag ${tag} already exists`);
 }
 
-execFileSync("node", [path.join(root, "scripts", "build.js")], { stdio: "inherit" });
+// Build both platforms for local verification
+execFileSync("node", [path.join(root, "scripts", "build.js"), "--platform=windows"], { stdio: "inherit" });
+execFileSync("node", [path.join(root, "scripts", "build.js"), "--platform=linux"], { stdio: "inherit" });
 
 git(["tag", tag]);
 git(["push", "origin", tag]);
