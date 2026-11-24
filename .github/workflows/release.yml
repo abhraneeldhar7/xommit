@@ -99,6 +99,15 @@ jobs:
     needs: [build-windows, build-linux]
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+
       - name: Download Windows artifact
         uses: actions/download-artifact@v4
         with:
@@ -111,12 +120,17 @@ jobs:
           name: xommit-linux-x64
           path: artifacts/linux
 
+      - name: Rename assets for release
+        run: |
+          cp artifacts/windows/xommit.exe artifacts/windows/xommit-windows-x64.exe
+          cp artifacts/linux/xommit artifacts/linux/xommit-linux-x64
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            artifacts/windows/xommit.exe
-            artifacts/linux/xommit
+            artifacts/windows/xommit-windows-x64.exe
+            artifacts/linux/xommit-linux-x64
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
