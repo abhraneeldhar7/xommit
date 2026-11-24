@@ -28,12 +28,6 @@ jobs:
         shell: pwsh
         run: Add-Content -Path $env:GITHUB_PATH -Value "${{ steps.msys2.outputs.msys2-location }}\ucrt64\bin"
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '24'
-          registry-url: 'https://registry.npmjs.org'
-
       - name: Build Windows
         working-directory: cli
         run: |
@@ -51,11 +45,14 @@ jobs:
             exit 1
           }
 
-      - name: Upload Windows artifact
-        uses: actions/upload-artifact@v4
+      - name: Upload Windows binary to release
+        uses: softprops/action-gh-release@v2
         with:
-          name: xommit-windows-x64.exe
-          path: cli/bin/xommit.exe
+          files: cli/bin/xommit.exe
+          tag_name: ${{ github.ref_name }}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build-linux:
     runs-on: ubuntu-latest
@@ -65,12 +62,6 @@ jobs:
 
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install -y g++ libcurl4-openssl-dev
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '24'
-          registry-url: 'https://registry.npmjs.org'
 
       - name: Build Linux
         working-directory: cli
@@ -89,13 +80,16 @@ jobs:
             exit 1
           fi
 
-      - name: Upload Linux artifact
-        uses: actions/upload-artifact@v4
+      - name: Upload Linux binary to release
+        uses: softprops/action-gh-release@v2
         with:
-          name: xommit-linux-x64
-          path: cli/bin/xommit
+          files: cli/bin/xommit
+          tag_name: ${{ github.ref_name }}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  release:
+  npm-publish:
     needs: [build-windows, build-linux]
     runs-on: ubuntu-latest
     steps:
@@ -108,33 +102,8 @@ jobs:
           node-version: '24'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Download Windows artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: xommit-windows-x64.exe
-          path: artifacts/windows
-
-      - name: Download Linux artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: xommit-linux-x64
-          path: artifacts/linux
-
-      - name: Rename assets for release
-        run: |
-          cp artifacts/windows/xommit.exe artifacts/windows/xommit-windows-x64.exe
-          cp artifacts/linux/xommit artifacts/linux/xommit-linux-x64
-
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: |
-            artifacts/windows/xommit-windows-x64.exe
-            artifacts/linux/xommit-linux-x64
-          generate_release_notes: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Publish to npm
         working-directory: cli
         run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
