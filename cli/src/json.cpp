@@ -1,5 +1,7 @@
 // minimal json parser. string/number/bool/null/array/object
 // used for provider requests/responses, config file
+// nlohmann/json would've added another 2mb to the build.
+
 
 #include "xommit/json.h"
 
