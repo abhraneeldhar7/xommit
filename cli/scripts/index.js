@@ -47,22 +47,26 @@ function download(url, target, redirects = 0) {
 }
 
 async function ensureBinary() {
-    const platform = os.platform(); // 'win32' | 'linux' | 'darwin'
+    const platform = os.platform(); // 'win32' | 'linux'
     const arch = os.arch(); // 'x64' | 'arm64'
+
+    if (arch !== "x64") {
+        throw new Error(`Unsupported architecture: ${arch}. Only x64 is supported.`);
+    }
 
     let asset;
     let cacheDir;
     let exeName;
 
     if (platform === "win32") {
-        asset = `xommit-windows-${arch}.exe`;
+        asset = "xommit-windows-x64.exe";
         exeName = "xommit.exe";
         cacheDir = path.join(
             process.env.LOCALAPPDATA || path.join(os.homedir(), "AppData", "Local"),
             "xommit", "bin"
         );
     } else if (platform === "linux") {
-        asset = `xommit-linux-${arch === "x64" ? "x64" : "arm64"}`;
+        asset = "xommit-linux-x64";
         exeName = "xommit";
         cacheDir = path.join(
             process.env.XDG_BIN_HOME || path.join(os.homedir(), ".local", "bin")

@@ -13,7 +13,6 @@ fi
 ARCH="$(uname -m)"
 case "$ARCH" in
     x86_64) ASSET="xommit-linux-x64" ;;
-    aarch64) ASSET="xommit-linux-arm64" ;;
     *) echo "Unsupported arch: $ARCH"; exit 1 ;;
 esac
 
