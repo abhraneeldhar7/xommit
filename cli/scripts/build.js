@@ -27,6 +27,7 @@ const args = [
   `-DXOMMIT_VERSION="${pkg.version}"`,
   `-DXOMMIT_REPO="${repo}"`,
   `-DXOMMIT_ASSET="xommit.exe"`,
+  `-DXOMMIT_HOMEPAGE="${pkg.homepage}"`,
   "-Iinclude",
   ...sources,
   "-o",

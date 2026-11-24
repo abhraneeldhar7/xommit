@@ -2,6 +2,7 @@
 // XOMMIT_VERSION: "1.0.6" (from package.json)
 // XOMMIT_REPO: "abhraneeldhar7/xommit" (github api urls)
 // XOMMIT_ASSET: "xommit.exe" (release asset name)
+// XOMMIT_HOMEPAGE: "https://xommit.antk.in" (project homepage)
 
 #pragma once
 
@@ -16,4 +17,8 @@
 
 #ifndef XOMMIT_ASSET
 #error "XOMMIT_ASSET must be defined by build system"
+#endif
+
+#ifndef XOMMIT_HOMEPAGE
+#error "XOMMIT_HOMEPAGE must be defined by build system"
 #endif

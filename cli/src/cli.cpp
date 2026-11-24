@@ -47,7 +47,7 @@ inline std::string style_link(const std::string& text, const std::string& url) {
 }
 
 // Links
-const char* LINK_XOMMIT = "https://xommit.antk.in";
+const char* LINK_XOMMIT = XOMMIT_HOMEPAGE;
 
 void print_help() {
     std::cout << "\n";
