@@ -41,7 +41,7 @@ export default function StagedFiles() {
 
             <div className="flex-1 sticky top-[100px] md:self-start">
                 <h1 className="text-4xl">How it works</h1>
-                <p className="md:text-md text-muted-foreground mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quibusdam neque iusto nobis ipsam animi voluptate natus numquam quas, ut optio accusamus aliquid maxime perferendis dicta reprehenderit fuga pariatur minus? lorem10</p>
+                <p className="md:text-md text-muted-foreground mt-4 leading-[1.8em]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quibusdam neque iusto nobis ipsam animi voluptate natus numquam quas, ut optio accusamus aliquid maxime perferendis dicta reprehenderit fuga pariatur minus? lorem10</p>
             </div>
 
             <div className="flex-1 aspect-square">

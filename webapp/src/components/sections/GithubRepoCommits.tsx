@@ -96,7 +96,7 @@ export default function GithubRepoCommits() {
 
         <div className="flex-1 sticky top-[100px] md:self-start">
             <h1 className="text-4xl">So your repo looks this good</h1>
-            <p className="md:text-md text-muted-foreground mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quibusdam neque iusto nobis ipsam animi voluptate natus numquam quas, ut optio accusamus aliquid maxime perferendis dicta reprehenderit.</p>
+            <p className="md:text-md text-muted-foreground mt-4 leading-[1.8em]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quibusdam neque iusto nobis ipsam animi voluptate natus numquam quas, ut optio accusamus aliquid maxime perferendis dicta reprehenderit.</p>
         </div>
 
         <div className="flex-1 aspect-square">

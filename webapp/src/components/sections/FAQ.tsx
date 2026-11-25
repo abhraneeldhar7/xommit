@@ -7,7 +7,7 @@ function FAQItem({ question, answer }: FAQItemProps) {
     return (
         <div className="p-4.5 border border-transparent border-r-border border-b-border transition-all duration-fast hover:border-border hover:bg-muted/50 group/item group-hover/faq:opacity-60 group-hover/faq:hover:opacity-100">
             <h2 className="text-3xl transition-colors duration-fast group-hover/faq:text-muted-foreground group-hover/faq:group-hover/item:text-foreground">{question}</h2>
-            <p className="text-muted-foreground mt-2 transition-colors duration-fast group-hover/item:text-foreground/90">{answer}</p>
+            <p className="text-muted-foreground mt-2 transition-colors duration-fast group-hover/item:text-foreground/90 leading-[1.8em]">{answer}</p>
         </div>
     )
 }

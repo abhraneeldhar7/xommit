@@ -9,7 +9,7 @@ export default function Footer() {
     return (<div className="site-max flex flex-col gap-10">
         <div className="flex md:flex-row flex-col gap-6 justify-between">
             <div>
-                <h2 className="text-3xl">Other stuff I built</h2>
+                {/* <h2 className="text-3xl">Other stuff I built</h2> */}
             </div>
 
             <div className="flex gap-1.5">
