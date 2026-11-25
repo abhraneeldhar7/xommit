@@ -95,10 +95,10 @@ export default function Hero() {
 
 				<div className="md:absolute top-0 left-0 p-6 w-[60%] z-[2]">
 
-					<div className="bg-[#101010] h-100 w-full flex flex-col rounded-xs">
+					<div className="bg-[#101010] shadow-md border aspect-[5/3] w-full flex flex-col rounded-xs">
 						<div className="w-full h-7 flex justify-end items-center">
 							<div className="w-fit h-full p-[6px] px-[8px] hover:bg-muted flex items-center transition-all duration-fast"><icons.Minus className="h-3 w-3" /></div>
-							<div className="w-fit h-full p-[6px] px-[8px] hover:bg-muted flex items-center transition-all duration-fast"><icons.Square className="h-3 w-3" /></div>
+							<div className="w-fit h-full p-[6px] px-[8px] hover:bg-muted flex items-center transition-all duration-fast"><icons.Square className="h-2.5 w-2.5" /></div>
 							<div className="w-fit h-full p-[6px] px-[8px] hover:bg-[red] flex items-center transition-all duration-fast"><icons.Close className="h-4 w-4" /></div>
 						</div>
 						<div className="p-3 px-5">

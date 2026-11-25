@@ -1,12 +1,11 @@
-import { Cancel01Icon, CheckmarkCircle01Icon, InformationCircleIcon, MinusSignIcon, SquareIcon } from "hugeicons-react";
-import { XingIcon } from "hugeicons-react";
+import { CheckCircle, X, Minus, Square, Info } from "lucide-react";
 
 export const icons = {
-  check: CheckmarkCircle01Icon,
-  Close: Cancel01Icon,
-  Minus: MinusSignIcon,
-  Square: SquareIcon,
-  info: InformationCircleIcon
+  check: CheckCircle,
+  Close: X,
+  Minus: Minus,
+  Square: Square,
+  info: Info
 } as const;
 
 export type IconName = keyof typeof icons;
