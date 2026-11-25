@@ -115,6 +115,5 @@ export default function GithubRepoCommits() {
 
             </div>
         </div>
-
-    </div >)
+    </div>)
 }

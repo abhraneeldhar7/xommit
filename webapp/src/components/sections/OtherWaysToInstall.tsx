@@ -3,7 +3,7 @@ import CopyCommand from "../CopyCommand"
 
 export default function OtherWaysToInstall({ version }: { version: string }) {
     const releasesUrl = `https://github.com/abhraneeldhar7/xommit/releases/download/v${version}`
-    return (<div id="other-install" className="my-30 site-max flex flex-col gap-7">
+    return (<div id="other-install" className="scroll-mt-20 my-30 site-max flex flex-col gap-7">
         <h1 className="text-4xl">Other ways to install</h1>
 
         <div className="border-t border-l w-full grid md:grid-cols-3 grid-cols-1 group/install">
