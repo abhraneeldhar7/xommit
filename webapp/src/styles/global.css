@@ -2,6 +2,7 @@
 @import "@fontsource-variable/inter";
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
 @custom-variant dark (&:is(.dark, .dark *));
 
@@ -26,11 +27,11 @@
   --text-2xl--line-height: 1.333;
   --text-3xl: 1.875rem;
   --text-3xl--line-height: 1.266;
-  --text-4xl: 2.5rem;
-  --text-4xl--line-height: 1.111;
+  --text-4xl: 3rem;
+  --text-4xl--line-height: 1.1;
   --text-5xl: 3.8rem;
   --text-5xl--line-height: 1;
-  --text-6xl: 4.5rem;
+  --text-6xl: 5rem;
   --text-6xl--line-height: 1;
 
   /* Radius scale */
@@ -134,7 +135,7 @@
 
   .site-max {
     max-width: 1200px;
-    width: full;
+    width: 100%;
     margin: 0 auto;
   }
 }
