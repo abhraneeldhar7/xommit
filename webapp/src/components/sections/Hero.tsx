@@ -76,7 +76,7 @@ export default function Hero({ version }: { version: string }) {
 
 			<p className="text-xs text-foreground/80">
 				xommit
-				<span className="text-[0.7rem] rounded-sm bg-foreground/40 px-2 py-1 leading-[1em] w-fit ml-2">
+				<span id="version-pill" className="text-[0.7rem] rounded-sm bg-foreground/40 px-2 py-1 leading-[1em] w-fit ml-2">
 					v{version}
 				</span>
 			</p>
