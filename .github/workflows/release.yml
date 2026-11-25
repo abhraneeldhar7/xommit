@@ -51,14 +51,12 @@ jobs:
       - name: Prepare release assets (Windows)
         run: |
           cp cli/bin/xommit.exe cli/bin/xommit-windows-x64.exe
-          cp cli/bin/xommit.exe cli/bin/xommit.exe
 
       - name: Upload Windows binaries to release
         uses: softprops/action-gh-release@v2
         with:
           files: |
             cli/bin/xommit-windows-x64.exe
-            cli/bin/xommit.exe
           tag_name: ${{ github.ref_name }}
           generate_release_notes: true
         env:
@@ -96,14 +94,12 @@ jobs:
       - name: Prepare release assets (Linux)
         run: |
           cp cli/bin/xommit cli/bin/xommit-linux-x64
-          cp cli/bin/xommit cli/bin/xommit
 
       - name: Upload Linux binaries to release
         uses: softprops/action-gh-release@v2
         with:
           files: |
             cli/bin/xommit-linux-x64
-            cli/bin/xommit
           tag_name: ${{ github.ref_name }}
           generate_release_notes: true
         env:
