@@ -2,13 +2,13 @@
 import Layout from "../layouts/Layout.astro";
 import NavBar from "../components/navBar.tsx";
 import Hero from "../components/sections/Hero.tsx";
-import StagedFiles from "../components/sections/StagedFiles.tsx";
-import ZeroPayments from "../components/sections/ZeroPayments.tsx";
-import GithubRepoCommits from "../components/sections/GithubRepoCommits.tsx";
+import StagedFiles from "../components/sections/StagedFiles.astro";
+import ZeroPayments from "../components/sections/ZeroPayments.astro";
+import GithubRepoCommits from "../components/sections/GithubRepoCommits.astro";
 import OtherWaysToInstall from "../components/sections/OtherWaysToInstall.tsx";
-import FAQ from "../components/sections/FAQ.tsx";
-import HowAiWasUsed from "../components/sections/HowAIwasUsed.tsx";
-import Footer from "../components/sections/Footer.tsx";
+import FAQ from "../components/sections/FAQ.astro";
+import HowAiWasUsed from "../components/sections/HowAIwasUsed.astro";
+import Footer from "../components/sections/Footer.astro";
 import { getCliVersion } from "../lib/version";
 
 const version = getCliVersion();
@@ -20,7 +20,7 @@ const version = getCliVersion();
 		<Hero client:load version={version} />
 		<StagedFiles />
 		<ZeroPayments />
-		<GithubRepoCommits client:load />
+		<GithubRepoCommits />
 		<OtherWaysToInstall client:load version={version} />
 		<FAQ />
 		<HowAiWasUsed />

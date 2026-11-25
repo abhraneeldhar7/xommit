@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import gradient from "../assets/gradient.webp";
 
 interface Props {
   title?: string;
@@ -38,6 +39,7 @@ const schema = {
 		<link rel="icon" type="image/png" href="/favicon.png" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="sitemap" href="/sitemap-index.xml" />
+		<link rel="preload" as="image" href={gradient.src} fetchpriority="high" />
 
 		<meta property="og:type" content="website" />
 		<meta property="og:site_name" content="xommit" />

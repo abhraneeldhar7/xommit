@@ -1,0 +1,72 @@
+---
+import { Image } from "astro:assets"
+import { Check, X } from "lucide-react"
+import Gradient from "../../assets/gradient.webp"
+import MeImg from "../../assets/me.png"
+
+type CommitItem = {
+    message: string
+    username: string
+    committedAt: string
+    hash: string
+    status?: "none" | "tick" | "cross"
+    statusCount?: string
+}
+
+const commits: CommitItem[] = [
+    { message: "feat(auth): add token refresh flow", username: "abhraneeldhar7", committedAt: "2 hours ago", hash: "a1b2c3d", status: "tick", statusCount: "12 / 12" },
+    { message: "fix(payments): handle stripe webhook retries", username: "abhraneeldhar7", committedAt: "5 hours ago", hash: "e4f5g6h", status: "tick", statusCount: "8 / 8" },
+    { message: "refactor(cache): pool redis connections", username: "abhraneeldhar7", committedAt: "yesterday", hash: "i7j8k9l", status: "cross", statusCount: "2 / 3" },
+    { message: "chore(deps): bump astro to 7.3.2", username: "abhraneeldhar7", committedAt: "2 days ago", hash: "m0n1o2p", status: "tick", statusCount: "5 / 5" },
+    { message: "docs(api): document webhook payloads", username: "abhraneeldhar7", committedAt: "3 days ago", hash: "q3r4s5t" },
+]
+---
+
+<section aria-labelledby="repo-heading" class="my-30 site-max flex gap-10 md:flex-row flex-col">
+
+    <div class="flex-1 sticky top-[100px] md:self-start">
+        <h2 id="repo-heading" class="text-4xl">So your repo looks this good</h2>
+        <p class="md:text-md text-muted-foreground mt-4 leading-[1.8em]">Your GitHub is the first thing people open, before your resume, before anything else, and your commit history is what they see. It should look professional, because it is your best proof that you actually build things. A commit like <span class="text-foreground/80 font-[500]">feat(auth): add token refresh flow</span> tells a far better story than a lazy one, and xommit keeps that consistent without you thinking about it.</p>
+    </div>
+
+    <div class="flex-1 aspect-square">
+        <div class="rounded-md h-full w-full relative overflow-hidden">
+            <Image src={Gradient} alt="" class="w-full h-full top-0 left-0 absolute object-cover z-[-1]" />
+
+            <div class="w-full h-full p-5 md:p-15 flex items-center">
+                <div class="w-full h-full rounded-md bg-background overflow-hidden">
+                    <div aria-label="Sample commit history" class="group flex gap-(--gap) overflow-hidden p-2 [--duration:40s] [--gap:1rem] flex-col [--duration:15s] p-0 [--gap:0px]">
+                        {Array(4).fill(0).map(() => (
+                            <ul class="flex shrink-0 justify-around gap-(--gap) animate-marquee-vertical flex-col">
+                                {commits.map((commit) => (
+                                    <li class="flex flex-col gap-1 border-b bg-background p-4 text-sm hover:bg-muted transition-all duration-default">
+
+                                        <p class="truncate font-[400] text-[1.1rem] leading-[1.1em]">{commit.message}</p>
+
+                                        <div class="flex items-center gap-1.5 text-xs text-muted-foreground font-[300] leading-[1.1em]">
+                                            <Image src={MeImg} alt="" width={32} height={32} class="h-4 w-4 rounded-full object-cover" />
+                                            <span>{commit.username}</span>
+                                            <span>committed {commit.committedAt}</span>
+
+                                            {commit.status && commit.status !== "none" && (
+                                                <>
+                                                    <span class="text-md">·</span>
+                                                    <span class="inline-flex items-center gap-1">
+                                                        {commit.status === "tick" && <Check class="h-3.5 w-3.5 text-blue-500" strokeWidth={2.5} />}
+                                                        {commit.status === "cross" && <X class="h-3.5 w-3.5 text-red-500" strokeWidth={2.5} />}
+                                                        {commit.statusCount && <span>{commit.statusCount}</span>}
+                                                    </span>
+                                                </>
+                                            )}
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
