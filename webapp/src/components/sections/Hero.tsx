@@ -1,4 +1,4 @@
-import { cn, coptToClipboard } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { icons } from "@/lib/icons";
 import VscodeImg from "../../assets/vscode.png"
@@ -7,6 +7,7 @@ import WindowsLogoImg from "../../assets/windows_logo.svg"
 import LinuxLogoImg from "../../assets/linux_logo.svg"
 
 import XommitLogo from "../XommitLogo";
+import CopyCommand from "../CopyCommand";
 
 type InstallOption = {
 	label: string;
@@ -43,13 +44,12 @@ If any instruction file (AGENTS.md, agent.md, CLAUDE.md, .cursorrules, etc.) exi
 	},
 ];
 
-export default function Hero() {
+export default function Hero({ version }: { version: string }) {
 
 
 
 	function InstallCopy() {
 		const [active, setActive] = useState(InstallCommands[0].label);
-		const [copied, setCopied] = useState(false);
 
 		const activeOption = InstallCommands.find((option) => option.label === active) ?? InstallCommands[0];
 
@@ -63,21 +63,10 @@ export default function Hero() {
 			</div>
 
 
-			<div className="border rounded-md w-fit p-[3px] flex gap-2 items-center">
-				<p className="truncate md:w-70 w-full leading-[1.1em] px-3"><span className="text-sm text-destructive mr-2">{activeOption.label == "agents" ? ">" : "$"}</span>{activeOption.prompt}</p>
-				<button className={cn("bg-destructive px-3 py-2 rounded-sm transition-all duration-fast hover:bg-destructive/70 w-15 flex items-center justify-center relative overflow-hidden", copied && "hover:bg-destructive")} onClick={() => {
-					coptToClipboard(activeOption.prompt)
-					setCopied(true);
-					window.setTimeout(() => setCopied(false), 1000);
-				}}>
-					<div className={cn("flex items-center justify-center w-full transition-all duration-fast ease-out", copied && "translate-y-[-100%] opacity-0", !copied && "translate-y-0 opacity-100")}>
-						Copy
-					</div>
-					<div className={cn("absolute inset-0 flex items-center justify-center transition-all duration-fast ease-out", !copied && "translate-y-[100%] opacity-0", copied && "translate-y-0 opacity-100")}>
-						<icons.check className="h-4.5 w-4.5" strokeWidth={2} />
-					</div>
-				</button>
-			</div>
+			<CopyCommand
+				command={activeOption.prompt}
+				prefix={activeOption.label == "agents" ? ">" : "$"}
+			/>
 
 		</div>)
 	}
@@ -88,7 +77,7 @@ export default function Hero() {
 			<p className="text-xs text-foreground/80">
 				xommit
 				<span className="text-[0.7rem] rounded-sm bg-foreground/40 px-2 py-1 leading-[1em] w-fit ml-2">
-					v1.0.9
+					v{version}
 				</span>
 			</p>
 
