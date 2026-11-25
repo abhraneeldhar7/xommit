@@ -7,7 +7,7 @@ export default function ZeroPayments() {
 
         <div className="flex-1 sticky top-[100px] md:self-start text-right">
             <h1 className="text-4xl">Zero Payment</h1>
-            <p className="md:text-md text-muted-foreground mt-4 leading-[1.8em]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quibusdam neque iusto nobis ipsam animi voluptate natus numquam quas, ut optio accusamus aliquid maxime perferendis dicta reprehenderit.</p>
+            <p className="md:text-md text-muted-foreground mt-4 leading-[1.8em]">Chances are you have free credits sitting in a provider you already signed up for, and a commit message costs almost nothing to generate. Point xommit at those credits and let it handle committing for you. No monthly fee, nothing to pay me, and one less thing on your mind.</p>
         </div>
 
         <div className="flex-1">

@@ -41,7 +41,7 @@ export default function StagedFiles() {
 
             <div className="flex-1 sticky top-[100px] md:self-start">
                 <h1 className="text-4xl">How it works</h1>
-                <p className="md:text-md text-muted-foreground mt-4 leading-[1.8em]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quibusdam neque iusto nobis ipsam animi voluptate natus numquam quas, ut optio accusamus aliquid maxime perferendis dicta reprehenderit fuga pariatur minus? lorem10</p>
+                <p className="md:text-md text-muted-foreground mt-4 leading-[1.8em]">xommit takes the diffs you have staged and sends them to the LLM along with the conventional commit rules, so every message comes back lowercase, imperative, and under 72 characters. You get three options, you pick the one that fits, and xommit commits it for you. If it is not in <span className="text-foreground/80 font-[500]">Staged</span>, it is never read, and your index is never touched.</p>
             </div>
 
             <div className="flex-1 aspect-square">
