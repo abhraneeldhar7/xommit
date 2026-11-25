@@ -13,16 +13,16 @@ export default function Footer() {
             </div>
 
             <div className="flex gap-1.5">
-                <a href="" target="_blank" className="transition-all duration-fast rounded-sm p-2 hover:bg-muted/50 flex items-center justify-center h-[35px] aspect-square overflow-hidden group">
+                <a href="https://github.com/abhraneeldhar7" target="_blank" className="transition-all duration-fast rounded-sm p-2 hover:bg-muted/50 flex items-center justify-center h-[35px] aspect-square overflow-hidden group">
                     <img src={GithubLogo.src} className="h-full w-full object-contain invert opacity-80 transition-all duration-fast group-hover:opacity-100" />
                 </a>
-                <a href="" target="_blank" className="transition-all duration-fast rounded-sm p-2.5 hover:bg-muted/50 flex items-center justify-center h-[35px] aspect-square overflow-hidden">
+                <a href="https://x.com/veryNeel" target="_blank" className="transition-all duration-fast rounded-sm p-2.5 hover:bg-muted/50 flex items-center justify-center h-[35px] aspect-square overflow-hidden">
                     <img src={TwitterLogo.src} className="h-full w-full object-contain" />
                 </a>
-                <a href="" target="_blank" className="transition-all duration-fast rounded-sm p-2 hover:bg-muted/50 flex items-center justify-center h-[35px] aspect-square overflow-hidden group">
+                <a href="https://www.linkedin.com/in/abhraneeldhar/" target="_blank" className="transition-all duration-fast rounded-sm p-2 hover:bg-muted/50 flex items-center justify-center h-[35px] aspect-square overflow-hidden group">
                     <img src={LinkedinLogo.src} className="h-full w-full object-contain grayscale transition-all duration-fast group-hover:grayscale-0" />
                 </a>
-                <a href="" target="_blank" className="transition-all duration-fast rounded-sm p-2 hover:bg-muted/50 flex items-center justify-center h-[35px] aspect-square overflow-hidden group">
+                <a href="mailto:abhraneeldhar@gmail.com" target="_blank" className="transition-all duration-fast rounded-sm p-2 hover:bg-muted/50 flex items-center justify-center h-[35px] aspect-square overflow-hidden group">
                     <img src={GmailLogo.src} className="h-full w-full object-contain grayscale transition-all duration-fast group-hover:grayscale-0" />
                 </a>
             </div>
