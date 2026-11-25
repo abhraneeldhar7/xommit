@@ -1,14 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Navbar from "../components/Navbar.astro";
 import Hero from "../components/sections/Hero.tsx";
+import NavBar from "../components/navBar.tsx";
 ---
 
 <Layout>
-	<Navbar />
-	<main>
-		<div class="w-full pt-30 px-4 md:px-15">
-			<Hero client:load />
-		</div>
-	</main>
+	<NavBar />
+	<div class="w-full pt-30 px-4 md:px-15">
+		<Hero client:load />
+	</div>
 </Layout>

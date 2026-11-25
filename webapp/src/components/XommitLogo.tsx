@@ -1,23 +1,24 @@
+import { cn } from "@/lib/utils";
 import LogoSpace from "./LogoSpace"
 
-export default function XommitLogo() {
+export default function XommitLogo({ className }: { className?: string }) {
     return (
         <h2
-            className="font-mono font-[350] text-[9px] sm:text-[20px] mx-auto sm:mx-0 w-fit tracking-0 leading-[1em]"
+            className={cn("font-mono font-[350] text-[9px] sm:text-[20px] mx-auto sm:mx-0 w-fit tracking-0 leading-[1em] ", className)}
         >
-            <span className="text-git">██╗<LogoSpace /><LogoSpace />██╗</span
+            <span className="text-destructive">██╗<LogoSpace /><LogoSpace />██╗</span
             ><span
             ><LogoSpace /><LogoSpace />██████╗<LogoSpace /><LogoSpace
                 />███╗<LogoSpace /><LogoSpace /><LogoSpace />███╗<LogoSpace
                 />███╗<LogoSpace /><LogoSpace /><LogoSpace />███╗<LogoSpace
                 />██╗<LogoSpace />████████╗</span
             ><br />
-            <span className="text-git">╚██╗██╔╝</span><span
+            <span className="text-destructive">╚██╗██╔╝</span><span
             ><LogoSpace />██╔═══██╗<LogoSpace />████╗<LogoSpace
                 />████║<LogoSpace />████╗<LogoSpace />████║<LogoSpace
                 />██║<LogoSpace />╚══██╔══╝</span
             ><br />
-            <span className="text-git"><LogoSpace />╚███╔╝<LogoSpace /></span
+            <span className="text-destructive"><LogoSpace />╚███╔╝<LogoSpace /></span
             ><span
             ><LogoSpace />██║<LogoSpace /><LogoSpace /><LogoSpace
                 />██║<LogoSpace />██╔████╔██║<LogoSpace
@@ -25,7 +26,7 @@ export default function XommitLogo() {
                 /><LogoSpace /><LogoSpace />██║<LogoSpace /><LogoSpace
                 /><LogoSpace /></span
             ><br />
-            <span className="text-git"><LogoSpace />██╔██╗<LogoSpace /></span
+            <span className="text-destructive"><LogoSpace />██╔██╗<LogoSpace /></span
             ><span
             ><LogoSpace />██║<LogoSpace /><LogoSpace /><LogoSpace
                 />██║<LogoSpace />██║╚██╔╝██║<LogoSpace
@@ -33,14 +34,14 @@ export default function XommitLogo() {
                 /><LogoSpace /><LogoSpace />██║<LogoSpace /><LogoSpace
                 /><LogoSpace /></span
             ><br />
-            <span className="text-git">██╔╝<LogoSpace />██╗</span><span
+            <span className="text-destructive">██╔╝<LogoSpace />██╗</span><span
             ><LogoSpace />╚██████╔╝<LogoSpace />██║<LogoSpace
                 />╚═╝<LogoSpace />██║<LogoSpace />██║<LogoSpace
                 />╚═╝<LogoSpace />██║<LogoSpace />██║<LogoSpace /><LogoSpace
                 /><LogoSpace /><LogoSpace />██║<LogoSpace /><LogoSpace
                 /><LogoSpace /></span
             ><br />
-            <span className="text-git">╚═╝<LogoSpace /><LogoSpace />╚═╝</span
+            <span className="text-destructive">╚═╝<LogoSpace /><LogoSpace />╚═╝</span
             ><span
             ><LogoSpace /><LogoSpace />╚═════╝<LogoSpace /><LogoSpace
                 />╚═╝<LogoSpace /><LogoSpace /><LogoSpace /><LogoSpace

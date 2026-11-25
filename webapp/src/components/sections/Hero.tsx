@@ -1,135 +1,118 @@
+import { cn, coptToClipboard } from "@/lib/utils";
 import { useState } from "react";
+import { icons } from "@/lib/icons";
+import VscodeImg from "../../assets/vscode.png"
+import GradientImg from "../../assets/gradient.jpg"
+import XommitLogo from "../XommitLogo";
 
 type InstallOption = {
-	id: string;
 	label: string;
 	prompt: string;
 };
 
-const OPTIONS: InstallOption[] = [
+const InstallCommands: InstallOption[] = [
 	{
-		id: "pnpm",
 		label: "pnpm",
 		prompt: "pnpm add -g @antkin/xommit",
 	},
 	{
-		id: "npm",
 		label: "npm",
 		prompt: "npm install -g @antkin/xommit",
 	},
 	{
-		id: "agents",
+		label: "bun",
+		prompt: "bun install -g @antkin/xommit",
+	},
+	{
 		label: "agents",
-		prompt: `Install "@antkin/xommit" globally using npm/pnpm/bun or whatever suitable package manager.
-[explain all the supported ways and platforms]
-[list supported ai providers]
-Ask the user for their [ai provider] keys before running "xommit --connect".
-Run "xommit --help" for full tutorial.
-If any instruction file (agent.md, AGENTS.md, etc) exists, add a rule to use xommit for committing staged files.`,
+		prompt: `Install "@antkin/xommit" globally using npm, pnpm, bun, or your preferred package manager:
+- npm: npm install -g @antkin/xommit
+- pnpm: pnpm add -g @antkin/xommit
+- bun: bun add -g @antkin/xommit
+
+Supported AI providers: Google AI Studio, Vercel AI SDK.
+
+Ask the user for their API keys for the chosen provider, then run "xommit --connect" to configure authentication.
+
+Run "xommit --help" for full tutorial and usage examples.
+
+If any instruction file (AGENTS.md, agent.md, CLAUDE.md, .cursorrules, etc.) exists in the project, add a rule to use xommit for committing staged files automatically.`,
 	},
 ];
 
 export default function Hero() {
-	const [activeId, setActiveId] = useState(OPTIONS[0].id);
-	const [copied, setCopied] = useState(false);
 
-	const active = OPTIONS.find((option) => option.id === activeId) ?? OPTIONS[0];
 
-	async function copyPrompt() {
-		try {
-			await navigator.clipboard.writeText(active.prompt);
-		} catch {
-			return;
-		}
 
-		setCopied(true);
-		window.setTimeout(() => setCopied(false), 1500);
-	}
+	function InstallCopy() {
+		const [active, setActive] = useState(InstallCommands[0].label);
+		const [copied, setCopied] = useState(false);
 
-	function selectOption(id: string) {
-		setActiveId(id);
-		setCopied(false);
-	}
+		const activeOption = InstallCommands.find((option) => option.label === active) ?? InstallCommands[0];
 
-	return (
-		<section aria-labelledby="hero-title">
-			<h1
-				id="hero-title"
-				className="text-4xl font-medium text-balance text-foreground sm:text-6xl"
-			>
-				Professional commits for larping tech bros
-			</h1>
 
-			<div
-				className="mt-8 inline-flex items-center gap-1 rounded-lg border border-border bg-card/40 p-1"
-				role="tablist"
-				aria-label="Install options"
-			>
-				{OPTIONS.map((option) => (
-					<button
-						key={option.id}
-						type="button"
-						role="tab"
-						id={`install-tab-${option.id}`}
-						aria-selected={option.id === active.id}
-						aria-controls="install-prompt"
-						onClick={() => selectOption(option.id)}
-						className="cursor-pointer rounded-md px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground aria-selected:bg-muted aria-selected:text-foreground"
-					>
-						{option.label}
-					</button>
+		return (<div className="mt-6 flex flex-col gap-2">
+
+			<div className="flex gap-1">
+				{InstallCommands.map((option, index) => (
+					<button key={index} className={cn("border-1 border-transparent text-sm rounded-sm hover:bg-muted px-2 py-1 transition-all duration-fast", option.label == active && "bg-muted border-border/70")} onClick={() => (setActive(option.label))}>{option.label}</button>
 				))}
 			</div>
 
-			<div
-				id="install-prompt"
-				role="tabpanel"
-				aria-labelledby={`install-tab-${active.id}`}
-				className="mt-4 flex items-start justify-between gap-4 rounded-xl border border-border bg-card/40 px-4 py-3.5"
-			>
-				<pre className="min-w-0 flex-1 whitespace-pre-wrap font-sans text-base text-foreground/85">
-					{active.prompt}
-				</pre>
 
-				<button
-					type="button"
-					onClick={copyPrompt}
-					aria-label="Copy prompt"
-					className="inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md border border-border px-2 py-1 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-				>
-					{copied ? (
-						<svg
-							width="14"
-							height="14"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							strokeWidth="2"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							aria-hidden="true"
-						>
-							<path d="M20 6 9 17l-5-5" />
-						</svg>
-					) : (
-						<svg
-							width="14"
-							height="14"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							strokeWidth="2"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							aria-hidden="true"
-						>
-							<rect x="9" y="9" width="13" height="13" rx="2" />
-							<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-						</svg>
-					)}
-					<span aria-live="polite">{copied ? "Copied" : "Copy"}</span>
+			<div className="border rounded-md w-fit p-[3px] flex gap-2 items-center">
+				<p className="truncate md:w-70 w-full leading-[1.1em] px-3"><span className="text-sm text-destructive mr-2">{activeOption.label == "agents" ? ">" : "$"}</span>{activeOption.prompt}</p>
+				<button className={cn("bg-destructive px-3 py-2 rounded-sm transition-all duration-fast hover:bg-destructive/70 w-15 flex items-center justify-center relative overflow-hidden", copied && "hover:bg-destructive")} onClick={() => {
+					coptToClipboard(activeOption.prompt)
+					setCopied(true);
+					window.setTimeout(() => setCopied(false), 1000);
+				}}>
+					<div className={cn("flex items-center justify-center w-full transition-all duration-fast ease-out", copied && "translate-y-[-100%] opacity-0", !copied && "translate-y-0 opacity-100")}>
+						Copy
+					</div>
+					<div className={cn("absolute inset-0 flex items-center justify-center transition-all duration-fast ease-out", !copied && "translate-y-[100%] opacity-0", copied && "translate-y-0 opacity-100")}>
+						<icons.check className="h-4.5 w-4.5" strokeWidth={2} />
+					</div>
 				</button>
 			</div>
-		</section>
+
+		</div>)
+	}
+
+	return (
+		<div className="site-max pb-30">
+
+			<h1 className="text-3xl md:text-5xl lg:text-6xl leading-[1.25em]">Cringe Commits <br className="lg:hidden" />for techbros</h1>
+
+			<InstallCopy />
+
+			<div className="my-2">
+				<a href="#other-install" className="text-xs transition-all duration-fast text-muted-foreground hover:text-foreground hover:underline">Other ways to install <icons.info className="inline size-[12px]" strokeWidth={2} /></a>
+			</div>
+
+			<div className="mt-4 relative overflow-hidden w-full p-6">
+				<img src={GradientImg.src} className="object-cover h-full w-full absolute inset-0 z-[-1]" />
+
+				<div className="md:absolute top-0 left-0 p-6 w-[60%] z-[2]">
+
+					<div className="bg-[#101010] h-100 w-full flex flex-col rounded-xs">
+						<div className="w-full h-7 flex justify-end items-center">
+							<div className="w-fit h-full p-[6px] px-[8px] hover:bg-muted flex items-center transition-all duration-fast"><icons.Minus className="h-3 w-3" /></div>
+							<div className="w-fit h-full p-[6px] px-[8px] hover:bg-muted flex items-center transition-all duration-fast"><icons.Square className="h-3 w-3" /></div>
+							<div className="w-fit h-full p-[6px] px-[8px] hover:bg-[red] flex items-center transition-all duration-fast"><icons.Close className="h-4 w-4" /></div>
+						</div>
+						<div className="p-3 px-5">
+							<XommitLogo className="text-[8px] sm:text-[10px] leading-[1em]" />
+						</div>
+
+					</div>
+				</div>
+
+				<div className="h-fit w-[80%] overflow-hidden ml-auto rounded-lg mt-5">
+					<img src={VscodeImg.src} className="w-full h-fit object-contain overflow-hidden blur-[3px]" />
+				</div>
+			</div>
+
+		</div>
 	);
 }

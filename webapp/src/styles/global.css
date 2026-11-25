@@ -12,10 +12,12 @@
   /* Type scale */
   --text-xs: 0.75rem;
   --text-xs--line-height: 1.333;
-  --text-sm: 0.875rem;
+  --text-sm: 0.86rem;
   --text-sm--line-height: 1.428;
   --text-base: 15px;
   --text-base--line-height: 1.6;
+  --text-md: 1.02rem;
+  --text-md--line-height: 1.6;
   --text-lg: 1.125rem;
   --text-lg--line-height: 1.555;
   --text-xl: 1.25rem;
@@ -26,15 +28,25 @@
   --text-3xl--line-height: 1.266;
   --text-4xl: 2.5rem;
   --text-4xl--line-height: 1.111;
-  --text-5xl: 3rem;
+  --text-5xl: 3.8rem;
   --text-5xl--line-height: 1;
-  --text-6xl: 3.75rem;
+  --text-6xl: 4.5rem;
   --text-6xl--line-height: 1;
 
-  /* Accent */
-  --color-git: #fa583b;
+  /* Radius scale */
+  --radius-none: 0;
+  --radius-xs: 0.2rem;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.4rem;
+  --radius-lg: 0.6rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-full: 9999px;
 
-  --radius: 0.625rem;
+  --transition-duration-fast: 200ms;
+  --transition-duration-default: 350ms;
+  --font-weight-base: 350;
+
 }
 
 @theme inline {
@@ -71,7 +83,7 @@
   --secondary-foreground: #0f172a;
   --accent: #f1f5f9;
   --accent-foreground: #0f172a;
-  --destructive: #f14e32;
+  --destructive: #fa583b;
   --destructive-foreground: #f8fafc;
   --ring: #0f172a;
 }
@@ -79,9 +91,9 @@
 .dark {
   --background: #131311;
   --foreground: #f5f5f5;
-  --muted: #1e293b;
-  --muted-foreground: #94a3b8;
-  --border: #334155;
+  --muted: #2c2c29;
+  --muted-foreground: #e9e6e4d2;
+  --border: #72727276;
   --card: #1e293b;
   --card-foreground: #f8fafc;
   --primary: #f8fafc;
@@ -90,7 +102,7 @@
   --secondary-foreground: #f8fafc;
   --accent: #1e293b;
   --accent-foreground: #f8fafc;
-  --destructive: #f14e32;
+  --destructive: #fa583b;
   --destructive-foreground: #f8fafc;
   --ring: #f8fafc;
 }
@@ -117,11 +129,11 @@
     font-family: var(--font-sans);
     font-size: 15px;
     line-height: 1.6;
-    font-weight: 400;
+    font-weight: var(--font-weight-base);
   }
 
   .site-max {
-    max-width: 1000px;
+    max-width: 1200px;
     width: full;
     margin: 0 auto;
   }
