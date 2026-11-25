@@ -79,11 +79,7 @@ async function ensureBinary() {
     const cacheFile = path.join(cacheDir, ".npm-version");
 
     if (fs.existsSync(exe)) {
-        let cached = "";
-        try { cached = fs.readFileSync(cacheFile, "utf8").trim(); } catch {}
-        if (cached === version) {
-            return exe;
-        }
+        return exe;
     }
 
     fs.mkdirSync(cacheDir, { recursive: true });
