@@ -15,7 +15,7 @@ const providers: Provider[] = [
 
 export default function TerminalConnect() {
     return (
-        <div className="bg-[#101010] shadow-md border aspect-[5/3] w-full flex flex-col rounded-[5px] overflow-hidden">
+        <div className="bg-[#101010] shadow-md border md:aspect-[5/3] w-full flex flex-col rounded-[5px] overflow-hidden">
             <div aria-hidden="true" className="w-full h-7 flex justify-end items-center">
                 <div className="w-fit h-full p-[6px] px-[10px] hover:bg-muted flex items-center transition-all duration-fast"><icons.Minus className="h-3 w-3" /></div>
                 <div className="w-fit h-full p-[6px] px-[10px] hover:bg-muted flex items-center transition-all duration-fast"><icons.Square className="h-2.5 w-2.5" /></div>
@@ -23,7 +23,7 @@ export default function TerminalConnect() {
             </div>
 
             <div className="p-3 px-5 space-y-5">
-                <p className="text-sm">
+                <p className="text-xs md:text-sm">
                     <span className="text-foreground/90">C:\projects\palantir{">"}</span>
                     <span className="text-destructive mx-1">$</span>
                     xommit --connect
@@ -31,7 +31,7 @@ export default function TerminalConnect() {
 
                 <XommitLogo className="text-[8px] sm:text-[10px] leading-[1em]" />
 
-                <div className="text-sm">
+                <div className="text-xs md:text-sm">
                     <p>Choose a provider:</p>
                     {providers.map((provider, index) => {
                         return (
@@ -44,7 +44,7 @@ export default function TerminalConnect() {
                     })}
                 </div>
 
-                <p className="text-sm text-muted-foreground">
+                <p className="text-xs md:text-sm text-muted-foreground">
                     <span className="text-destructive mx-1">$</span> Paste your API key...
                 </p>
             </div>

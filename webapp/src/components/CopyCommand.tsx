@@ -13,7 +13,7 @@ export default function CopyCommand({ command, prefix = "$", className, fill = f
     const [copied, setCopied] = useState(false)
 
     return (
-        <div className={cn("border rounded-md w-fit p-[3px] flex gap-2 items-center", className)}>
+        <div className={cn("border rounded-md md:w-fit w-full p-[3px] flex gap-2 items-center", className)}>
             <p className={cn("truncate leading-[1.1em] px-3", fill ? "flex-1 min-w-0" : "md:w-70 w-full")}><span className="text-sm text-destructive mr-2">{prefix}</span>{command}</p>
             <button className={cn("bg-destructive px-3 py-2 rounded-sm transition-all duration-fast hover:bg-destructive/70 w-15 flex items-center justify-center relative overflow-hidden", copied && "hover:bg-destructive")} onClick={() => {
                 coptToClipboard(command)

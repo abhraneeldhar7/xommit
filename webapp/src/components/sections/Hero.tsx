@@ -63,10 +63,13 @@ export default function Hero({ version }: { version: string }) {
 			</div>
 
 
-			{/* <CopyCommand
-				command={activeOption.prompt}
-				prefix={activeOption.label == "agents" ? ">" : "$"}
-			/> */}
+			<div className="w-full flex">
+				<CopyCommand
+					fill
+					command={activeOption.prompt}
+					prefix={activeOption.label == "agents" ? ">" : "$"}
+				/>
+			</div>
 
 		</div>)
 	}
@@ -81,7 +84,7 @@ export default function Hero({ version }: { version: string }) {
 				</span>
 			</p>
 
-			<h1 id="hero-heading" className="mt-2 text-3xl md:text-5xl lg:text-6xl leading-[1.25em]">Cringe Commits <br className="lg:hidden" />for tech bros</h1>
+			<h1 id="hero-heading" className="mt-2 text-[2.7rem] leading-[1.25em] md:text-5xl lg:text-6xl leading-[1.25em]">Cringe Commits <br className="lg:hidden" />for tech bros</h1>
 
 			<InstallCopy />
 
@@ -89,15 +92,14 @@ export default function Hero({ version }: { version: string }) {
 				<a href="#other-install" className="text-xs transition-all duration-fast text-muted-foreground/70 hover:text-foreground hover:underline"><icons.info className="inline size-[14px]" strokeWidth={2} /> Other ways to install </a>
 			</div>
 
-			<div className="mt-4 relative overflow-hidden w-full p-6 rounded-md">
+			<div className="mt-4 relative overflow-hidden w-full p-5 rounded-md">
 				<img src={GradientImg.src} alt="" loading="eager" fetchPriority="high" decoding="sync" className="object-cover h-full w-full absolute inset-0 z-[-1]" />
 
-				<div className="md:absolute top-0 left-0 p-6 w-[60%] z-[2]">
-
+				<div className="md:absolute top-0 left-0 md:p-6 w-full md:w-[60%] z-[2]">
 					<TerminalDemo />
 				</div>
 
-				<div className="h-fit w-[80%] overflow-hidden ml-auto rounded-lg mt-5">
+				<div className="h-fit w-[80%] overflow-hidden ml-auto rounded-lg mt-5 hidden md:flex">
 					<img src={VscodeImg.src} alt="xommit running in a terminal next to a code editor" loading="eager" fetchPriority="high" className="w-full h-fit object-contain overflow-hidden blur-[3px]" />
 				</div>
 

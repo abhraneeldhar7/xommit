@@ -131,7 +131,7 @@ export default function TerminalDemo() {
     const activeIndex = phase === "options" ? displayedIndex : run.selected
 
     return (
-        <div className="bg-[#101010] shadow-md border aspect-[5/3] w-full flex flex-col rounded-[5px] overflow-hidden">
+        <div className="bg-[#101010] shadow-md border md:h-auto h-70 md:aspect-[5/3] w-full flex flex-col rounded-[5px] overflow-hidden">
             <div aria-hidden="true" className="w-full h-7 flex justify-end items-center">
                 <div className="w-fit h-full p-[6px] px-[10px] hover:bg-muted flex items-center transition-all duration-fast"><icons.Minus className="h-3 w-3" /></div>
                 <div className="w-fit h-full p-[6px] px-[10px] hover:bg-muted flex items-center transition-all duration-fast"><icons.Square className="h-2.5 w-2.5" /></div>
@@ -139,7 +139,7 @@ export default function TerminalDemo() {
             </div>
 
             <div className="p-3 px-5 space-y-5">
-                <p className="text-sm">
+                <p className="text-xs md:text-sm">
                     <span className="text-foreground/90">C:\projects\palantir{">"}</span>
                     <span className="text-destructive mx-1">$</span>
                     {command}
@@ -150,10 +150,10 @@ export default function TerminalDemo() {
                     <XommitLogo className="text-[8px] sm:text-[10px] leading-[1em]" />
                 )}
 
-                {phase === "generating" && <p className="shimmer font-[500] text-sm">Generating</p>}
+                {phase === "generating" && <p className="shimmer font-[500] text-xs md:text-sm">Generating</p>}
 
                 {(phase === "options" || phase === "selected") && (
-                    <div className="text-sm">
+                    <div className="text-xs md:text-sm">
                         <p>Choose a commit message:</p>
                         {run.options.map((option, index) => {
                             const active = index === activeIndex
@@ -168,7 +168,7 @@ export default function TerminalDemo() {
                 )}
 
                 {phase === "committed" && (
-                    <div className="text-sm">
+                    <div className="text-xs md:text-sm">
                         <p>[master {run.hash}] {choice}</p>
                         <p className="text-muted-foreground">1 file changed, 2 insertions(+), 1 deletion(-)</p>
                     </div>
