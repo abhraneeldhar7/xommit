@@ -3,7 +3,7 @@ import npmLogo from "../assets/npm_logo.webp"
 import githubLogo from "../assets/github_logo.svg"
 
 export default function NavBar() {
-    return (<div className="fixed top-0 left-0 w-full z-5 p-4 group/navbar">
+    return (<div className="fixed top-0 left-0 w-full z-5 bg-background p-4 group/navbar">
 
         <div className="flex justify-between items-center transition-all">
             <div className="flex items-center gap-3">
