@@ -1,12 +1,16 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Hero from "../components/sections/Hero.tsx";
+import ZeroPayments from "../components/sections/ZeroPayments.tsx";
+import StagedFiles from "../components/sections/StagedFiles.tsx";
 import NavBar from "../components/navBar.tsx";
 ---
 
 <Layout>
 	<NavBar />
-	<div class="w-full pt-30 px-4 md:px-15">
+	<div class="w-full pt-30 px-4 md:px-15 pb-50 relative">
 		<Hero client:load />
+		<StagedFiles client:load/>
+		<ZeroPayments client:load />
 	</div>
 </Layout>
