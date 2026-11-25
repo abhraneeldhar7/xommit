@@ -28,6 +28,19 @@ if (git(["tag", "--list", tag])) {
   fail(`tag ${tag} already exists`);
 }
 
+let published = "";
+try {
+  published = execFileSync("npm", ["view", pkg.name, "version"], { encoding: "utf8" }).trim();
+} catch {
+  fail(`cannot read ${pkg.name} from npm, check your network or run npm login`);
+}
+
+if (published === pkg.version) {
+  fail(`npm already has ${pkg.name}@${published}, bump package.json version first`);
+}
+
+console.log(`npm has ${published}, publishing ${pkg.version}`);
+
 // Build only current platform for local verification
 const platform = os.platform() === "win32" ? "windows" : "linux";
 execFileSync("node", [path.join(root, "scripts", "build.js"), `--platform=${platform}`], { stdio: "inherit" });

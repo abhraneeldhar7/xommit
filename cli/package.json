@@ -18,7 +18,7 @@
     "type": "git",
     "url": "git+https://github.com/abhraneeldhar7/xommit.git"
   },
-  "license": "MIT",
+  "license": "PolyForm-Noncommercial-1.0.0",
   "author": "abhraneeldhar7",
   "type": "commonjs",
   "bin": {
