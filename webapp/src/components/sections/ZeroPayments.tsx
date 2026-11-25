@@ -10,7 +10,11 @@ export default function ZeroPayments() {
 
         <div className="flex-1 aspect-square">
             <div className="rounded-md h-full w-full relative overflow-hidden">
-                <img src={Gradient.src} className="w-full h-full top-0 left-0 absolute object-cover z-[-1] opacity-25" />            </div>
+                <img src={Gradient.src} className="w-full h-full top-0 left-0 absolute object-cover z-[-1]" />
+            
+
+            
+            </div>
         </div>
 
     </div>)

@@ -58,7 +58,7 @@ export default function Hero() {
 
 			<div className="flex gap-1">
 				{InstallCommands.map((option, index) => (
-					<button key={index} className={cn("border-1 border-transparent text-sm rounded-sm hover:bg-muted px-2 py-1 transition-all duration-fast", option.label == active && "bg-muted border-border/70")} onClick={() => (setActive(option.label))}>{option.label}</button>
+					<button key={index} className={cn("text-sm rounded-sm text-foreground/60 hover:bg-muted/50 px-2 py-1 transition-all duration-fast", option.label == active && "bg-muted/90 text-foreground")} onClick={() => (setActive(option.label))}>{option.label}</button>
 				))}
 			</div>
 
@@ -85,22 +85,22 @@ export default function Hero() {
 	return (
 		<div className="site-max">
 
-			<p className="text-xs">
+			<p className="text-xs text-foreground/80">
 				xommit
-				<span className="rounded-sm bg-foreground/50 px-2 py-1 leading-[1em] w-fit ml-2">
+				<span className="text-[0.7rem] rounded-sm bg-foreground/40 px-2 py-1 leading-[1em] w-fit ml-2">
 					v1.0.9
 				</span>
 			</p>
 
-			<h1 className="mt-2 text-3xl md:text-5xl lg:text-6xl leading-[1.25em]">Cringe Commits <br className="lg:hidden" />for techbros</h1>
+			<h1 className="mt-2 text-3xl md:text-5xl lg:text-6xl leading-[1.25em]">Cringe Commits <br className="lg:hidden" />for tech bros</h1>
 
 			<InstallCopy />
 
 			<div className="my-2">
-				<a href="#other-install" className="text-xs transition-all duration-fast text-muted-foreground hover:text-foreground hover:underline"><icons.info className="inline size-[14px]" strokeWidth={2} /> Other ways to install </a>
+				<a href="#other-install" className="text-xs transition-all duration-fast text-muted-foreground/70 hover:text-foreground hover:underline"><icons.info className="inline size-[14px]" strokeWidth={2} /> Other ways to install </a>
 			</div>
 
-			<div className="mt-4 relative overflow-hidden w-full p-6">
+			<div className="mt-4 relative overflow-hidden w-full p-6 rounded-md">
 				<img src={GradientImg.src} className="object-cover h-full w-full absolute inset-0 z-[-1]" />
 
 				<div className="md:absolute top-0 left-0 p-6 w-[60%] z-[2]">

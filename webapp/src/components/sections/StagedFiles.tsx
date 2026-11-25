@@ -8,7 +8,7 @@ function FileItem({ filename, delay = 0, animate = true }: { filename: string; d
             <FileIcon size={17} className="opacity-80" />
             <p
                 className={cn(
-                    "text-md truncate max-w-50 leading-[1.1em] text-muted-foreground",
+                    "text-md truncate w-full leading-[1.1em] text-muted-foreground",
                     animate && "shimmer font-[500]"
                 )}
                 style={{ animationDelay: `${delay}ms` }}
@@ -46,11 +46,11 @@ export default function StagedFiles() {
 
             <div className="flex-1 aspect-square">
                 <div className="rounded-md h-full w-full relative overflow-hidden flex flex-col flex-1">
-                    <img src={Gradient.src} className="w-full h-full top-0 left-0 absolute object-cover z-[-1] opacity-25" />
+                    <img src={Gradient.src} className="w-full h-full top-0 left-0 absolute object-cover z-[-1] " />
 
                     <div className="w-full h-full flex items-center p-5 md:p-15">
 
-                        <div className="w-full h-fit rounded-md bg-background/50 p-3 px-5">
+                        <div className="w-full h-fit rounded-md bg-background/70 p-3 px-5">
 
                             <p className="">Staged <ChevronDown size={17} className="inline opacity-70" /></p>
                             <div className="mt-2 space-y-2.5">

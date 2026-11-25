@@ -1,8 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Hero from "../components/sections/Hero.tsx";
-import ZeroPayments from "../components/sections/ZeroPayments.tsx";
 import StagedFiles from "../components/sections/StagedFiles.tsx";
+import ZeroPayments from "../components/sections/ZeroPayments.tsx";
+import GithubRepoCommits from "../components/sections/GithubRepoCommits.tsx";
+import FAQ from "../components/sections/FAQ.tsx";
 import NavBar from "../components/navBar.tsx";
 ---
 
@@ -10,7 +12,9 @@ import NavBar from "../components/navBar.tsx";
 	<NavBar />
 	<div class="w-full pt-30 px-4 md:px-15 pb-50 relative">
 		<Hero client:load />
-		<StagedFiles client:load/>
+		<StagedFiles client:load />
 		<ZeroPayments client:load />
+		<GithubRepoCommits client:load />
+		<FAQ client:load/>
 	</div>
 </Layout>

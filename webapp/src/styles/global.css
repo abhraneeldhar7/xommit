@@ -38,7 +38,7 @@
   --radius-none: 0;
   --radius-xs: 0.2rem;
   --radius-sm: 0.25rem;
-  --radius-md: 0.4rem;
+  --radius-md: 0.45rem;
   --radius-lg: 0.6rem;
   --radius-xl: 1rem;
   --radius-2xl: 1.5rem;
@@ -67,6 +67,30 @@
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-ring: var(--ring);
+  --animate-marquee: marquee var(--duration) infinite linear;
+  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
+  @keyframes marquee {
+  from {
+    transform: translateX(0);
+
+    }
+  to {
+    transform: translateX(calc(-100% - var(--gap)));
+
+    }
+
+  }
+  @keyframes marquee-vertical {
+  from {
+    transform: translateY(0);
+
+    }
+  to {
+    transform: translateY(calc(-100% - var(--gap)));
+
+    }
+
+  }
 
 }
 
