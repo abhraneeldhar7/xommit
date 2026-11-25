@@ -16,7 +16,7 @@ const providers: Provider[] = [
 export default function TerminalConnect() {
     return (
         <div className="bg-[#101010] shadow-md border aspect-[5/3] w-full flex flex-col rounded-[5px] overflow-hidden">
-            <div className="w-full h-7 flex justify-end items-center">
+            <div aria-hidden="true" className="w-full h-7 flex justify-end items-center">
                 <div className="w-fit h-full p-[6px] px-[10px] hover:bg-muted flex items-center transition-all duration-fast"><icons.Minus className="h-3 w-3" /></div>
                 <div className="w-fit h-full p-[6px] px-[10px] hover:bg-muted flex items-center transition-all duration-fast"><icons.Square className="h-2.5 w-2.5" /></div>
                 <div className="w-fit h-full p-[6px] px-[8px] hover:bg-[red] flex items-center transition-all duration-fast"><icons.Close className="h-3 w-3" /></div>

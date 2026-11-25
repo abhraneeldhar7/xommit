@@ -37,16 +37,17 @@ const changesFiles = [
 
 export default function StagedFiles() {
     return (
-        <div className="my-15 site-max flex gap-10 md:flex-row flex-col">
+        <section aria-labelledby="how-it-works-heading" className="my-15 site-max flex gap-10 md:flex-row flex-col">
 
             <div className="flex-1 sticky top-[100px] md:self-start">
-                <h1 className="text-4xl">How it works</h1>
+                <h2 id="how-it-works-heading" className="text-4xl">How it works</h2>
                 <p className="md:text-md text-muted-foreground mt-4 leading-[1.8em]">xommit takes the diffs you have staged and sends them to the LLM along with the conventional commit rules, so every message comes back lowercase, imperative, and under 72 characters. You get three options, you pick the one that fits, and xommit commits it for you. If it is not in <span className="text-foreground/80 font-[500]">Staged</span>, it is never read, and your index is never touched.</p>
+                <p className="md:text-md text-muted-foreground mt-4 leading-[1.8em]">Conventional Commits is a small spec for commit messages: a type such as feat, fix, or docs, an optional scope like auth or api, and a short imperative subject. Because every message follows the same shape, tools can read your history, generate changelogs, and work out version bumps automatically. It also stops the "wip", "fixes", "final v2" commits that nobody can read later, and it is the reason your log reads like documentation instead of a diary.</p>
             </div>
 
             <div className="flex-1 aspect-square">
                 <div className="rounded-md h-full w-full relative overflow-hidden flex flex-col flex-1">
-                    <img src={Gradient.src} className="w-full h-full top-0 left-0 absolute object-cover z-[-1] " />
+                    <img src={Gradient.src} alt="" className="w-full h-full top-0 left-0 absolute object-cover z-[-1] " />
 
                     <div className="w-full h-full flex items-center p-5 md:p-15">
 
@@ -82,6 +83,6 @@ export default function StagedFiles() {
                 </div>
             </div>
 
-        </div>
+        </section>
     )
 }

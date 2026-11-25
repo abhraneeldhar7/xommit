@@ -1,12 +1,14 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
+import sitemap from '@astrojs/sitemap';
 import tailwindcss from "@tailwindcss/vite";
 import path from 'path';
 
 // https://astro.build/config
 export default defineConfig({
-    integrations: [react()],
+    site: 'https://xommit.antk.in',
+    integrations: [react(), sitemap()],
     server: { port: 3000, allowedHosts: ["yearlong-jon-patrilineal.ngrok-free.dev"] },
     vite: {
         plugins: [tailwindcss()],

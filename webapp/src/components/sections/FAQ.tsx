@@ -6,7 +6,7 @@ type FAQItemProps = {
 function FAQItem({ question, answer }: FAQItemProps) {
     return (
         <div className="p-4.5 border border-transparent border-r-border border-b-border transition-all duration-fast hover:border-border hover:bg-muted/50 group/item group-hover/faq:opacity-60 group-hover/faq:hover:opacity-100">
-            <h2 className="text-3xl transition-colors duration-fast group-hover/faq:text-muted-foreground group-hover/faq:group-hover/item:text-foreground">{question}</h2>
+            <h3 className="text-3xl transition-colors duration-fast group-hover/faq:text-muted-foreground group-hover/faq:group-hover/item:text-foreground">{question}</h3>
             <p className="text-muted-foreground mt-2 transition-colors duration-fast group-hover/item:text-foreground/90 leading-[1.8em]">{answer}</p>
         </div>
     )
@@ -51,14 +51,26 @@ const faqs: FAQItemProps[] = [
     },
 ]
 
+const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: { "@type": "Answer", text: faq.answer },
+    })),
+}
+
 export default function FAQ() {
-    return (<div className="my-30 site-max flex flex-col gap-7">
-        <h1 className="text-4xl">FAQs</h1>
+    return (<section aria-labelledby="faq-heading" className="my-30 site-max flex flex-col gap-7">
+        <h2 id="faq-heading" className="text-4xl">FAQs</h2>
 
         <div className="border-t border-l w-full grid md:grid-cols-3 grid-cols-1 group/faq">
             {faqs.map((faq) => (
                 <FAQItem key={faq.question} {...faq} />
             ))}
         </div>
-    </div>)
+
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+    </section>)
 }

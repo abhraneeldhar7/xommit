@@ -8,6 +8,11 @@ interface MarqueeProps extends ComponentPropsWithoutRef<"div"> {
    */
   className?: string
   /**
+   * Element to render the track and its copies as
+   * @default "div"
+   */
+  as?: "div" | "ul"
+  /**
    * Whether to reverse the animation direction
    * @default false
    */
@@ -40,6 +45,7 @@ export function Marquee({
   children,
   vertical = false,
   repeat = 4,
+  as: Track = "div",
   ...props
 }: MarqueeProps) {
   return (
@@ -57,7 +63,7 @@ export function Marquee({
       {Array(repeat)
         .fill(0)
         .map((_, i) => (
-          <div
+          <Track
             key={i}
             className={cn("flex shrink-0 justify-around gap-(--gap)", {
               "animate-marquee flex-row": !vertical,
@@ -67,7 +73,7 @@ export function Marquee({
             })}
           >
             {children}
-          </div>
+          </Track>
         ))}
     </div>
   )

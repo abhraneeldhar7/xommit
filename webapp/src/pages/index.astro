@@ -16,7 +16,7 @@ const version = getCliVersion();
 
 <Layout>
 	<NavBar client:load />
-	<div class="w-full pt-30 px-4 md:px-15 relative">
+	<main class="w-full pt-30 px-4 md:px-15 relative">
 		<Hero client:load version={version} />
 		<StagedFiles />
 		<ZeroPayments />
@@ -24,6 +24,6 @@ const version = getCliVersion();
 		<OtherWaysToInstall client:load version={version} />
 		<FAQ />
 		<HowAiWasUsed />
-		<Footer />
-	</div>
+	</main>
+	<Footer />
 </Layout>

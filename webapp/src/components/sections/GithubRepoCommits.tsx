@@ -14,7 +14,7 @@ type CommitItemProps = {
 
 function CommitItem({ message, username, committedAt, hash, status = "none", statusCount }: CommitItemProps) {
     return (
-        <div className="flex flex-col gap-1 border-b bg-background p-4 text-sm hover:bg-muted transition-all duration-default">
+        <li className="flex flex-col gap-1 border-b bg-background p-4 text-sm hover:bg-muted transition-all duration-default">
 
             <p className="truncate font-[400] text-[1.1rem] leading-[1.1em]">
                 {message}
@@ -23,7 +23,7 @@ function CommitItem({ message, username, committedAt, hash, status = "none", sta
             <div className="flex items-center gap-1.5 text-xs text-muted-foreground font-[300] leading-[1.1em]">
                 <img
                     src={MeImg.src}
-                    alt={username}
+                    alt=""
                     className="h-4 w-4 rounded-full object-cover"
                 />
                 <span>{username}</span>
@@ -46,7 +46,7 @@ function CommitItem({ message, username, committedAt, hash, status = "none", sta
                     </>
                 )}
             </div>
-        </div>
+        </li>
     )
 }
 
@@ -92,20 +92,20 @@ const commits: CommitItemProps[] = [
 ]
 
 export default function GithubRepoCommits() {
-    return (<div className="my-30 site-max flex gap-10 md:flex-row flex-col">
+    return (<section aria-labelledby="repo-heading" className="my-30 site-max flex gap-10 md:flex-row flex-col">
 
         <div className="flex-1 sticky top-[100px] md:self-start">
-            <h1 className="text-4xl">So your repo looks this good</h1>
+            <h2 id="repo-heading" className="text-4xl">So your repo looks this good</h2>
             <p className="md:text-md text-muted-foreground mt-4 leading-[1.8em]">Your GitHub is the first thing people open, before your resume, before anything else, and your commit history is what they see. It should look professional, because it is your best proof that you actually build things. A commit like <span className="text-foreground/80 font-[500]">feat(auth): add token refresh flow</span> tells a far better story than a lazy one, and xommit keeps that consistent without you thinking about it.</p>
         </div>
 
         <div className="flex-1 aspect-square">
             <div className="rounded-md h-full w-full relative overflow-hidden">
-                <img src={Gradient.src} className="w-full h-full top-0 left-0 absolute object-cover z-[-1]" />
+                <img src={Gradient.src} alt="" className="w-full h-full top-0 left-0 absolute object-cover z-[-1]" />
 
                 <div className="w-full h-full p-5 md:p-15 flex items-center">
                     <div className="w-full h-full rounded-md bg-background overflow-hidden">
-                        <Marquee vertical className="[--duration:15s] p-0 [--gap:0px]">
+                        <Marquee vertical as="ul" aria-label="Sample commit history" className="[--duration:15s] p-0 [--gap:0px]">
                             {commits.map((commit) => (
                                 <CommitItem key={commit.hash} {...commit} />
                             ))}
@@ -115,5 +115,5 @@ export default function GithubRepoCommits() {
 
             </div>
         </div>
-    </div>)
+    </section>)
 }

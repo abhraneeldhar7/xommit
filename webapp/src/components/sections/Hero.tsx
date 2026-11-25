@@ -72,7 +72,7 @@ export default function Hero({ version }: { version: string }) {
 	}
 
 	return (
-		<div className="site-max">
+		<section aria-labelledby="hero-heading" className="site-max">
 
 			<p className="text-xs text-foreground/80">
 				xommit
@@ -81,7 +81,8 @@ export default function Hero({ version }: { version: string }) {
 				</span>
 			</p>
 
-			<h1 className="mt-2 text-3xl md:text-5xl lg:text-6xl leading-[1.25em]">Cringe Commits <br className="lg:hidden" />for tech bros</h1>
+			<h1 id="hero-heading" className="mt-2 text-3xl md:text-5xl lg:text-6xl leading-[1.25em]">AI commit messages for <br className="lg:hidden" />your staged git changes</h1>
+			<p className="mt-4 text-md text-muted-foreground leading-[1.8em] max-w-[60ch]">Cringe commits for tech bros. xommit reads your staged diff, writes three messages that follow Conventional Commits, and commits whichever one you pick.</p>
 
 			<InstallCopy />
 
@@ -90,7 +91,7 @@ export default function Hero({ version }: { version: string }) {
 			</div>
 
 			<div className="mt-4 relative overflow-hidden w-full p-6 rounded-md">
-				<img src={GradientImg.src} className="object-cover h-full w-full absolute inset-0 z-[-1]" />
+				<img src={GradientImg.src} alt="" className="object-cover h-full w-full absolute inset-0 z-[-1]" />
 
 				<div className="md:absolute top-0 left-0 p-6 w-[60%] z-[2]">
 
@@ -98,7 +99,7 @@ export default function Hero({ version }: { version: string }) {
 				</div>
 
 				<div className="h-fit w-[80%] overflow-hidden ml-auto rounded-lg mt-5">
-					<img src={VscodeImg.src} className="w-full h-fit object-contain overflow-hidden blur-[3px]" />
+					<img src={VscodeImg.src} alt="xommit running in a terminal next to a code editor" className="w-full h-fit object-contain overflow-hidden blur-[3px]" />
 				</div>
 
 
@@ -108,11 +109,11 @@ export default function Hero({ version }: { version: string }) {
 
 			<p className="text-md flex items-center leading-[1em] w-full my-15 justify-center">
 				Supported on
-				<img src={WindowsLogoImg.src} className="inline aspect-square h-[20px] object-contain grayscale ml-4 transition-all duration-default hover:grayscale-0" />
-				<img src={LinuxLogoImg.src} className="inline aspect-square h-[20px] object-contain grayscale mx-4.5 transition-all duration-default hover:grayscale-0" />
+				<img src={WindowsLogoImg.src} alt="Windows" className="inline aspect-square h-[20px] object-contain grayscale ml-4 transition-all duration-default hover:grayscale-0" />
+				<img src={LinuxLogoImg.src} alt="Linux" className="inline aspect-square h-[20px] object-contain grayscale mx-4.5 transition-all duration-default hover:grayscale-0" />
 			</p>
 
 
-		</div>
+		</section>
 	);
 }
