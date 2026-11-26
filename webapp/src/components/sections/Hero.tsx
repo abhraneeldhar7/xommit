@@ -63,7 +63,7 @@ export default function Hero({ version }: { version: string }) {
 			</div>
 
 
-			<div className="w-full flex">
+			<div className="w-full flex md:w-90">
 				<CopyCommand
 					fill
 					command={activeOption.prompt}
@@ -93,14 +93,14 @@ export default function Hero({ version }: { version: string }) {
 			</div>
 
 			<div className="mt-4 relative overflow-hidden w-full p-5 rounded-md">
-				<img src={GradientImg.src} alt="" loading="eager" fetchPriority="high" decoding="sync" className="object-cover h-full w-full absolute inset-0 z-[-1]" />
+				<img src={GradientImg.src} alt="" width={GradientImg.width} height={GradientImg.height} className="object-cover h-full w-full absolute inset-0 z-[-1]" fetchPriority="high" decoding="sync" loading="eager" />
 
 				<div className="md:absolute top-0 left-0 md:p-6 w-full md:w-[60%] z-[2]">
 					<TerminalDemo />
 				</div>
 
 				<div className="h-fit w-[80%] overflow-hidden ml-auto rounded-lg mt-5 hidden md:flex">
-					<img src={VscodeImg.src} alt="xommit running in a terminal next to a code editor" loading="eager" fetchPriority="high" className="w-full h-fit object-contain overflow-hidden blur-[3px]" />
+					<img src={VscodeImg.src} alt="xommit running in a terminal next to a code editor" width={VscodeImg.width} height={VscodeImg.height} className="w-full h-fit object-contain overflow-hidden blur-[3px]" loading="lazy" fetchPriority="high" decoding="async" />
 				</div>
 
 
@@ -108,10 +108,10 @@ export default function Hero({ version }: { version: string }) {
 			</div>
 
 
-			<p className="text-md flex items-center leading-[1em] w-full my-15 justify-center">
+			<p className="text-md flex items-center leading-[1em] w-full my-15 justify-center gap-5">
 				Supported on
-				<img src={WindowsLogoImg.src} alt="Windows" loading="eager" className="inline aspect-square h-[20px] object-contain grayscale ml-4 transition-all duration-default hover:grayscale-0" />
-				<img src={LinuxLogoImg.src} alt="Linux" loading="eager" className="inline aspect-square h-[20px] object-contain grayscale mx-4.5 transition-all duration-default hover:grayscale-0" />
+				<img src={WindowsLogoImg.src} alt="Windows" width={WindowsLogoImg.width} height={WindowsLogoImg.height} className="inline aspect-square h-[20px] w-[20px] object-contain grayscale transition-all duration-default hover:grayscale-0" loading="lazy" decoding="async" />
+				<img src={LinuxLogoImg.src} alt="Linux" width={LinuxLogoImg.width} height={LinuxLogoImg.height} className="inline aspect-square h-[20px] w-[20px] object-contain grayscale transition-all duration-default hover:grayscale-0" loading="lazy" decoding="async" />
 			</p>
 
 
