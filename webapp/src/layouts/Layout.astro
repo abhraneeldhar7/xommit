@@ -7,8 +7,8 @@ interface Props {
 }
 
 const {
-  title = "xommit: AI commit messages in Conventional Commits format",
-  description = "xommit reads your staged git diffs and writes commit messages that follow Conventional Commits. Pick one of three options and it commits for you. Free, runs in your terminal, uses only your own AI provider key.",
+  title = "xommit",
+  description = "Conventional commits from staged changes",
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
