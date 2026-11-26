@@ -14,7 +14,7 @@ type Phase = "typing" | "generating" | "options" | "selected" | "committed"
 
 const runs: Run[] = [
     {
-        command: "fixed the webhook shit",
+        command: "fixed the webhook stuff",
         options: [
             "fix(payments): retry failed stripe webhooks",
             "feat(payments): add webhook retry queue",

@@ -5,7 +5,7 @@
 
 ## Flow is:
 1. user writes "xommit arg arg arg arg" in any terminal (problem 1: proper install so name can be recognized).
-if the first arg starts with double "-" that means this is a params call, not a plain commit message. any "-" other than double beginning position means its plain text commit message. This is as cut and dry as it needs to be, no complex shit.
+if the first arg starts with double "-" that means this is a params call, not a plain commit message. any "-" other than double beginning position means its plain text commit message. This is as cut and dry as it needs to be, no complex stuff.
 available options below:
 	--help: show tutorial
 	--connect : connect to user's own ai token provider (google ai studio, vercel ai gateway) (explained in AI provider section)
@@ -30,7 +30,7 @@ available options below:
 ---
 
 ## Publishing:
-Whole publishing flow is a real bitch (problem 5: need proper publishing cicd to github and npm store and write publishing.md teaching me all that). don't worry about mac or linux releases now, only windows.
+Whole publishing flow is a headache (problem 5: need proper publishing cicd to github and npm store and write publishing.md teaching me all that). don't worry about mac or linux releases now, only windows.
 
 ---
 
